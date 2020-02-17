@@ -4,10 +4,14 @@
 .join-form input {
   border: none;
   border-bottom: solid .04em #d3d3d3;
-  width: 80%; }
+  width: 80%;
+  color: #272343; }
   .join-form input:focus {
     outline: none;
     border-bottom: solid .04em #bae8e8; }
+
+.join-form ::placeholder {
+  font-size: .8rem; }
 
 .join-form hr {
   margin: auto;
@@ -19,6 +23,25 @@
 
 .modal {
   top: 20%; }
+  .modal .title-container {
+    flex-grow: 2;
+    text-align: center; }
+  .modal #btn-close {
+    color: rgba(39, 35, 67, 0.7); }
+    .modal #btn-close:hover {
+      color: #272343;
+      opacity: 100; }
+  .modal .modal-header, .modal .nav-tabs {
+    border-bottom: solid .04em #272343; }
+  .modal [aria-selected="false"] {
+    color: rgba(39, 35, 67, 0.4); }
+    .modal [aria-selected="false"]:hover {
+      color: rgba(39, 35, 67, 0.7);
+      border-color: rgba(39, 35, 67, 0.7); }
+  .modal .nav-link.active {
+    color: #272343;
+    border-color: #272343;
+    border-bottom: none; }
 
 #navbar .nav-link {
   color: #272343; }
