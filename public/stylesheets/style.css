@@ -1,8 +1,16 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+.join-form input {
+  border: none;
+  border-bottom: solid .04em #d3d3d3; }
+  .join-form input:focus {
+    outline: none;
+    border-bottom: solid .04em #bae8e8; }
 
-a {
-  color: #00B7FF; }
+.join-form hr {
+  margin: auto;
+  border: solid .05em #bae8e8;
+  flex-grow: 2; }
+
+.join-form span {
+  margin: 0 1em; }
 
 /*# sourceMappingURL=style.css.map */
