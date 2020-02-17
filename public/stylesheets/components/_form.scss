@@ -1,0 +1,31 @@
+.join-form {
+  label {
+    color: #272343;
+  }
+
+  input {
+    border: none;
+    border-bottom: solid .04em #d3d3d3;
+    width: 80%;
+    color: #272343;
+    &:focus{
+      outline: none;
+      border-bottom: solid .04em #bae8e8;
+    }
+  }
+
+  ::placeholder{
+    font-size: .8rem;
+  }
+  
+  hr {
+    margin: auto;
+    border: solid .05em #bae8e8;
+    flex-grow: 2;
+  }
+
+  span {
+    margin: 0 1em;
+  }
+
+}

@@ -1,0 +1,20 @@
+<ul id="navbar" class="nav justify-content-end pt-3 pr-3">
+  <li class="nav-item">
+    <a class="nav-link" href="/news">News</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/about">About</a>
+  </li>
+  {{#if user}}
+  <li class="nav-item">
+    <a class="nav-link" href="/logout">Logout</a>
+  </li>
+  {{else}}
+  <li class="nav-item">
+    <p class="nav-link btn" data-toggle="modal" data-target="#join-modal">Join Us</p>
+  </li>
+  {{/if}}
+</ul>
+
+{{> modal}}
+
