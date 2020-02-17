@@ -11,7 +11,7 @@ const userSchema = new Schema(
     gretaPoints: { type: Number, default: 0 },
     favoriteNews: [{ type : Schema.Types.ObjectId, ref: 'News' }],
     thunbergs: [{ type : Schema.Types.ObjectId, ref: 'Thunberg' }],
-    followers: [{ type : Schema.Types.ObjectId, ref: 'User' }],
+    followers: { type: Number, default: 0 },
     followings: [{ type : Schema.Types.ObjectId, ref: 'User' }]
   },
   {
