@@ -1,0 +1,12 @@
+#navbar {
+  .nav-link {
+    color: #272343;
+
+    &:hover {
+      color: #2a7886;
+    }
+  } 
+  .active {
+    color: #2a7886;
+  }
+}

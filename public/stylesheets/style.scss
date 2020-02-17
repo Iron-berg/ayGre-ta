@@ -1,18 +1,6 @@
-.join-form {
-  input {
-    border: none;
-    border-bottom: solid .04em #d3d3d3;
-    &:focus{
-      outline: none;
-      border-bottom: solid .04em #bae8e8;
-    }
-  }
-  hr {
-    margin: auto;
-    border: solid .05em #bae8e8;
-    flex-grow: 2;
-  }
-  span {
-    margin: 0 1em;
-  }
-}
+@import 
+    'components/form',
+    'components/modal';
+
+@import
+    'layout/navbar'

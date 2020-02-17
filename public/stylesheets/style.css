@@ -1,6 +1,10 @@
+.join-form label {
+  color: #272343; }
+
 .join-form input {
   border: none;
-  border-bottom: solid .04em #d3d3d3; }
+  border-bottom: solid .04em #d3d3d3;
+  width: 80%; }
   .join-form input:focus {
     outline: none;
     border-bottom: solid .04em #bae8e8; }
@@ -12,5 +16,16 @@
 
 .join-form span {
   margin: 0 1em; }
+
+.modal {
+  top: 20%; }
+
+#navbar .nav-link {
+  color: #272343; }
+  #navbar .nav-link:hover {
+    color: #2a7886; }
+
+#navbar .active {
+  color: #2a7886; }
 
 /*# sourceMappingURL=style.css.map */
