@@ -1,11 +1,16 @@
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
 const User = require('../models/user');
 const { hashPassword } = require('../lib/hashing');
 
-router.post('/', async (req, res) => {
+// Signup route
+router.post('/', async (req, res, next) => {
 	try {
-		const { username, password } = req.body;
+		const { username, password, signup } = req.body;
+
+		if (!signup) return next();
+
 		const registeredUser = await User.findOne({ username });
 
 		if (registeredUser) {
@@ -21,5 +26,8 @@ router.post('/', async (req, res) => {
 		return res.redirect('/');
 	}
 });
+
+// Local login
+router.post('/', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/' }));
 
 module.exports = router;
