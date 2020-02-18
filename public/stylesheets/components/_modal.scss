@@ -13,10 +13,15 @@
 			opacity: 100;
 		}
 	}
-
+	.tab-content {
+		border: solid 1px #272343;
+		border-bottom-right-radius: .25rem;
+		border-bottom-left-radius: .25rem;
+		border-top: none;
+	}
 	.modal-header,
 	.nav-tabs {
-		border-bottom: solid .04em #272343;
+		border-bottom: solid 1px #272343;
 	}
 
 	[aria-selected="false"] {
