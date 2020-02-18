@@ -1,13 +1,17 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 const User = require("../models/user");
 const { hashPassword } = require("../lib/hashing");
-const passport = require("passport");
 
-router.post("/", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const registeredUser = await User.findOne({ username });
+// Signup route
+router.post('/', async (req, res, next) => {
+	try {
+		const { username, password, signup } = req.body;
+
+		if (!signup) return next();
+
+		const registeredUser = await User.findOne({ username });
 
     if (registeredUser) {
       console.log(`User ${registeredUser.username} already exists`);
@@ -26,6 +30,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Facebook login
 router.get("/login/facebook", passport.authenticate("facebook"));
 
 router.get(
@@ -39,11 +44,16 @@ router.get(
     res.redirect("/");
   }
 );
+    
+// Local login
+router.post('/', passport.authenticate('local', { successRedirect: '/', failureRedirect: '/' }));
 
+// Logout route
 router.get("/logout", (req, res) => {
   req.logout();
   console.log("User logged out");
   res.redirect("/");
 });
 
+    
 module.exports = router;
