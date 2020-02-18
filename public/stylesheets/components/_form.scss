@@ -23,6 +23,7 @@
 		display: flex;
 		justify-content: center;
 	}
+
 	input[type="submit"],
 	button {
 		padding: .5em 1em;
@@ -33,6 +34,11 @@
 		box-shadow: .1em .1em 0 #272343;
 		border-radius: .2em;
 		transition: box-shadow 0.2s, transform .3s, color 0.2s;
+
+		a {
+			color: #272343;
+			text-decoration: none;
+		}
 
 		&:hover {
 			box-shadow: 0px 0px 0 #272343;
