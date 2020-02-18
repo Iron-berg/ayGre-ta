@@ -8,16 +8,18 @@
       <label for="password">Password:</label>
       <input type="password" name="password" id="password" placeholder="password">
     </div>
-    <button>{{submit}}</button>
+    <div class="btn-container">
+      <input type="submit" value="{{value}}" name={{name}}>
+    </div>
   </form>
-  <div class="or-join container">
-    <div class="row">
+  <div class="facebook-join container">
+    <div class="or-container row">
       <hr>
       <span>OR</span>
       <hr>
     </div>
     <div class="row justify-content-center">
-      <button href="#">{{action}} Facebook</button>
+      <button><i class="fab fa-facebook-square mr-2"></i> {{action}} Facebook</button>
     </div>
   </div>
 </div>
