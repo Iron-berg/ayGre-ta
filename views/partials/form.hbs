@@ -1,5 +1,5 @@
 <div class="container pt-3 join-form">
-  <form method="POST">
+  <form action="/auth/{{id}}" method="POST">
     <div class="form-group">
       <label for="{{id}}-username">Username:</label>
       <input type="text" name="username" id="{{id}}-username" placeholder="username">
@@ -9,7 +9,7 @@
       <input type="password" name="password" id="{{id}}-password" placeholder="password">
     </div>
     <div class="btn-container">
-      <input type="submit" value="{{value}}" name={{name}}>
+      <button>{{submit}}</button>
     </div>
   </form>
   <div class="facebook-join container">
