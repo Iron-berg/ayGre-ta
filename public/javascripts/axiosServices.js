@@ -1,10 +1,10 @@
 console.log('connected');
 
-async function getNews() {
+async function getNewsArticles() {
 	try {
-		const response = await axios.get('/services/news');
-		console.log(response.data);
-		return response.data;
+		const newsApi = await axios.get('/services/news');
+		// console.log(newsApi.data.news);
+		return newsApi.data.news;
 	} catch (error) {
 		console.log(error);
 	}
