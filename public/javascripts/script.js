@@ -8,7 +8,7 @@ const updateLink = () => {
 	}
 };
 
-const formatNews = async () => {
+const formatNewsApi = async () => {
 	try {
 		const articles = await getNewsArticles();
 		return articles.map(article => {
@@ -17,7 +17,26 @@ const formatNews = async () => {
 				body: article.description,
 				pictureUrl: article.urlToImage,
 				author: article.author,
-				externalUrl: article.url
+				externalUrl: article.url,
+				published: article.publishedAt
+			};
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const formatNewsGuardian = async () => {
+	try {
+		const articles = await getguardianArticles();
+		return articles.map(article => {
+			return {
+				headline: article.fields.headline,
+				body: article.fields.trailText,
+				pictureUrl: article.fields.thumbnail,
+				author: article.fields.byline,
+				externalUrl: article.webUrl,
+				published: article.webPublicationDate
 			};
 		});
 	} catch (error) {
@@ -26,20 +45,24 @@ const formatNews = async () => {
 };
 
 const populateCarousel = async () => {
-	const articles = await formatNews();
-	console.log(articles);
-	articles.forEach((article, index) => {
+	const articlesApi = await formatNewsApi();
+	const articlesGuardian = await formatNewsGuardian()
+
+	const articles = [...articlesApi, ...articlesGuardian].sort((a, b)=> new Date(b.published) - new Date(a.published));
+
+	for(let i = 0; i <=5 ; i++){
 		let container = document.createElement('div');
-		container.setAttribute('class', `carousel-item ${index === 0 ? 'active': ''}`);
+
+		container.setAttribute('class', `carousel-item ${i === 0 ? 'active': ''}`);
 		container.innerHTML = `<div class="card bg-dark text-white">
-															<img class="d-block w-100" src="${article.pictureUrl}">
+															<img class="d-block w-100" src="${articles[i].pictureUrl}">
 															<div class="carousel-caption">
-																<h4>${article.headline}</h4>
+																<h4>${articles[i].headline}</h4>
 															</div>
 													</div>`
 													
 		document.getElementById('carousel').appendChild(container);
-	})
+	}
 };
 
 document.addEventListener(
