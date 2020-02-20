@@ -13,7 +13,7 @@ router.get('/services/news', async (req, res, next) => {
 
 router.get('/services/guardian', async (req, res, next)=>{
 	try {
-		const news = await guardianAPI.getNews('&show-fields=headline,byline,thumbnail,bodyText,trailText')
+		const news = await guardianAPI.getNews('&section=environment&q="climate%20change"&page-size=20&show-fields=headline,byline,thumbnail,bodyText,trailText')
 		res.json({news: news.data.response.results})
 	}catch(error){
 		console.log(error)
