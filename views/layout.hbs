@@ -49,6 +49,15 @@
         .catch(function (error) {
           console.log(error);
         })
+
+      // Consume example of NASA API for getting Earth pic
+      axios.get('/services/epic/lastPhoto')
+        .then(function (response) {
+          console.log("LA URL DE LA FOTO ES " + JSON.stringify(response.data.photoUrl));
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
     });
   </script>
 </body>
