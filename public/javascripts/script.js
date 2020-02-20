@@ -1,12 +1,19 @@
-const navLinks = [...document.querySelectorAll('#navbar .nav-link')]
-const currentLink = document.querySelector('a[href="' + location.pathname + '"]')
+// Functions related to DOM manipulation
+const updateLink = () => {
+	const navLinks = [ ...document.querySelectorAll('#navbar .nav-link') ];
+	const currentLink = document.querySelector('a[href="' + location.pathname + '"]');
+	navLinks.forEach(link => link.classList.remove('active'));
+	if (location.pathname !== '/') {
+		currentLink.classList.add('active');
+	}
+};
 
-console.log(location)
-
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('IronGenerator JS imported successfully!');
-  navLinks.forEach(link => link.classList.remove('active'))
-  if(location.pathname !== '/'){
-    currentLink.classList.add('active')
-  }
-}, false);
+document.addEventListener(
+	'DOMContentLoaded',
+	() => {
+		console.log('IronGenerator JS imported successfully!');
+		updateLink();
+		getNews();
+	},
+	false
+);
