@@ -9,3 +9,13 @@ async function getNewsArticles() {
 		console.log(error);
 	}
 }
+
+async function getguardianArticles() {
+	try {
+		const guardianApi = await axios.get('/services/guardian');
+		// console.log(guardianApi.data.news);
+		return guardianApi.data.news;
+	} catch (error) {
+		console.log(error);
+	}
+}
