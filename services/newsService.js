@@ -1,14 +1,17 @@
 const axios = require('axios');
 
-class newsApi {
+class newsService {
 	constructor(baseURL) {
 		this.baseURL = baseURL;
 	}
 
-	getNews(query, language) {
-		console.log(`${this.baseURL}&q=${query}&language=${language}`);
-		return axios.get(`${this.baseURL}&q=${query}&language=${language}`);
+	getNews(query) {
+		console.log(`${this.baseURL}&q=${query}`);
+		return axios.get(`${this.baseURL}&q=${query}`);
 	}
 }
 
-module.exports = new newsApi(`http://newsapi.org/v2/everything?apikey=${process.env.NEWS_APIKEY}`);
+const newsAPI = new newsService(`http://newsapi.org/v2/everything?apikey=${process.env.NEWS_APIKEY}`);
+const guardianAPI = new newsService(`https://content.guardianapis.com/search?api-key=${process.env.GUARDIAN_APIKEY}`);
+
+module.exports = { newsAPI, guardianAPI };

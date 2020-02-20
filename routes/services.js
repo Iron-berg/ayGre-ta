@@ -1,15 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const newsService = require('../services/newsService');
+const { newsAPI, guardianAPI } = require('../services/newsService');
 
 router.get('/services/news', async (req, res, next) => {
 	try {
-		const news = await newsService.getNews('"greta%20thunberg"OR"climate%20change"', 'en');
-		const articles = news.data.articles.map(article => article);
-		res.json({ articles });
+		const news = await newsAPI.getNews('"greta%20thunberg"OR"climate%20change"OR"environment"&language=en');
+		res.json({ news: news.data.articles });
 	} catch (error) {
 		console.log(error);
 	}
 });
+
+router.get('/services/guardian', async (req, res, next)=>{
+	try {
+		const news = await guardianAPI.getNews('&show-fields=headline,byline,thumbnail,bodyText,trailText')
+		res.json({news: news.data.response.results})
+	}catch(error){
+		console.log(error)
+	}
+})
 
 module.exports = router;
