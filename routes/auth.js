@@ -18,8 +18,17 @@ router.post('/auth/signup', async (req, res, next) => {
 				username,
 				password: hashPassword(password)
 			});
-			console.log(`${newUser} created`);
-			return res.redirect('/');
+
+			// login after signup
+			req.login(newUser, error => {
+				if(!error){
+					console.log(`${newUser} created and logged in`);
+					return res.redirect('/');
+				} else {
+					console.log(`Something went wrong: ${error}`)
+					return res.redirect('/');
+				}
+			});
 		}
 	} catch (error) {
 		console.log('Credentials are necessary');
