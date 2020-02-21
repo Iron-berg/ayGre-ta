@@ -36,6 +36,7 @@
       axios.get('/services/openuv', { params: { lat: 27, lng: 133 } })
         .then(function (response) {
           console.log("EL INDICE DE UV ES " + JSON.stringify(response.data.uv));
+          return JSON.stringify(response.data.uv);
         })
         .catch(function (error) {
           console.log(error);
@@ -45,6 +46,7 @@
       axios.get('/services/air')
         .then(function (response) {
           console.log("EL INDICE DE CONTAMINACION ES " + JSON.stringify(response.data.contam));
+          return JSON.stringify(response.data.contam);
         })
         .catch(function (error) {
           console.log(error);
@@ -54,6 +56,7 @@
       axios.get('/services/epic/lastPhoto')
         .then(function (response) {
           console.log("LA URL DE LA FOTO ES " + JSON.stringify(response.data.photoUrl));
+          return JSON.stringify(response.data.photoUrl);
         })
         .catch(function (error) {
           console.log(error);
