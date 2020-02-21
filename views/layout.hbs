@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,14 @@
   <script src="https://kit.fontawesome.com/067e9870dd.js" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Lobster&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
+
 <body>
   {{> navbar}}
-  
+
   {{{body}}}
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -21,5 +25,38 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="/javascripts/axiosServices.js"></script>
   <script src="/javascripts/script.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      // Consume example of UV index API
+      axios.get('/services/openuv', { params: { lat: 27, lng: 133 } })
+        .then(function (response) {
+          console.log("EL INDICE DE UV ES " + JSON.stringify(response.data.uv));
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+
+      // Consume example of contamination API
+      axios.get('/services/air')
+        .then(function (response) {
+          console.log("EL INDICE DE CONTAMINACION ES " + JSON.stringify(response.data.contam));
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+
+      // Consume example of NASA API for getting Earth pic
+      axios.get('/services/epic/lastPhoto')
+        .then(function (response) {
+          console.log("LA URL DE LA FOTO ES " + JSON.stringify(response.data.photoUrl));
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    });
+  </script>
 </body>
+
 </html>
