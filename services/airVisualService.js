@@ -1,16 +1,16 @@
-const axios = require("axios");
+const axios = require('axios');
 
 class AirVisualService {
   constructor() {
     this.service = axios.create({
       baseURL:
-        "https://api.airvisual.com/v2/nearest_city?key=" +
+        'https://api.airvisual.com/v2/nearest_city?key=' +
         process.env.API_AIR_TOKEN
     });
   }
 
   getAirIndex() {
-    let result = "";
+    let result = '';
 
     return this.service
       .get()

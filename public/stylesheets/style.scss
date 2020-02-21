@@ -1,9 +1,10 @@
-@import 
-    'components/form',
-    'components/modal';
+@import "components/form", "components/modal";
 
-@import
-    'layout/navbar';
+@import "layout/navbar";
 
-@import
-    'pages/home'
+@import "layout/about";
+
+@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700&display=swap");
+
+@import 'pages/home'
+
