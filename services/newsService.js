@@ -6,7 +6,7 @@ class newsService {
 	}
 
 	getNews(query) {
-		console.log(`${this.baseURL}&q=${query}`);
+		// console.log(`${this.baseURL}&q=${query}`);
 		return axios.get(`${this.baseURL}&q=${query}`);
 	}
 }

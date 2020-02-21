@@ -8,47 +8,11 @@ const updateLink = () => {
 	}
 };
 
-const formatNewsApi = async () => {
-	try {
-		const articles = await getNewsArticles();
-		return articles.map(article => {
-			return {
-				headline: article.title,
-				body: article.description,
-				pictureUrl: article.urlToImage,
-				author: article.author,
-				externalUrl: article.url,
-				published: article.publishedAt
-			};
-		});
-	} catch (error) {
-		console.log(error);
-	}
-};
-
-const formatNewsGuardian = async () => {
-	try {
-		const articles = await getguardianArticles();
-		return articles.map(article => {
-			return {
-				headline: article.fields.headline,
-				body: article.fields.trailText,
-				pictureUrl: article.fields.thumbnail,
-				author: article.fields.byline,
-				externalUrl: article.webUrl,
-				published: article.webPublicationDate
-			};
-		});
-	} catch (error) {
-		console.log(error);
-	}
-};
-
 const populateCarousel = async () => {
-	const articlesApi = await formatNewsApi();
-	const articlesGuardian = await formatNewsGuardian()
-
+	const articlesApi = await getNewsArticles();
+	const articlesGuardian = await getguardianArticles()
 	const articles = [...articlesApi, ...articlesGuardian].sort((a, b)=> new Date(b.published) - new Date(a.published));
+	console.log(articles)
 
 	for(let i = 0; i <=5 ; i++){
 		let container = document.createElement('div');
