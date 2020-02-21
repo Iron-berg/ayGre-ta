@@ -14,11 +14,11 @@ const populateCarousel = async () => {
 	const articles = [...articlesApi, ...articlesGuardian].sort((a, b)=> new Date(b.published) - new Date(a.published));
 	console.log(articles)
 
-	for(let i = 0; i <=5 ; i++){
+	for(let i = 0; i < 5 ; i++){
 		let container = document.createElement('div');
 
 		container.setAttribute('class', `carousel-item ${i === 0 ? 'active': ''}`);
-		container.innerHTML = `<div class="card bg-dark text-white">
+		container.innerHTML = `<div class="card text-white">
 															<img class="d-block w-100" src="${articles[i].pictureUrl}">
 															<div class="carousel-caption">
 																<h4>${articles[i].headline}</h4>
