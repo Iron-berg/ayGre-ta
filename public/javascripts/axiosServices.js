@@ -9,7 +9,7 @@ async function getNewsArticles() {
 	}
 }
 
-async function getguardianArticles() {
+async function getGuardianArticles() {
 	try {
 		const guardianApi = await axios.get('/services/guardian');
 		return guardianApi.data.news;
