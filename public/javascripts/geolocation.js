@@ -1,20 +1,11 @@
-function getGeolocation() {
-  // Try to get a geolocation object from the web browser
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      function(position) {
-        // Create an object to match Google's Lat-Lng object format
-        const center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        console.log("center: ", center);
-      },
-      function() {
-        console.log("Error in the geolocation service.");
-      }
-    );
-  } else {
-    console.log("Browser does not support geolocation.");
-  }
-}
+// This method gets the current position of the client
+const geolocation = new Promise((resolve, reject) => {
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      resolve(position.coords);
+    },
+    error => {
+      reject(error);
+    }
+  );
+}).catch(error => error);
