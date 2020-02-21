@@ -12,4 +12,9 @@ router.get("/", (req, res, next) => {
   res.render("index");
 });
 
+// GET news page
+router.get('/news', (req, res, next)=>{
+  res.render('news')
+})
+
 module.exports = router;
