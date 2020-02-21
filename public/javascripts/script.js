@@ -34,20 +34,7 @@ const populateCarousel = async () => {
 
 // News page
 const formatDate = date => {
-	const Months = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December'
-	];
+	const Months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
 	const dateStr = new Date(date);
 	const month = Months[dateStr.getUTCMonth()];
 	const day = dateStr.getUTCDate();
@@ -81,6 +68,36 @@ const populateCards = async () => {
 	}
 };
 
+// News page - lazy load implementation
+const loadCards = async () => {
+	const articles = await fetchNews();
+	for (let i = lastLoaded + 1; i <= lastLoaded + 3; i++) {
+		if(articles.length === loadedNews.length){
+			console.log('everything is loaded')
+			break;
+		}
+		if (!loadedNews.includes(articles[i])) {
+			let container = document.createElement('div');
+			container.setAttribute('class', 'col-12 col-md-6 col-lg-4 pt-5');
+			container.innerHTML = `<div class="card">
+														<img src="${articles[i].pictureUrl}" class="card-img-top">
+														<div class="card-body">
+															<h5 class="card-title">${articles[i].headline}</h5>
+															<p class="card-text">${articles[i].body}</p>
+															<a href="${articles[i].externalUrl}" target="blank">Read more</a>
+														</div>
+														<div class="card-footer">
+															<small>${formatDate(articles[i].published)}</small>
+														</div>
+													</div>`;
+			document.getElementById('news').appendChild(container);
+
+			loadedNews.push(articles[i]);
+		}
+	}
+};
+
+// Set up event listeners
 document.addEventListener(
 	'DOMContentLoaded',
 	() => {
@@ -95,3 +112,9 @@ document.addEventListener(
 	},
 	false
 );
+
+window.addEventListener('scroll', () => {
+	if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
+		loadCards();
+	}
+});
