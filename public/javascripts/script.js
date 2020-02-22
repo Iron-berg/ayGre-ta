@@ -39,7 +39,7 @@ const updateUvIndex = async () => {
   console.log("The UV Index is: " + uvIndex);
 
   let container = document.createElement("div");
-  container.innerHTML = `<h1>${uvIndex}</h1>`;
+  container.innerHTML = `<p><img src="images/sun.png" width="50%" height="50%" align="middle" class="img-fluid" alt="Air pollution"> 1.5</p>`;
   document.getElementById("data4").appendChild(container);
 };
 
@@ -48,7 +48,7 @@ const updateContaminationIndex = async () => {
   console.log("The air pollution Index is: " + contamIndex);
 
   let container = document.createElement("div");
-  container.innerHTML = `<p><img src="images/air.png" width="50%" height="20%" align="middle" class="img-fluid" alt="Air pollution"> ${contamIndex}</p>`;
+  container.innerHTML = `<p><img src="images/air.png" width="50%" height="50%" align="middle" class="img-fluid" alt="Air pollution"> ${contamIndex}</p>`;
   document.getElementById("data2").appendChild(container);
 };
 
@@ -57,7 +57,7 @@ const updateTemperature = async () => {
   console.log("The temperature in Celsius is: " + temperature);
 
   let container = document.createElement("div");
-  container.innerHTML = `<h1>${temperature}</h1>`;
+  container.innerHTML = `<p>${temperature} <img src="images/celsius.png" width="30%" height="30%" align="middle" class="img-fluid" alt="Air pollution"></p>`;
   document.getElementById("data3").appendChild(container);
 };
 
