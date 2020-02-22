@@ -9,12 +9,12 @@ router.use('/', services);
 
 // GET home page
 router.get('/', (req, res, next) => {
-	res.render('index');
+	res.render('index', { showTitle: true });
 });
 
 // GET news page
 router.get('/news', (req, res, next) => {
-	res.render('news');
+	res.render('news', { showTitle: true });
 });
 
 // GET about page

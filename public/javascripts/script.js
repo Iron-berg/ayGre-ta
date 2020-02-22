@@ -41,10 +41,13 @@ const populateCarousel = async () => {
 
 		container.setAttribute('class', `carousel-item ${i === 0 ? 'active' : ''}`);
 		container.innerHTML = `<div class="card text-white">
-															<img class="d-block w-100" src="${articles[i].pictureUrl}">
-															<div class="carousel-caption">
-																<h4>${articles[i].headline}</h4>
-															</div>
+                              <div class="img-gradient">
+															  <img class="d-block w-100" src="${articles[i].pictureUrl}">
+                              </div>
+                              <div class="carousel-caption">
+                                <h4>${articles[i].headline}</h4>
+                                ${i === 4 ? '<a href="/news">Discover more in our news section</a>' : ''}
+													    </div>
 													</div>`;
 		document.getElementById('carousel').appendChild(container);
 	}
