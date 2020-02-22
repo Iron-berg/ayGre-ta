@@ -21,3 +21,40 @@
     border-radius: 50%;
   }
 }
+
+.data-content {
+	font-family: "Nanum Gothic", "Helvetica Neue", Arial, sans-serif;
+	color: #f1f3f4;
+	background-color: #2a7886;
+	color: #f1f3f4;
+	// background-color: rgba(39, 35, 67, 0.7);
+	// border: 1px solid rgb(39, 35, 67);
+	border-radius: 15px 50px;
+	padding: 10px;
+	margin-bottom: 50px;
+
+	div {
+		margin-top: 50px;
+	}
+
+	p {
+		font-size: 3.5em;
+	}
+
+	p.legend {
+		font-size: 1.8em;
+		margin-bottom: 0.8em;
+	}
+
+	p#earth-title {
+		font-family: "Lobster", cursive;
+		font-size: 1.8em;
+		margin-bottom: 0;
+		padding-bottom: 0;
+	}
+
+	#earth {
+		border: 1px solid rgb(39, 35, 67);
+		border-radius: 50%;
+	}
+}

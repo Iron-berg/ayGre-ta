@@ -20,6 +20,18 @@ class AirVisualService {
       })
       .catch(error => console.log(`ERROR: ${error}`));
   }
+
+  getTemperature() {
+    let result = '';
+
+    return this.service
+      .get()
+      .then(response => {
+        result = response.data;
+        return result.data.current.weather.tp; // returns the current temperature in Celsius
+      })
+      .catch(error => console.log(`ERROR: ${error}`));
+  }
 }
 
 module.exports = new AirVisualService();
