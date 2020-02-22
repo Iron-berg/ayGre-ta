@@ -35,17 +35,21 @@ const populateCarousel = async () => {
 
 const updateUvIndex = async () => {
   const currentPost = await geolocation;
-  const uvIndex = await getUvIndex(currentPost.latitude, currentPost.longitude);
+  let uvIndex = await getUvIndex(currentPost.latitude, currentPost.longitude);
   console.log("The UV Index is: " + uvIndex);
+  //uvIndex = 1.6; // FAKE DATA
+  if (uvIndex === undefined) uvIndex = "-";
 
   let container = document.createElement("div");
-  container.innerHTML = `<p><img src="images/sun.png" width="50%" height="50%" align="middle" class="img-fluid" alt="Air pollution"> 1.5</p>`;
+  container.innerHTML = `<p><img src="images/sun.png" width="50%" height="50%" align="middle" class="img-fluid" alt="Air pollution"> ${uvIndex}</p>`;
   document.getElementById("data4").appendChild(container);
 };
 
 const updateContaminationIndex = async () => {
-  const contamIndex = await getContaminationIndex();
+  let contamIndex = await getContaminationIndex();
   console.log("The air pollution Index is: " + contamIndex);
+  //contamIndex = 55; // FAKE DATA
+  if (contamIndex === undefined) contamIndex = "-";
 
   let container = document.createElement("div");
   container.innerHTML = `<p><img src="images/air.png" width="50%" height="50%" align="middle" class="img-fluid" alt="Air pollution"> ${contamIndex}</p>`;
@@ -53,8 +57,10 @@ const updateContaminationIndex = async () => {
 };
 
 const updateTemperature = async () => {
-  const temperature = await getTemperature();
+  let temperature = await getTemperature();
   console.log("The temperature in Celsius is: " + temperature);
+  //temperature = 20; // FAKE DATA
+  if (temperature === undefined) temperature = "-";
 
   let container = document.createElement("div");
   container.innerHTML = `<p>${temperature} <img src="images/celsius.png" width="30%" height="30%" align="middle" class="img-fluid" alt="Air pollution"></p>`;
