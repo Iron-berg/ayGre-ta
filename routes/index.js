@@ -1,25 +1,30 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
 // use routes
-const auth = require("./auth");
-router.use("/", auth);
-const services = require("./services");
-router.use("/", services);
+const auth = require('./auth');
+router.use('/', auth);
+const services = require('./services');
+router.use('/', services);
 
-// GET home page 
-router.get("/", (req, res, next) => {
-  res.render("index");
+// GET home page
+router.get('/', (req, res, next) => {
+	res.render('index');
 });
 
 // GET news page
-router.get('/news', (req, res, next)=>{
-  res.render('news')
-})
+router.get('/news', (req, res, next) => {
+	res.render('news');
+});
 
-// GET about page 
-router.get("/about", (req, res, next) => {
-  res.render("about");
+// GET about page
+router.get('/about', (req, res, next) => {
+	res.render('about');
+});
+
+// GET user page
+router.get('/user', (req, res, next) => {
+	res.render('user');
 });
 
 module.exports = router;
