@@ -34,7 +34,20 @@ const populateCarousel = async () => {
 
 // News page
 const formatDate = date => {
-	const Months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+	const Months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	];
 	const dateStr = new Date(date);
 	const month = Months[dateStr.getUTCMonth()];
 	const day = dateStr.getUTCDate();
@@ -72,8 +85,8 @@ const populateCards = async () => {
 const loadCards = async () => {
 	const articles = await fetchNews();
 	for (let i = lastLoaded + 1; i <= lastLoaded + 3; i++) {
-		if(articles.length === loadedNews.length){
-			console.log('everything is loaded')
+		if (articles.length === loadedNews.length) {
+			console.log('everything is loaded');
 			break;
 		}
 		if (!loadedNews.includes(articles[i])) {
@@ -95,6 +108,7 @@ const loadCards = async () => {
 			loadedNews.push(articles[i]);
 		}
 	}
+	lastLoaded = articles.indexOf(loadedNews[loadedNews.length - 1]);
 };
 
 // Set up event listeners
