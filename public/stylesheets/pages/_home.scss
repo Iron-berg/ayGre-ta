@@ -6,18 +6,35 @@
 }
 
 #news-carousel {
-  .card {
-    border: solid .05em #272343;
-    overflow: hidden;
-  }
+	.card {
+		border: solid .05em #272343;
+		overflow: hidden;
+	}
 
-  img {
-    object-fit: cover;
-    height: 500px;
-  }
-  .carousel-indicators li{
-    height: 1em;
-    width: 1em;
-    border-radius: 50%;
-  }
+	img {
+		object-fit: cover;
+		height: 500px;
+	}
+
+	.carousel-indicators li {
+		height: 1em;
+		width: 1em;
+		border-radius: 50%;
+	}
+
+	.spinner-container {
+		height: 500px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.spinner-border {
+			color: #79bac1;
+			width: 3rem;
+			height: 3rem;
+			animation: spinner-border 1s linear infinite;
+			border: .5em solid #79bac1;
+			border-right-color: transparent;
+		}
+	}
 }

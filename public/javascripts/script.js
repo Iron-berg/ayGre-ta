@@ -35,6 +35,7 @@ const fetchNews = async () => {
 
 const populateCarousel = async () => {
 	const articles = await fetchNews();
+	document.getElementById('carousel').removeChild(document.getElementById('spinner'));
 	for (let i = 0; i < 5; i++) {
 		let container = document.createElement('div');
 
