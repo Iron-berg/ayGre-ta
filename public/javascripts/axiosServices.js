@@ -31,8 +31,17 @@ async function getUvIndex(lat, lng) {
 
 async function getContaminationIndex() {
   try {
-    const airVisualApi = await axios.get("/services/air");
-    return airVisualApi.data.contam;
+    const airVisualApiCont = await axios.get("/services/air");
+    return airVisualApiCont.data.contam;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getTemperature() {
+  try {
+    const airVisualApiTemp = await axios.get("/services/temperature");
+    return airVisualApiTemp.data.temp;
   } catch (error) {
     console.log(error);
   }
