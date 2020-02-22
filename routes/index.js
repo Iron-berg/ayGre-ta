@@ -7,12 +7,17 @@ router.use("/", auth);
 const services = require("./services");
 router.use("/", services);
 
-/* GET home page */
+// GET home page 
 router.get("/", (req, res, next) => {
   res.render("index");
 });
 
-/* GET about page */
+// GET news page
+router.get('/news', (req, res, next)=>{
+  res.render('news')
+})
+
+// GET about page 
 router.get("/about", (req, res, next) => {
   res.render("about");
 });

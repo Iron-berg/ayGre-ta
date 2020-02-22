@@ -9,14 +9,13 @@ async function getNewsArticles() {
   }
 }
 
-async function getguardianArticles() {
-  try {
-    const guardianApi = await axios.get("/services/guardian");
-    return guardianApi.data.news;
-  } catch (error) {
-    console.log(error);
-  }
-}
+async function getGuardianArticles() {
+	try {
+		const guardianApi = await axios.get('/services/guardian');
+		return guardianApi.data.news;
+	} catch (error) {
+		console.log(error);
+	}
 
 async function getUvIndex(lat, lng) {
   try {
