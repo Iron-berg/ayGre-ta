@@ -3,7 +3,7 @@ const axios = require("axios");
 class EpicService {
   constructor() {
     this.service = axios.create({
-      baseURL: "https://epic.gsfc.nasa.gov/api/natural/date"
+      baseURL: 'https://epic.gsfc.nasa.gov/api/natural/date'
     });
   }
 
@@ -20,7 +20,7 @@ class EpicService {
 
   // Format url according to NASA API
   createPhotoUrl(photoName, photoDate) {
-    const format = "jpg";
+    const format = 'jpg';
     const year = photoDate.substring(0, 4);
     const month = photoDate.substring(5, 7);
     const day = photoDate.substring(8, 10);
