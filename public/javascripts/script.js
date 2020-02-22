@@ -1,7 +1,7 @@
 // Functions related to DOM manipulation
 const updateLink = () => {
-	const navLinks = [ ...document.querySelectorAll('#navbar .nav-link') ];
-	const currentLink = document.querySelector('a[href="' + location.pathname + '"]');
+	const navLinks = [ ...document.querySelectorAll('#navbarNav .nav-link') ];
+	const currentLink = document.querySelector('#navbarNav a[href="' + location.pathname + '"]');
 	navLinks.forEach(link => link.classList.remove('active'));
 	currentLink.classList.add('active');
 };
