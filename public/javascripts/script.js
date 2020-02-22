@@ -46,6 +46,12 @@ const updateContaminationIndex = async () => {
   // HERE GOES DOM MANIPULATION
 };
 
+const updateTemperature = async () => {
+  const temperature = await getTemperature();
+  console.log("The temperature in Celsius is: " + temperature);
+  // HERE GOES DOM MANIPULATION
+};
+
 const updateEpicPhoto = async () => {
   const urlEpic = await getEpicPhoto();
   console.log("The URL of the Earth pic is: " + urlEpic);
@@ -61,6 +67,7 @@ document.addEventListener(
     updateUvIndex();
     updateContaminationIndex();
     updateEpicPhoto();
+    updateTemperature();
   },
   false
 );
