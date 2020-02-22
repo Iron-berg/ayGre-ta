@@ -37,25 +37,37 @@ const updateUvIndex = async () => {
   const currentPost = await geolocation;
   const uvIndex = await getUvIndex(currentPost.latitude, currentPost.longitude);
   console.log("The UV Index is: " + uvIndex);
-  // HERE GOES DOM MANIPULATION
+
+  let container = document.createElement("div");
+  container.innerHTML = `<h1>${uvIndex}</h1>`;
+  document.getElementById("data4").appendChild(container);
 };
 
 const updateContaminationIndex = async () => {
   const contamIndex = await getContaminationIndex();
   console.log("The air pollution Index is: " + contamIndex);
-  // HERE GOES DOM MANIPULATION
+
+  let container = document.createElement("div");
+  container.innerHTML = `<h1>${contamIndex}</h1>`;
+  document.getElementById("data2").appendChild(container);
 };
 
 const updateTemperature = async () => {
   const temperature = await getTemperature();
   console.log("The temperature in Celsius is: " + temperature);
-  // HERE GOES DOM MANIPULATION
+
+  let container = document.createElement("div");
+  container.innerHTML = `<h1>${temperature}</h1>`;
+  document.getElementById("data3").appendChild(container);
 };
 
 const updateEpicPhoto = async () => {
   const urlEpic = await getEpicPhoto();
   console.log("The URL of the Earth pic is: " + urlEpic);
-  // HERE GOES DOM MANIPULATION
+
+  let container = document.createElement("div");
+  container.innerHTML = `<img src="${urlEpic}" class="img-fluid" alt="The Earth">`;
+  document.getElementById("data1").appendChild(container);
 };
 
 document.addEventListener(
