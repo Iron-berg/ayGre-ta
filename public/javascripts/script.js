@@ -48,7 +48,7 @@ const updateContaminationIndex = async () => {
   console.log("The air pollution Index is: " + contamIndex);
 
   let container = document.createElement("div");
-  container.innerHTML = `<h1>${contamIndex}</h1>`;
+  container.innerHTML = `<p><img src="images/air.png" width="50%" height="20%" align="middle" class="img-fluid" alt="Air pollution"> ${contamIndex}</p>`;
   document.getElementById("data2").appendChild(container);
 };
 
@@ -66,7 +66,7 @@ const updateEpicPhoto = async () => {
   console.log("The URL of the Earth pic is: " + urlEpic);
 
   let container = document.createElement("div");
-  container.innerHTML = `<img src="${urlEpic}" class="img-fluid" alt="The Earth">`;
+  container.innerHTML = `<img src="${urlEpic}" id="earth" class="img-fluid" alt="The Earth">`;
   document.getElementById("data1").appendChild(container);
 };
 
