@@ -121,8 +121,21 @@ const handleFavorites = e => {
 	const body = e.target.offsetParent.children[1].children[1].innerText;
 	const externalUrl = e.target.offsetParent.children[1].children[2].firstElementChild.href;
 	const published = e.target.offsetParent.children[2].innerText.slice(13);
+	console.log(e.target.classList);
 
-	e.target.classList.toggle('favorite');
+	axios
+		.post('/favorite', {
+			pictureUrl,
+			headline,
+			body,
+			externalUrl,
+			published,
+			favorite: !e.target.classList.contains('favorite')
+		})
+		.then(res => {
+			e.target.classList.toggle('favorite');
+		})
+		.catch(err => console.log('something went wrong', err));
 };
 
 let loadedNews = [];

@@ -7,14 +7,12 @@ router.use('/', auth);
 const services = require('./services');
 router.use('/', services);
 
+const news = require('./news');
+router.use('/', news);
+
 // GET home page
 router.get('/', (req, res, next) => {
 	res.render('index', { showTitle: true });
-});
-
-// GET news page
-router.get('/news', (req, res, next) => {
-	res.render('news', { showTitle: true });
 });
 
 // GET about page
