@@ -20,11 +20,13 @@
         <a class="nav-link" href="/about">About</a>
       </li>
       {{#if user}}
-      <li class="nav-item">
-        <a class="nav-link" href="/user">{{user.username}}</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/logout">Logout</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.username}}</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/user">Personal Page</a>
+          <a class="dropdown-item" href="/user-favs">Favorite News</a>
+          <a class="dropdown-item" href="/logout">Logout</a>
+        </div>
       </li>
       {{else}}
       <li class="nav-item">
