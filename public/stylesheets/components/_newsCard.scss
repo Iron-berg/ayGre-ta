@@ -15,4 +15,19 @@
 			color: #2a7886;
 		}
 	}
+
+	#fav-news {
+		padding: 1em;
+
+		.fa-leaf {
+			cursor: pointer;
+			vertical-align: middle;
+			padding-top: .3em;
+
+			&:hover {
+				color: #67c979;
+				font-size: 1.1rem;
+			}
+		}
+	}
 }

@@ -3,7 +3,8 @@ console.log('connected');
 async function getNewsArticles() {
 	try {
 		const newsApi = await axios.get('/services/news');
-		return newsApi.data.news;
+		const { news, isLoggedNews } = newsApi.data;
+		return { news, isLoggedNews };
 	} catch (error) {
 		console.log(error);
 	}
@@ -12,7 +13,8 @@ async function getNewsArticles() {
 async function getGuardianArticles() {
 	try {
 		const guardianApi = await axios.get('/services/guardian');
-		return guardianApi.data.news;
+		const { guardianNews, isLoggedGuardian } = guardianApi.data;
+		return { guardianNews, isLoggedGuardian };
 	} catch (error) {
 		console.log(error);
 	}
@@ -30,21 +32,21 @@ async function getUvIndex(lat, lng) {
 }
 
 async function getContaminationIndex() {
-  try {
-    const airVisualApiCont = await axios.get("/services/air");
-    return airVisualApiCont.data.contam;
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const airVisualApiCont = await axios.get('/services/air');
+		return airVisualApiCont.data.contam;
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 async function getTemperature() {
-  try {
-    const airVisualApiTemp = await axios.get("/services/temperature");
-    return airVisualApiTemp.data.temp;
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const airVisualApiTemp = await axios.get('/services/temperature');
+		return airVisualApiTemp.data.temp;
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 async function getEpicPhoto() {
