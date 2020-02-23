@@ -114,6 +114,17 @@ const formatDate = date => {
 	return `Published on ${month} ${day}, ${year}`;
 };
 
+const handleFavorites = e => {
+	console.log('clicked to favorite');
+	const pictureUrl = e.target.offsetParent.children[0].src;
+	const headline = e.target.offsetParent.children[1].children[0].innerText;
+	const body = e.target.offsetParent.children[1].children[1].innerText;
+	const externalUrl = e.target.offsetParent.children[1].children[2].firstElementChild.href;
+	const published = e.target.offsetParent.children[2].innerText.slice(13);
+
+	e.target.classList.toggle('favorite');
+};
+
 let loadedNews = [];
 let lastLoaded;
 const populateCards = async () => {
@@ -129,7 +140,7 @@ const populateCards = async () => {
                               <p class="card-text">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
-                                ${isLoggedNews || isLoggedGuardian ? '<i class="fas fa-leaf"></i>' : ''}
+                                ${isLoggedNews || isLoggedGuardian ? '<i class="fas fa-leaf fav-btn"></i>' : ''}
                               </div>
 														</div>
 														<div class="card-footer">
@@ -142,6 +153,7 @@ const populateCards = async () => {
 		loadedNews.push(articles[i]);
 		lastLoaded = articles.indexOf(articles[i]);
 	}
+	document.querySelectorAll('.fav-btn').forEach(button => button.addEventListener('click', handleFavorites));
 };
 
 // News page - lazy load implementation
@@ -162,7 +174,7 @@ const loadCards = async () => {
 															<p class="card-text">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
-                                ${isLoggedNews || isLoggedGuardian ? '<i class="fas fa-leaf"></i>' : ''}
+                                ${isLoggedNews || isLoggedGuardian ? '<i class="fas fa-leaf fav-btn"></i>' : ''}
                               </div>
                             </div>
 														<div class="card-footer">
@@ -174,6 +186,7 @@ const loadCards = async () => {
 			loadedNews.push(articles[i]);
 		}
 	}
+	document.querySelectorAll('.fav-btn').forEach(button => button.addEventListener('click', handleFavorites));
 	lastLoaded = articles.indexOf(loadedNews[loadedNews.length - 1]);
 };
 
