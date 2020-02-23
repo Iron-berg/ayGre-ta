@@ -1,0 +1,26 @@
+<div class="col-12 main-section text-center">
+          <div class="row">
+              <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
+          </div>
+          <div class="row user-detail">
+              <div class="col-lg-12 col-sm-12 col-12">
+                  <img src="{{#if user.pictureUrl}}{{user.pictureUrl}}{{else}}images/user-default.png{{/if}}" alt="{{user.username}}" class="rounded-circle img-thumbnail">
+                  <h5>{{user.username}}</h5>
+                  <p id="fav-news"><i class="far fa-newspaper" aria-hidden="true"></i> Favorite News</p>
+
+                  <hr>
+                  <p id="points-label">Greta points</p>
+                  <h3>{{user.gretaPoints}} <i class="fas fa-medal"></i></h3>
+
+                  <hr>
+                  <p id="points-label">Followers</p>
+                  <h3>{{user.followers}} <i class="fas fa-users"></i></h3>
+              </div>
+          </div>
+          <div class="row user-social-detail">
+              <div class="col-lg-12 col-sm-12 col-12">
+                <label for="name">Follow</label>
+                <input id="name" name="name" class="form-control" type="text" placeholder="Name" aria-label="Search">
+              </div>
+          </div>
+      </div>
