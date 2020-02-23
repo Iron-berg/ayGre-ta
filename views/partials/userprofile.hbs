@@ -4,23 +4,23 @@
           </div>
           <div class="row user-detail">
               <div class="col-lg-12 col-sm-12 col-12">
-                  <img src="{{user.pictureUrl}}" class="rounded-circle img-thumbnail">
+                  <img src="{{#if user.pictureUrl}}{{user.pictureUrl}}{{else}}images/user-default.png{{/if}}" alt="{{user.username}}" class="rounded-circle img-thumbnail">
                   <h5>{{user.username}}</h5>
-                  <p><i class="fa fa-map-marker" aria-hidden="true"></i> New Jersey, USA.</p>
+                  <p id="fav-news"><i class="far fa-newspaper" aria-hidden="true"></i> Favorite News</p>
 
                   <hr>
-                  <a href="#" class="btn btn-success btn-sm">Follow</a>
-                  <a href="#" class="btn btn-info btn-sm">Send Messege</a>
+                  <p id="points-label">Greta points</p>
+                  <h3>{{user.gretaPoints}} <i class="fas fa-medal"></i></h3>
 
                   <hr>
-                  <span>Lorem ips consectetur adipisium ,eiusmod tempor incididuin reprehendeanim.</span>
+                  <p id="points-label">Followers</p>
+                  <h3>{{user.followers}} <i class="fas fa-users"></i></h3>
               </div>
           </div>
           <div class="row user-social-detail">
               <div class="col-lg-12 col-sm-12 col-12">
-                  <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                  <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                  <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <label for="name">Follow</label>
+                <input id="name" name="name" class="form-control" type="text" placeholder="Name" aria-label="Search">
               </div>
           </div>
       </div>

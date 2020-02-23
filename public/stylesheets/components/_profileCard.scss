@@ -1,6 +1,9 @@
 .main-section {
-  border: 1px solid #138496;
+  border: 3px solid #138496;
+  border-radius: 10px;
   background-color: #fff;
+  font-family: "Nanum Gothic", "Helvetica Neue", Arial, sans-serif;
+  margin-bottom: 50px;
 }
 .profile-header {
   background-color: #2a7886;
@@ -15,13 +18,22 @@
 }
 .user-detail h5 {
   margin: 15px 0px 5px 0px;
+  font-family: "Lobster", cursive;
 }
 .user-social-detail {
   padding: 15px 0px;
   background-color: #2a7886;
+  color: #fff;
 }
 .user-social-detail a i {
   color: #fff;
   font-size: 23px;
   padding: 0px 5px;
+}
+
+#points-label,
+#fav-news,
+.far,
+.fas {
+  color: #aeb6bf;
 }
