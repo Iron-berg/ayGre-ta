@@ -3,6 +3,7 @@ const router = express.Router();
 const openUvService = require("../services/openUvService");
 const airVisualService = require("../services/airVisualService");
 const epicService = require("../services/epicService");
+const mongoService = require("../services/mongoService");
 const { newsAPI, guardianAPI } = require("../services/newsService");
 
 /* GET Open UV API (UV INDEX) */
@@ -75,6 +76,15 @@ router.get("/services/guardian", async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+/* GET Users from DDBB by name */
+router.get("/ddbb/findUsersByName/:name", async (req, res, next) => {
+  // const result = await epicService.getLastPhoto();
+  console.log("EL NOMBRE QUE LLEGA " + req.params.name);
+  const usr = await mongoService.getUsersByName(req.params.name);
+  //console.log("LOS USUARIOS QUE VIENEN " + usr);
+  res.json(JSON.stringify(usr));
 });
 
 module.exports = router;
