@@ -1,0 +1,24 @@
+.fa-arrow-circle-up {
+	position: fixed;
+	right: 2em;
+	bottom: 1em;
+	font-size: 2em;
+	color: #272343;
+	visibility: hidden;
+	cursor: pointer;
+
+	&:hover {
+		color: #2a7886;
+	}
+
+	@media (max-width: 1024px) {
+		right: .25em;
+	}
+	@media (max-width: 768px) {
+		font-size: 1.8em;
+		right: .2em;
+	}
+	@media (max-width: 425px) {
+		visibility: hidden;
+	}
+}

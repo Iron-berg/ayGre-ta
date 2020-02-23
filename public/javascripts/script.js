@@ -132,6 +132,12 @@ const loadCards = async () => {
 	lastLoaded = articles.indexOf(loadedNews[loadedNews.length - 1]);
 };
 
+const handleArrow = () => {
+	window.scrollTo(0, 0);
+
+	document.getElementById('back-to-top').style.visibility = 'hidden';
+};
+
 // Set up event listeners
 document.addEventListener(
 	'DOMContentLoaded',
@@ -155,4 +161,11 @@ window.addEventListener('scroll', () => {
 	if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
 		loadCards();
 	}
+	if (window.scrollY > document.documentElement.clientHeight) {
+		document.getElementById('back-to-top').style.visibility = 'visible';
+	} else {
+		document.getElementById('back-to-top').style.visibility = 'hidden';
+	}
 });
+
+document.getElementById('back-to-top').addEventListener('click', handleArrow);
