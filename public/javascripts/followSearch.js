@@ -4,6 +4,7 @@ var countries = [
 ];
 
 var input = document.getElementById("followUser");
+var logedUser = input.getAttribute("data-userid");
 
 autocomplete({
   input: input,
@@ -11,9 +12,9 @@ autocomplete({
     text = text.toLowerCase();
     // you can also use AJAX requests instead of preloaded data
     let data = await getUsersByName(text);
-    //console.log("DATA " + JSON.stringify(data.data));
+    console.log("DATA " + JSON.stringify(data.data));
     names = JSON.parse(data.data);
-    //console.log("NOMBRES --- " + names[0].username);
+    console.log("NOMBRES --- " + names[0].username);
     var suggestions = names.filter(n =>
       n.username.toLowerCase().startsWith(text)
     );
@@ -21,14 +22,16 @@ autocomplete({
     let newSuggestions = suggestions.map(item => {
       let user = {};
       user.label = item.username;
-      user.value = item.username;
+      user.value = item._id;
       return user;
     });
 
     update(newSuggestions);
   },
-  onSelect: function(item) {
+  onSelect: async function(item) {
     input.value = item.label;
-    console.log("Item selected " + input.value);
+
+    let data = await addFollowing(item.value, logedUser);
+    $("#followUser").val("");
   }
 });

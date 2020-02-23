@@ -80,11 +80,17 @@ router.get("/services/guardian", async (req, res, next) => {
 
 /* GET Users from DDBB by name */
 router.get("/ddbb/findUsersByName/:name", async (req, res, next) => {
-  // const result = await epicService.getLastPhoto();
-  console.log("EL NOMBRE QUE LLEGA " + req.params.name);
   const usr = await mongoService.getUsersByName(req.params.name);
-  //console.log("LOS USUARIOS QUE VIENEN " + usr);
   res.json(JSON.stringify(usr));
+});
+
+/* POST add following to user in DDBB by ids */
+router.get("/ddbb/addFollowing", async (req, res, next) => {
+  const response = await mongoService.addFollowed(
+    req.query.following,
+    req.query.currentUser
+  );
+  res.json(response);
 });
 
 module.exports = router;

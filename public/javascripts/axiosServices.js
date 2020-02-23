@@ -59,8 +59,18 @@ async function getEpicPhoto() {
 async function getUsersByName(name) {
   try {
     const users = await axios.get("/ddbb/findUsersByName/" + name);
-    console.log("Usuarios q vienen " + users);
     return users;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function addFollowing(following, currentUser) {
+  try {
+    const response = await axios.get("/ddbb/addFollowing", {
+      params: { following, currentUser }
+    });
+    return response;
   } catch (error) {
     console.log(error);
   }
