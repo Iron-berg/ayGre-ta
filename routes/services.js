@@ -3,6 +3,7 @@ const router = express.Router();
 const openUvService = require("../services/openUvService");
 const airVisualService = require("../services/airVisualService");
 const epicService = require("../services/epicService");
+const mongoService = require("../services/mongoService");
 const { newsAPI, guardianAPI } = require("../services/newsService");
 
 /* GET Open UV API (UV INDEX) */
@@ -75,6 +76,21 @@ router.get("/services/guardian", async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+/* GET Users from DDBB by name */
+router.get("/ddbb/findUsersByName/:name", async (req, res, next) => {
+  const usr = await mongoService.getUsersByName(req.params.name);
+  res.json(JSON.stringify(usr));
+});
+
+/* POST add following to user in DDBB by ids */
+router.get("/ddbb/addFollowing", async (req, res, next) => {
+  const response = await mongoService.addFollowed(
+    req.query.following,
+    req.query.currentUser
+  );
+  res.json(response);
 });
 
 module.exports = router;
