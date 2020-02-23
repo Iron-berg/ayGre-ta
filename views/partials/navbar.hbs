@@ -1,25 +1,39 @@
-<ul id="navbar" class="nav justify-content-end pt-3 pr-3">
-  <li class="nav-item">
-    <a class="nav-link" href="/">Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/news">News</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/about">About</a>
-  </li>
-  {{#if user}}
-  <li class="nav-item">
-    <a class="nav-link" href="/user">{{user.username}}</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/logout">Logout</a>
-  </li>
-  {{else}}
-  <li class="nav-item">
-    <p class="nav-link btn" data-toggle="modal" data-target="#join-modal">Join Us</p>
-  </li>
-  {{/if}}
-</ul>
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light">
+  <div class="logo">
+    <a href="/"><img src="images/logoGreta.png" alt="logo"></a>
+  </div>
+  <div class="title-container">
+      <p id="title" class="navbar-brand {{#unless showTitle}}title-hidden {{/unless}}">ayGre-ta</p>
+  </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/news">News</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/about">About</a>
+      </li>
+      {{#if user}}
+      <li class="nav-item">
+        <a class="nav-link" href="/user">{{user.username}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+      {{else}}
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="modal" data-target="#join-modal">Join Us</a>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+</nav>
+
 
 {{> modal}}

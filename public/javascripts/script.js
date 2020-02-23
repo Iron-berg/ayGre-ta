@@ -4,33 +4,9 @@ const updateLink = () => {
   const currentLink = document.querySelector(
     'a[href="' + location.pathname + '"]'
   );
+  
   navLinks.forEach(link => link.classList.remove("active"));
   currentLink.classList.add("active");
-};
-
-// Home page - News section
-const fetchNews = async () => {
-  const articlesApi = await getNewsArticles();
-  const articlesGuardian = await getGuardianArticles();
-  return [...articlesApi, ...articlesGuardian].sort(
-    (a, b) => new Date(b.published) - new Date(a.published)
-  );
-};
-
-const populateCarousel = async () => {
-  const articles = await fetchNews();
-  for (let i = 0; i < 5; i++) {
-    let container = document.createElement("div");
-
-    container.setAttribute("class", `carousel-item ${i === 0 ? "active" : ""}`);
-    container.innerHTML = `<div class="card text-white">
-															<img class="d-block w-100" src="${articles[i].pictureUrl}">
-															<div class="carousel-caption">
-																<h4>${articles[i].headline}</h4>
-															</div>
-													</div>`;
-    document.getElementById("carousel").appendChild(container);
-  }
 };
 
 // Home page - Data section
@@ -78,6 +54,36 @@ const updateEpicPhoto = async () => {
   document.getElementById("data1").appendChild(container);
 };
 
+// Home page - News section
+const fetchNews = async () => {
+  const articlesApi = await getNewsArticles();
+  const articlesGuardian = await getGuardianArticles();
+  return [...articlesApi, ...articlesGuardian].sort(
+    (a, b) => new Date(b.published) - new Date(a.published)
+  );
+};
+
+const populateCarousel = async () => {
+	const articles = await fetchNews();
+	document.getElementById('carousel').removeChild(document.getElementById('spinner'));
+	for (let i = 0; i < 5; i++) {
+		let container = document.createElement('div');
+
+		container.setAttribute('class', `carousel-item ${i === 0 ? 'active' : ''}`);
+		container.innerHTML = `<div class="card text-white">
+                              <div class="img-gradient">
+															  <img class="d-block w-100" src="${articles[i].pictureUrl}">
+                              </div>
+                              <div class="carousel-caption">
+                                <h4>${articles[i].headline}</h4>
+                                ${i === 4 ? '<a href="/news">Discover more in our news section</a>' : ''}
+													    </div>
+													</div>`;
+    
+    document.getElementById("carousel").appendChild(container);
+  }
+};
+
 // News page
 const formatDate = date => {
   const Months = [
@@ -120,6 +126,7 @@ const populateCards = async () => {
 															<small>${formatDate(articles[i].published)}</small>
 														</div>
 													</div>`;
+    
     document.getElementById("news").appendChild(container);
 
     loadedNews.push(articles[i]);
@@ -157,6 +164,13 @@ const loadCards = async () => {
   lastLoaded = articles.indexOf(loadedNews[loadedNews.length - 1]);
 };
 
+// Implement back to top button
+const handleArrow = () => {
+	window.scrollTo(0, 0);
+
+	document.getElementById('back-to-top').style.visibility = 'hidden';
+};
+
 // Set up event listeners
 document.addEventListener(
   "DOMContentLoaded",
@@ -177,8 +191,15 @@ document.addEventListener(
   false
 );
 
-window.addEventListener("scroll", () => {
-  if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
-    loadCards();
-  }
+window.addEventListener('scroll', () => {
+	if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
+		loadCards();
+	}
+	if (window.scrollY > document.documentElement.clientHeight) {
+		document.getElementById('back-to-top').style.visibility = 'visible';
+	} else {
+		document.getElementById('back-to-top').style.visibility = 'hidden';
+	}
 });
+
+document.getElementById('back-to-top').addEventListener('click', handleArrow);

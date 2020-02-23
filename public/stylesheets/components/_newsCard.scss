@@ -1,11 +1,18 @@
 .card {
-  height: 100%;
-  border: solid .04em #272343;
-  overflow: hidden;
+	height: 100%;
+	border: solid .04em #272343;
+	overflow: hidden;
 
-  .card-footer {
-    background-color: rgba(39, 35, 67, .7);
-    color: #fff;
-    border-top: solid .04em #272343;
-  }
+	.card-footer {
+		background-color: rgba(39, 35, 67, .7);
+		color: #fff;
+		border-top: solid .04em #272343;
+	}
+
+	a {
+		color: #79bac1;
+		&:hover {
+			color: #2a7886;
+		}
+	}
 }
