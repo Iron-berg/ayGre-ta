@@ -3,8 +3,8 @@ console.log('connected');
 async function getNewsArticles() {
 	try {
 		const newsApi = await axios.get('/services/news');
-		const { news, isLoggedNews } = newsApi.data;
-		return { news, isLoggedNews };
+		const { news, isLoggedNews, uniqueIdsApi } = newsApi.data;
+		return { news, isLoggedNews, uniqueIdsApi };
 	} catch (error) {
 		console.log(error);
 	}
@@ -13,8 +13,9 @@ async function getNewsArticles() {
 async function getGuardianArticles() {
 	try {
 		const guardianApi = await axios.get('/services/guardian');
-		const { guardianNews, isLoggedGuardian } = guardianApi.data;
-		return { guardianNews, isLoggedGuardian };
+		const { guardianNews, isLoggedGuardian, uniqueIdsGuardian } = guardianApi.data;
+
+		return { guardianNews, isLoggedGuardian, uniqueIdsGuardian };
 	} catch (error) {
 		console.log(error);
 	}

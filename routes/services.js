@@ -4,6 +4,8 @@ const openUvService = require('../services/openUvService');
 const airVisualService = require('../services/airVisualService');
 const epicService = require('../services/epicService');
 const { newsAPI, guardianAPI } = require('../services/newsService');
+const News = require('../models/news');
+const mongoose = require('mongoose');
 
 /* GET Open UV API (UV INDEX) */
 router.get('/services/openuv', async (req, res, next) => {
@@ -44,8 +46,16 @@ router.get('/services/news', async (req, res, next) => {
 				published: article.publishedAt
 			};
 		});
+		const favoritesId = req.user.favoriteNews.map(id => {
+			return mongoose.Types.ObjectId(id);
+		});
+		const favoriteNews = await News.find({ _id: { $in: favoritesId } });
 
-		res.json({ news, isLoggedNews: req.user ? true : false });
+		res.json({
+			news,
+			isLoggedNews: req.user ? true : false,
+			uniqueIdsApi: favoriteNews.map(news => news.externalUrl)
+		});
 	} catch (error) {
 		console.log(error);
 		res.json({
@@ -71,8 +81,16 @@ router.get('/services/guardian', async (req, res, next) => {
 				published: article.webPublicationDate
 			};
 		});
+		const favoritesId = req.user.favoriteNews.map(id => {
+			return mongoose.Types.ObjectId(id);
+		});
+		const favoriteNews = await News.find({ _id: { $in: favoritesId } });
 
-		res.json({ guardianNews, isLoggedGuardian: req.user ? true : false });
+		res.json({
+			guardianNews,
+			isLoggedGuardian: req.user ? true : false,
+			uniqueIdsGuardian: favoriteNews.map(news => news.externalUrl)
+		});
 	} catch (error) {
 		console.log(error);
 		res.json({

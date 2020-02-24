@@ -54,8 +54,9 @@ const updateEpicPhoto = async () => {
 
 // Home page - News section
 const fetchNews = async () => {
-	const { news, isLoggedNews } = await getNewsArticles();
-	const { guardianNews, isLoggedGuardian } = await getGuardianArticles();
+	const { news, isLoggedNews, uniqueIdsApi } = await getNewsArticles();
+	const { guardianNews, isLoggedGuardian, uniqueIdsGuardian } = await getGuardianArticles();
+
 	let articles;
 	if (news && guardianNews) {
 		articles = [ ...news, ...guardianNews ].sort((a, b) => new Date(b.published) - new Date(a.published));
@@ -65,7 +66,7 @@ const fetchNews = async () => {
 			? news.sort((a, b) => new Date(b.published) - new Date(a.published))
 			: guardianNews.sort((a, b) => new Date(b.published) - new Date(a.published));
 	}
-	return { articles, isLoggedNews, isLoggedGuardian };
+	return { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi };
 };
 
 const populateCarousel = async () => {
@@ -115,13 +116,11 @@ const formatDate = date => {
 };
 
 const handleFavorites = e => {
-	console.log('clicked to favorite');
 	const pictureUrl = e.target.offsetParent.children[0].src;
 	const headline = e.target.offsetParent.children[1].children[0].innerText;
 	const body = e.target.offsetParent.children[1].children[1].innerText;
 	const externalUrl = e.target.offsetParent.children[1].children[2].firstElementChild.href;
 	const published = e.target.offsetParent.children[2].innerText.slice(13);
-	console.log(e.target.classList);
 
 	axios
 		.post('/favorite', {
@@ -141,9 +140,11 @@ const handleFavorites = e => {
 let loadedNews = [];
 let lastLoaded;
 const populateCards = async () => {
-	const { articles, isLoggedNews, isLoggedGuardian } = await fetchNews();
-
+	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi } = await fetchNews();
 	for (let i = 0; i < 6; i++) {
+		let isFavGuardian =
+			uniqueIdsGuardian.length > 0 && uniqueIdsGuardian.includes(articles[i].externalUrl) ? 'favorite' : '';
+		let isFavApi = uniqueIdsApi.length > 0 && uniqueIdsApi.includes(articles[i].externalUrl) ? 'favorite' : '';
 		let container = document.createElement('div');
 		container.setAttribute('class', 'col-12 col-md-6 col-lg-4 pt-5');
 		container.innerHTML = `<div class="card">
@@ -153,7 +154,9 @@ const populateCards = async () => {
                               <p class="card-text">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
-                                ${isLoggedNews || isLoggedGuardian ? '<i class="fas fa-leaf fav-btn"></i>' : ''}
+                                ${(isLoggedNews || isLoggedGuardian) && (isFavGuardian || isFavApi)
+									? '<i class="fas fa-leaf fav-btn favorite"></i>'
+									: isLoggedNews || isLoggedGuardian ? '<i class="fas fa-leaf fav-btn"></i>' : ''}
                               </div>
 														</div>
 														<div class="card-footer">
@@ -171,9 +174,12 @@ const populateCards = async () => {
 
 // News page - lazy load implementation
 const loadCards = async () => {
-	const { articles, isLoggedNews, isLoggedGuardian } = await fetchNews();
+	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi } = await fetchNews();
 
 	for (let i = lastLoaded + 1; i <= lastLoaded + 3; i++) {
+		let isFavGuardian =
+			uniqueIdsGuardian.length > 0 && uniqueIdsGuardian.includes(articles[i].externalUrl) ? 'favorite' : '';
+		let isFavApi = uniqueIdsApi.length > 0 && uniqueIdsApi.includes(articles[i].externalUrl) ? 'favorite' : '';
 		if (articles.length === loadedNews.length) {
 			break;
 		}
@@ -187,7 +193,11 @@ const loadCards = async () => {
 															<p class="card-text">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
-                                ${isLoggedNews || isLoggedGuardian ? '<i class="fas fa-leaf fav-btn"></i>' : ''}
+                                ${(isLoggedNews || isLoggedGuardian) && (isFavGuardian || isFavApi)
+									? '<i class="fas fa-leaf fav-btn favorite"></i>'
+									: (isLoggedNews || isLoggedGuardian) && (!isFavGuardian && !isFavApi)
+										? '<i class="fas fa-leaf fav-btn"></i>'
+										: ''}
                               </div>
                             </div>
 														<div class="card-footer">
