@@ -4,6 +4,7 @@ const openUvService = require("../services/openUvService");
 const airVisualService = require("../services/airVisualService");
 const epicService = require("../services/epicService");
 const mongoUserService = require("../services/mongoUserService");
+const mongoThunbergService = require("../services/mongoThunbergService");
 const { newsAPI, guardianAPI } = require("../services/newsService");
 
 /* GET Open UV API (UV INDEX) */
@@ -89,6 +90,15 @@ router.get("/ddbb/addFollowing", async (req, res, next) => {
   const response = await mongoUserService.addFollowed(
     req.query.following,
     req.query.currentUser
+  );
+  res.json(response);
+});
+
+/* POST add following to user in DDBB by ids */
+router.post("/ddbb/postThunberg", async (req, res, next) => {
+  const response = await mongoThunbergService.postThunberg(
+    req.query.message,
+    req.query.author
   );
   res.json(response);
 });
