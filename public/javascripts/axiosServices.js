@@ -1,21 +1,21 @@
-console.log("connected");
-
 async function getNewsArticles() {
-  try {
-    const newsApi = await axios.get("/services/news");
-    return newsApi.data.news;
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const newsApi = await axios.get('/services/news');
+		const { news, isLoggedNews, uniqueIdsApi } = newsApi.data;
+		return { news, isLoggedNews, uniqueIdsApi };
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 async function getGuardianArticles() {
-  try {
-    const guardianApi = await axios.get("/services/guardian");
-    return guardianApi.data.news;
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const guardianApi = await axios.get('/services/guardian');
+		const { guardianNews, isLoggedGuardian, uniqueIdsGuardian, newsSaved } = guardianApi.data;
+		return { guardianNews, isLoggedGuardian, uniqueIdsGuardian, newsSaved };
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 async function getUvIndex(lat, lng) {
@@ -30,21 +30,21 @@ async function getUvIndex(lat, lng) {
 }
 
 async function getContaminationIndex() {
-  try {
-    const airVisualApiCont = await axios.get("/services/air");
-    return airVisualApiCont.data.contam;
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const airVisualApiCont = await axios.get('/services/air');
+		return airVisualApiCont.data.contam;
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 async function getTemperature() {
-  try {
-    const airVisualApiTemp = await axios.get("/services/temperature");
-    return airVisualApiTemp.data.temp;
-  } catch (error) {
-    console.log(error);
-  }
+	try {
+		const airVisualApiTemp = await axios.get('/services/temperature');
+		return airVisualApiTemp.data.temp;
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 async function getEpicPhoto() {

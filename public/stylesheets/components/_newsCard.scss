@@ -15,4 +15,31 @@
 			color: #2a7886;
 		}
 	}
+
+	#fav-news {
+		padding: 1em;
+
+		.btn-container {
+			display: flex;
+		}
+		.btn-container-hidden {
+			visibility: hidden;
+		}
+		.counter {
+			padding-right: .5em;
+			color: #272343;
+		}
+		.fa-leaf {
+			cursor: pointer;
+			vertical-align: middle;
+		}
+		.favorite {
+			color: #67c979;
+			font-size: 1.2rem;
+		}
+		.fav-btn:hover {
+			color: #67c979;
+			font-size: 1.2rem;
+		}
+	}
 }
