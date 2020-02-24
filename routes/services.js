@@ -46,9 +46,11 @@ router.get('/services/news', async (req, res, next) => {
 				published: article.publishedAt
 			};
 		});
-		const favoritesId = req.user.favoriteNews.map(id => {
-			return mongoose.Types.ObjectId(id);
-		});
+		const favoritesId = req.user
+			? req.user.favoriteNews.map(id => {
+					return mongoose.Types.ObjectId(id);
+				})
+			: [];
 		const favoriteNews = await News.find({ _id: { $in: favoritesId } });
 
 		res.json({
@@ -81,9 +83,11 @@ router.get('/services/guardian', async (req, res, next) => {
 				published: article.webPublicationDate
 			};
 		});
-		const favoritesId = req.user.favoriteNews.map(id => {
-			return mongoose.Types.ObjectId(id);
-		});
+		const favoritesId = req.user
+			? req.user.favoriteNews.map(id => {
+					return mongoose.Types.ObjectId(id);
+				})
+			: [];
 		const favoriteNews = await News.find({ _id: { $in: favoritesId } });
 
 		res.json({

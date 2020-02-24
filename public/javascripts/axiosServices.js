@@ -14,7 +14,6 @@ async function getGuardianArticles() {
 	try {
 		const guardianApi = await axios.get('/services/guardian');
 		const { guardianNews, isLoggedGuardian, uniqueIdsGuardian } = guardianApi.data;
-
 		return { guardianNews, isLoggedGuardian, uniqueIdsGuardian };
 	} catch (error) {
 		console.log(error);

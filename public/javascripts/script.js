@@ -62,6 +62,7 @@ const fetchNews = async () => {
 		articles = [ ...news, ...guardianNews ].sort((a, b) => new Date(b.published) - new Date(a.published));
 	} else {
 		console.log('not able to get news', guardianNews);
+		console.log('not able to get news', news);
 		articles = news
 			? news.sort((a, b) => new Date(b.published) - new Date(a.published))
 			: guardianNews.sort((a, b) => new Date(b.published) - new Date(a.published));
