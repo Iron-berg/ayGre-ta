@@ -19,7 +19,7 @@ class MongoUserService {
       } else {
         // Find user to be followed and update followers
         const userToFollow = await this.User.findByIdAndUpdate(idToFollow, {
-          $inc: { followers: 1 }
+          $inc: { followers: 1, gretaPoints: 1 }
         });
 
         // Add user followed to current user
