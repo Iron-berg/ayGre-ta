@@ -1,10 +1,5 @@
-var countries = [
-  { label: "United Kingdom", value: "UK" },
-  { label: "United States", value: "US" }
-];
-
-var input = document.getElementById("followUser");
-var logedUser = input.getAttribute("data-userid");
+let input = document.getElementById("followUser");
+let logedUser = input.getAttribute("data-userid");
 
 autocomplete({
   input: input,
@@ -15,7 +10,7 @@ autocomplete({
     console.log("DATA " + JSON.stringify(data.data));
     names = JSON.parse(data.data);
     console.log("NOMBRES --- " + names[0].username);
-    var suggestions = names.filter(n =>
+    let suggestions = names.filter(n =>
       n.username.toLowerCase().startsWith(text)
     );
 
