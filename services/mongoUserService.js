@@ -1,4 +1,4 @@
-class MongoService {
+class MongoUserService {
   constructor() {
     this.User = require("../models/user");
   }
@@ -44,4 +44,4 @@ class MongoService {
   };
 }
 
-module.exports = new MongoService();
+module.exports = new MongoUserService();
