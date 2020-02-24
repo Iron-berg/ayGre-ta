@@ -79,7 +79,8 @@ async function addFollowing(following, currentUser) {
 async function postThunberg(message, author) {
   try {
     const response = await axios.post("/ddbb/postThunberg", {
-      params: { message, author }
+      message,
+      author
     });
     return response;
   } catch (error) {

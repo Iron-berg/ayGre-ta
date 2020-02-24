@@ -97,8 +97,8 @@ router.get("/ddbb/addFollowing", async (req, res, next) => {
 /* POST add following to user in DDBB by ids */
 router.post("/ddbb/postThunberg", async (req, res, next) => {
   const response = await mongoThunbergService.postThunberg(
-    req.query.message,
-    req.query.author
+    req.body.message,
+    req.body.author
   );
   res.json(response);
 });

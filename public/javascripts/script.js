@@ -4,7 +4,7 @@ const updateLink = () => {
   const currentLink = document.querySelector(
     'a[href="' + location.pathname + '"]'
   );
-  
+
   navLinks.forEach(link => link.classList.remove("active"));
   currentLink.classList.add("active");
 };
@@ -64,22 +64,28 @@ const fetchNews = async () => {
 };
 
 const populateCarousel = async () => {
-	const articles = await fetchNews();
-	document.getElementById('carousel').removeChild(document.getElementById('spinner'));
-	for (let i = 0; i < 5; i++) {
-		let container = document.createElement('div');
+  const articles = await fetchNews();
+  document
+    .getElementById("carousel")
+    .removeChild(document.getElementById("spinner"));
+  for (let i = 0; i < 5; i++) {
+    let container = document.createElement("div");
 
-		container.setAttribute('class', `carousel-item ${i === 0 ? 'active' : ''}`);
-		container.innerHTML = `<div class="card text-white">
+    container.setAttribute("class", `carousel-item ${i === 0 ? "active" : ""}`);
+    container.innerHTML = `<div class="card text-white">
                               <div class="img-gradient">
 															  <img class="d-block w-100" src="${articles[i].pictureUrl}">
                               </div>
                               <div class="carousel-caption">
                                 <h4>${articles[i].headline}</h4>
-                                ${i === 4 ? '<a href="/news">Discover more in our news section</a>' : ''}
+                                ${
+                                  i === 4
+                                    ? '<a href="/news">Discover more in our news section</a>'
+                                    : ""
+                                }
 													    </div>
 													</div>`;
-    
+
     document.getElementById("carousel").appendChild(container);
   }
 };
@@ -126,7 +132,7 @@ const populateCards = async () => {
 															<small>${formatDate(articles[i].published)}</small>
 														</div>
 													</div>`;
-    
+
     document.getElementById("news").appendChild(container);
 
     loadedNews.push(articles[i]);
@@ -166,9 +172,9 @@ const loadCards = async () => {
 
 // Implement back to top button
 const handleArrow = () => {
-	window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
 
-	document.getElementById('back-to-top').style.visibility = 'hidden';
+  document.getElementById("back-to-top").style.visibility = "hidden";
 };
 
 // Set up event listeners
@@ -191,15 +197,29 @@ document.addEventListener(
   false
 );
 
-window.addEventListener('scroll', () => {
-	if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
-		loadCards();
-	}
-	if (window.scrollY > document.documentElement.clientHeight) {
-		document.getElementById('back-to-top').style.visibility = 'visible';
-	} else {
-		document.getElementById('back-to-top').style.visibility = 'hidden';
-	}
+window.addEventListener("scroll", () => {
+  if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
+    loadCards();
+  }
+  if (window.scrollY > document.documentElement.clientHeight) {
+    document.getElementById("back-to-top").style.visibility = "visible";
+  } else {
+    document.getElementById("back-to-top").style.visibility = "hidden";
+  }
 });
 
-document.getElementById('back-to-top').addEventListener('click', handleArrow);
+// Post Thunberg Form
+document
+  .getElementById("btnThunberg")
+  .addEventListener("click", async function() {
+    const message = document.getElementById("message").value;
+    const loggedUser = document
+      .getElementById("btnThunberg")
+      .getAttribute("data-userid");
+
+    await postThunberg(message, logedUser);
+    document.getElementById("message").value = "";
+  });
+
+// NO PASAR!!!!!! NO TRESPASS!!!!!
+document.getElementById("back-to-top").addEventListener("click", handleArrow);
