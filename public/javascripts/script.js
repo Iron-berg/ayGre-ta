@@ -55,7 +55,7 @@ const updateEpicPhoto = async () => {
 // Home page - News section
 const fetchNews = async () => {
 	const { news, isLoggedNews, uniqueIdsApi } = await getNewsArticles();
-	const { guardianNews, isLoggedGuardian, uniqueIdsGuardian } = await getGuardianArticles();
+	const { guardianNews, isLoggedGuardian, uniqueIdsGuardian, newsSaved } = await getGuardianArticles();
 
 	let articles;
 	if (news && guardianNews) {
@@ -67,7 +67,7 @@ const fetchNews = async () => {
 			? news.sort((a, b) => new Date(b.published) - new Date(a.published))
 			: guardianNews.sort((a, b) => new Date(b.published) - new Date(a.published));
 	}
-	return { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi };
+	return { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved };
 };
 
 const populateCarousel = async () => {
@@ -135,6 +135,9 @@ const handleFavorites = e => {
 		})
 		.then(res => {
 			e.target.classList.toggle('favorite');
+			e.target.previousElementSibling.innerText = e.target.classList.contains('favorite')
+				? Number(e.target.previousElementSibling.innerText) + 1
+				: Number(e.target.previousElementSibling.innerText) - 1;
 		})
 		.catch(err => console.log('something went wrong', err));
 };
@@ -142,12 +145,16 @@ const handleFavorites = e => {
 let loadedNews = [];
 let lastLoaded;
 const populateCards = async () => {
-	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi } = await fetchNews();
+	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
 
 	for (let i = 0; i < 6; i++) {
-		let news =
-			uniqueIdsGuardian.find(news => news.externalUrl === articles[i].externalUrl) ||
-			uniqueIdsApi.find(news => news.externalUrl === articles[i].externalUrl);
+		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
+			? newsSaved.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
+			: '0';
+		let isFavorite =
+			uniqueIdsGuardian.includes(articles[i].externalUrl) || uniqueIdsApi.includes(articles[i].externalUrl)
+				? 'favorite'
+				: '';
 
 		let container = document.createElement('div');
 		container.setAttribute('class', 'col-12 col-md-6 col-lg-4 pt-5');
@@ -161,8 +168,8 @@ const populateCards = async () => {
                                 <div class="btn-container ${!isLoggedGuardian || !isLoggedNews
 									? 'btn-container-hidden'
 									: ''}">
-                                  <p class="counter">${news ? news.timesFavorited : '0'}</p>
-                                  <i class="fas fa-leaf fav-btn ${news ? 'favorite' : ''}"></i>
+                                  <p class="counter">${counter}</p>
+                                  <i class="fas fa-leaf fav-btn ${isFavorite}"></i>
                                 </div>
                               </div>
 														</div>
@@ -181,12 +188,16 @@ const populateCards = async () => {
 
 // News page - lazy load implementation
 const loadCards = async () => {
-	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi } = await fetchNews();
+	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
 
 	for (let i = lastLoaded + 1; i <= lastLoaded + 3; i++) {
-		let news =
-			uniqueIdsGuardian.find(news => news.externalUrl === articles[i].externalUrl) ||
-			uniqueIdsApi.find(news => news.externalUrl === articles[i].externalUrl);
+		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
+			? newsSaved.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
+			: '0';
+		let isFavorite =
+			uniqueIdsGuardian.includes(articles[i].externalUrl) || uniqueIdsApi.includes(articles[i].externalUrl)
+				? 'favorite'
+				: '';
 
 		if (articles.length === loadedNews.length) {
 			break;
@@ -204,8 +215,8 @@ const loadCards = async () => {
                                 <div class="btn-container ${!isLoggedGuardian || !isLoggedNews
 									? 'btn-container-hidden'
 									: ''}">
-                                  <p class="counter">${news ? news.timesFavorited : '0'}</p>
-                                  <i class="fas fa-leaf fav-btn ${news ? 'favorite' : ''}"></i>
+                                  <p class="counter">${counter}</p>
+                                  <i class="fas fa-leaf fav-btn ${isFavorite}"></i>
                                 </div>
                               </div>
                             </div>
