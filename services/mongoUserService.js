@@ -13,9 +13,12 @@ class MongoUserService {
 
   addFollowed = async function(idToFollow, user) {
     try {
-      // First check wether is already following
-      if (await this.alreadyFollowing(idToFollow, user)) {
-        console.log("Already following");
+      // First check wether is already following or it is himself or herself
+      if (
+        (await this.alreadyFollowing(idToFollow, user)) ||
+        idToFollow === user
+      ) {
+        console.log("Already following or trying to follow yourself, idiot!");
       } else {
         // Find user to be followed and update followers
         const userToFollow = await this.User.findByIdAndUpdate(idToFollow, {
