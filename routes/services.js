@@ -56,7 +56,9 @@ router.get('/services/news', async (req, res, next) => {
 		res.json({
 			news,
 			isLoggedNews: req.user ? true : false,
-			uniqueIdsApi: favoriteNews.map(news => news.externalUrl)
+			uniqueIdsApi: favoriteNews.map(news => {
+				return { externalUrl: news.externalUrl, timesFavorited: news.timesFavorited };
+			})
 		});
 	} catch (error) {
 		console.log(error);
@@ -93,7 +95,9 @@ router.get('/services/guardian', async (req, res, next) => {
 		res.json({
 			guardianNews,
 			isLoggedGuardian: req.user ? true : false,
-			uniqueIdsGuardian: favoriteNews.map(news => news.externalUrl)
+			uniqueIdsGuardian: favoriteNews.map(news => {
+				return { externalUrl: news.externalUrl, timesFavorited: news.timesFavorited };
+			})
 		});
 	} catch (error) {
 		console.log(error);
