@@ -10,7 +10,10 @@
               <p class="card-text">{{body}}</p>
               <div id="fav-news" class="row justify-content-between">
                 <a href="{{externalUrl}}" target="blank">Read more</a>
-                <i class="fas fa-leaf user-fav favorite"></i>
+                <div class="btn-container">
+                  <p class="counter">{{timesFavorited}}</p>
+                  <i class="fas fa-leaf user-fav favorite"></i>
+                </div>
               </div>
             </div>
             <div class="card-footer">

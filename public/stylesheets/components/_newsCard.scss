@@ -19,10 +19,16 @@
 	#fav-news {
 		padding: 1em;
 
+		.btn-container {
+			display: flex;
+		}
+		.counter {
+			padding-right: .5em;
+			color: #272343;
+		}
 		.fa-leaf {
 			cursor: pointer;
 			vertical-align: middle;
-			padding-top: .3em;
 		}
 		.favorite {
 			color: #67c979;
