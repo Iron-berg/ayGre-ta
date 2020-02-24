@@ -8,6 +8,18 @@ router.get('/news', (req, res, next) => {
 	res.render('news', { showTitle: true });
 });
 
+// GET favorite news page
+router.get('/userFavs', (req, res, next) => {
+	User.findById(req.user.id).populate('favoriteNews').exec((err, user) => {
+		if (err) {
+			console.log(err);
+			return res.redirect('/user');
+		} else {
+			res.render('userFavs', { favNews: user.favoriteNews });
+		}
+	});
+});
+
 // POST - favorite news
 router.post('/favorite', async (req, res, next) => {
 	try {
