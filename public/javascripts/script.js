@@ -116,6 +116,7 @@ const formatDate = date => {
 	return `Published on ${month} ${day}, ${year}`;
 };
 
+// Mark favorites - news page
 const handleFavorites = e => {
 	const pictureUrl = e.target.offsetParent.children[0].src;
 	const headline = e.target.offsetParent.children[1].children[0].innerText;
@@ -210,8 +211,9 @@ const loadCards = async () => {
 			loadedNews.push(articles[i]);
 		}
 	}
-	document.querySelectorAll('.fav-btn').forEach(button => button.addEventListener('click', handleFavorites));
 	lastLoaded = articles.indexOf(loadedNews[loadedNews.length - 1]);
+
+	document.querySelectorAll('.fav-btn').forEach(button => button.addEventListener('click', handleFavorites));
 };
 
 // Implement back to top button
@@ -219,6 +221,32 @@ const handleArrow = () => {
 	window.scrollTo(0, 0);
 
 	document.getElementById('back-to-top').style.visibility = 'hidden';
+};
+
+// Handle buttons style
+const handleBtn = () => {
+	document.querySelectorAll('.user-fav').forEach(btn => {
+		btn.addEventListener('mouseenter', e => {
+			e.target.classList.remove('favorite');
+		});
+	});
+
+	document.querySelectorAll('.user-fav').forEach(btn => {
+		btn.addEventListener('mouseleave', e => {
+			e.target.classList.add('favorite');
+		});
+	});
+};
+
+// Handle user's favorites
+const handleUserFavs = e => {
+	axios
+		.post('/user/favs', { externalUrl: e.target.offsetParent.children[1].children[2].firstElementChild.href })
+		.then(res => {
+			e.target.classList.toggle('favorite');
+			e.target.offsetParent.offsetParent.remove();
+		})
+		.catch(error => console.log(error));
 };
 
 // Set up event listeners
@@ -237,6 +265,12 @@ document.addEventListener(
 		if (location.pathname === '/news') {
 			populateCards();
 		}
+
+		document.querySelectorAll('.user-fav').forEach(btn => {
+			btn.addEventListener('click', handleUserFavs);
+		});
+
+		handleBtn();
 	},
 	false
 );

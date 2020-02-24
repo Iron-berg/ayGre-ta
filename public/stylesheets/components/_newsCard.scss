@@ -23,15 +23,14 @@
 			cursor: pointer;
 			vertical-align: middle;
 			padding-top: .3em;
-
-			&:hover {
-				color: #67c979;
-				font-size: 1.1rem;
-			}
 		}
 		.favorite {
 			color: #67c979;
-			font-size: 1.1rem;
+			font-size: 1.2rem;
+		}
+		.fav-btn:hover {
+			color: #67c979;
+			font-size: 1.2rem;
 		}
 	}
 }
