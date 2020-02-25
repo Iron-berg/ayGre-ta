@@ -7,12 +7,22 @@
 
 .home {
 	padding-top: 3.5em;
+
+	.row {
+		margin: 0;
+	}
 }
 
 #news-carousel {
+	position: sticky;
+	top: 7em;
+	box-shadow: .3em .3em .4em #333;
+	border-radius: 1em;
+
 	.card {
 		border: solid .05em #272343;
 		overflow: hidden;
+		border-radius: 1em;
 	}
 
 	img {

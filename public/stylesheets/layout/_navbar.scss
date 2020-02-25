@@ -54,10 +54,16 @@
 			&:hover {
 				background: transparent;
 				color: #2a7886;
+				.fa-leaf {
+					color: #67c979;
+				}
 			}
 			&.active {
 				background: none;
 				color: #2a7886;
+				.fa-leaf {
+					color: #67c979;
+				}
 			}
 		}
 	}
