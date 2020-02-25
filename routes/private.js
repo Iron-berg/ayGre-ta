@@ -18,10 +18,13 @@ router.get('/user', ensureLogin.ensureLoggedIn(), async (req, res, next) => {
 			};
 		});
 
-		console.log(platformUsers);
 		const currentUser = platformUsers.find(user => user.username === req.user.username);
 
-		res.render('user', { platformUser: platformUsers.slice(0, 5), currentUser });
+		res.render('user', {
+			platformUser: platformUsers.slice(0, 5),
+			currentUser,
+			numOfFavs: req.user.favoriteNews.length
+		});
 	} catch (error) {
 		console.log(error);
 	}
