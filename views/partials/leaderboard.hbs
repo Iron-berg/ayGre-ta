@@ -29,4 +29,14 @@
     <div class="col-4 text-center stats">{{gretaPoints}}</div>
   </div>
   {{/each}}
+  {{#unless currentUser.isTopUser}}
+  <div id="bottom-user" class="row table-content">
+    <div class="col-3 current-user">Your stats</div>
+    <div class="col-3 text-center stats">{{currentUser.followers}}</div>
+    <div class="col-2 text-center stats">{{currentUser.likes}}</div>
+    <div class="col-4 text-center stats">{{currentUser.gretaPoints}}</div>
+  </div>
+  {{else}}
+    <div class="row table-content footer-table"></div>
+  {{/unless }}
 </div>

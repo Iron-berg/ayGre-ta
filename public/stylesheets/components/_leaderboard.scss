@@ -4,8 +4,8 @@
 	.board-title {
 		background-color: #2a7886;
 		height: 150px;
-		border-top-right-radius: 1em;
-		border-top-left-radius: 1em;
+		border-top-right-radius: .3em;
+		border-top-left-radius: .3em;
 		color: #fff;
 		justify-content: center;
 		align-items: center;
@@ -35,13 +35,29 @@
 
 	.table-content:last-of-type {
 		border-bottom: .1em solid #138496;
-		border-bottom-right-radius: 1em;
-		border-bottom-left-radius: 1em;
+		border-bottom-right-radius: .5em;
+		border-bottom-left-radius: .5em;
 		padding-bottom: 2em;
+	}
+	#bottom-user {
+		background-color: #2a7886;
+		border-top: .1em solid #138496;
+		color: #fff;
+		.current-user {
+			color: #fff;
+		}
+		padding: 1.6em .2em;
+	}
+	.footer-table {
+		background-color: #2a7886;
+		padding: 4em 0;
 	}
 }
 
 @media (max-width: 1024px) {
+	.leaderboard {
+		margin: 1em;
+	}
 	.table-heading p {
 		display: none;
 	}
