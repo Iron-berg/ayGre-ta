@@ -49,6 +49,13 @@ class MongoThunbergService {
       if (followingThunbergs.length > 0)
         allThunbergs.push(...followingThunbergs);
 
+      // Sort thunbergs by date
+      allThunbergs.sort(function(a, b) {
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
       return allThunbergs;
     } catch (error) {
       console.log(`ERROR MongoThunbergService getRelatedThunbergs ${error}`);
