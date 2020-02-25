@@ -12,7 +12,7 @@
   </form>
 
   <hr>
-
-  {{> thunbergcard }}
-
+  {{#each thunbergs}}
+   {{> thunbergcard this }}
+  {{/each}}
 </div>
