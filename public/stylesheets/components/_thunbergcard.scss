@@ -1,0 +1,23 @@
+.card {
+	margin-bottom: 20px;
+	border: 1px solid #138496;
+
+	.card-body {
+		color: #000;
+	}
+
+	.card-header,
+	.card-footer {
+		background-color: #79bac1;
+		color: #fff;
+		border-color: #138496;
+	}
+
+	.card-header {
+		border: 0 0 1px 0;
+	}
+
+	.card-footer {
+		border: 1px 0 0 0;
+	}
+}
