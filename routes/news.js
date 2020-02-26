@@ -15,7 +15,12 @@ router.get('/userFavs', (req, res) => {
 			console.log(err);
 			return res.redirect('/user');
 		} else {
-			res.render('userFavs', { favNews: user.favoriteNews });
+			const newsOrdered = user.favoriteNews.sort(
+				(a, b) => b.timesFavorited - a.timesFavorited || new Date(b.published) - new Date(a.published)
+			);
+
+			console.log('rendering user favs', user.favoriteNews);
+			res.render('userFavs', { favNews: newsOrdered });
 		}
 	});
 });
