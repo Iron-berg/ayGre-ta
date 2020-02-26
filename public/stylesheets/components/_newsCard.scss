@@ -2,7 +2,13 @@
 	height: 100%;
 	border: solid .04em #272343;
 	overflow: hidden;
-
+	.card-text {
+		padding-top: 1em;
+	}
+	.author {
+		text-transform: uppercase;
+		font-weight: bold;
+	}
 	.card-footer {
 		background-color: rgba(39, 35, 67, .7);
 		color: #fff;
@@ -14,5 +20,53 @@
 		&:hover {
 			color: #2a7886;
 		}
+	}
+
+	#fav-news {
+		padding: 1em;
+
+		.btn-container {
+			display: flex;
+		}
+		.btn-container-hidden {
+			visibility: hidden;
+		}
+		.counter {
+			padding-right: .5em;
+			color: #272343;
+		}
+		.fa-leaf {
+			cursor: pointer;
+			vertical-align: middle;
+		}
+		.favorite {
+			color: #67c979;
+			font-size: 1.2rem;
+		}
+		.fav-btn:hover {
+			color: #67c979;
+			font-size: 1.2rem;
+		}
+	}
+}
+
+.spinner-container {
+	height: 500px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	p {
+		padding-top: 1em;
+		color: #272343;
+	}
+
+	.spinner-border {
+		color: #79bac1;
+		width: 3rem;
+		height: 3rem;
+		animation: spinner-border 1s linear infinite;
+		border: .5em solid #79bac1;
+		border-right-color: transparent;
 	}
 }
