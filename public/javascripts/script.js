@@ -147,6 +147,8 @@ let lastLoaded;
 const populateCards = async () => {
 	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
 
+	document.getElementById('news-container').removeChild(document.getElementById('spinner'));
+
 	for (let i = 0; i < 6; i++) {
 		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
 			? newsSaved.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
@@ -191,6 +193,10 @@ const loadCards = async () => {
 	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
 
 	for (let i = lastLoaded + 1; i <= lastLoaded + 3; i++) {
+		if (articles.length === loadedNews.length) {
+			break;
+		}
+
 		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
 			? newsSaved.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
 			: '0';
@@ -199,9 +205,6 @@ const loadCards = async () => {
 				? 'favorite'
 				: '';
 
-		if (articles.length === loadedNews.length) {
-			break;
-		}
 		if (!loadedNews.includes(articles[i])) {
 			let container = document.createElement('div');
 			container.setAttribute('class', 'col-12 col-md-6 col-lg-4 pt-5');
