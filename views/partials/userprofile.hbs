@@ -6,7 +6,8 @@
               <div class="col-lg-12 col-sm-12 col-12">
                   <img src="{{#if user.pictureUrl}}{{user.pictureUrl}}{{else}}images/user-default.png{{/if}}" alt="{{user.username}}" class="rounded-circle img-thumbnail">
                   <h5>{{user.username}}</h5>
-                  <p id="fav-news"><i class="far fa-newspaper" aria-hidden="true"></i> Favorite News</p>
+                  <p id="fav-news"><i class="far fa-newspaper" aria-hidden="true"></i> <a href="/userFavs">Favorite News</a></p>
+                  <h3>{{numOfFavs}} <i class="fas fa-leaf"></i></h3>
 
                   <hr>
                   <p id="points-label">Greta points</p>

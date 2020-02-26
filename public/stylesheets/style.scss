@@ -1,11 +1,18 @@
-@import "components/form",
+@import 
+  "components/form",
 	"components/modal",
 	"components/newsCard",
 	"components/arrowButton",
-	"components/profileCard";
+	"components/profileCard",
+	"components/leaderboard";
 
-@import "layout/navbar", "layout/about";
+@import 
+  "layout/navbar", 
+  "layout/about";
 
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700&display=swap");
 
-@import "pages/home", "pages/error-pages";
+@import 
+  "pages/home", 
+  "pages/userFavs", 
+  "pages/error-pages";

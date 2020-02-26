@@ -1,12 +1,13 @@
 <div class="container">
-  <div class="row">
     {{#if favNews}}
+    <div class="row">
       {{#each favNews}}
         <div class="col-12 col-md-6 col-lg-4 pt-5">
           <div class="card">
             <img src="{{pictureUrl}}" class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">{{headline}}</h5>
+              <small class="card-text text-muted author">By {{author}}</small>
               <p class="card-text">{{body}}</p>
               <div id="fav-news" class="row justify-content-between">
                 <a href="{{externalUrl}}" target="blank">Read more</a>
@@ -22,8 +23,13 @@
           </div>
         </div>
       {{/each}}
+    </div>
     {{else}}
-      <p>You don't have any favorites news yet</p>
+    <div class="row justify-content-center pt-5">
+      <div class="text-news">
+        <p>You don't have any favorite news yet</p>
+        <p>Check out our <a href="/news">news section <i class="fas fa-leaf"></i></a></p>
+      </div>
+    </div>
     {{/if}}
-  </div>
 </div>

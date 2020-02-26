@@ -1,39 +1,48 @@
 .main-section {
-  border: 3px solid #138496;
-  border-radius: 10px;
-  background-color: #fff;
-  font-family: "Nanum Gothic", "Helvetica Neue", Arial, sans-serif;
-  margin-bottom: 50px;
+	border: 3px solid #138496;
+	border-radius: 10px;
+	background-color: #fff;
+	font-family: "Nanum Gothic", "Helvetica Neue", Arial, sans-serif;
+	margin-bottom: 50px;
 }
 .profile-header {
-  background-color: #2a7886;
-  height: 150px;
+	background-color: #2a7886;
+	height: 150px;
 }
 .user-detail {
-  margin: -50px 0px 30px 0px;
+	margin: -50px 0px 30px 0px;
+
+	a {
+		color: #aeb6bf;
+
+		&:hover {
+			color: #2a7886;
+			text-decoration: none;
+		}
+	}
 }
 .user-detail img {
-  height: 100px;
-  width: 100px;
+	height: 100px;
+	width: 100px;
 }
 .user-detail h5 {
-  margin: 15px 0px 5px 0px;
-  font-family: "Lobster", cursive;
+	margin: 15px 0px 5px 0px;
+	font-family: "Lobster", cursive;
 }
 .user-social-detail {
-  padding: 15px 0px;
-  background-color: #2a7886;
-  color: #fff;
+	padding: 15px 0px;
+	background-color: #2a7886;
+	color: #fff;
 }
 .user-social-detail a i {
-  color: #fff;
-  font-size: 23px;
-  padding: 0px 5px;
+	color: #fff;
+	font-size: 23px;
+	padding: 0px 5px;
 }
 
 #points-label,
 #fav-news,
 .far,
 .fas {
-  color: #aeb6bf;
+	color: #aeb6bf;
 }
