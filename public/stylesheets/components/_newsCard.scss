@@ -2,7 +2,13 @@
 	height: 100%;
 	border: solid .04em #272343;
 	overflow: hidden;
-
+	.card-text {
+		padding-top: 1em;
+	}
+	.author {
+		text-transform: uppercase;
+		font-weight: bold;
+	}
 	.card-footer {
 		background-color: rgba(39, 35, 67, .7);
 		color: #fff;

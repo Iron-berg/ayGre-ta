@@ -120,14 +120,16 @@ const formatDate = date => {
 const handleFavorites = e => {
 	const pictureUrl = e.target.offsetParent.children[0].src;
 	const headline = e.target.offsetParent.children[1].children[0].innerText;
-	const body = e.target.offsetParent.children[1].children[1].innerText;
-	const externalUrl = e.target.offsetParent.children[1].children[2].firstElementChild.href;
+	const author = e.target.offsetParent.children[1].children[1].innerText.slice(3);
+	const body = e.target.offsetParent.children[1].children[2].innerText;
+	const externalUrl = e.target.offsetParent.children[1].children[3].firstElementChild.href;
 	const published = e.target.offsetParent.children[2].innerText.slice(13);
 
 	axios
 		.post('/favorite', {
 			pictureUrl,
 			headline,
+			author: author.toLowerCase(),
 			body,
 			externalUrl,
 			published,
@@ -146,6 +148,7 @@ let loadedNews = [];
 let lastLoaded;
 const populateCards = async () => {
 	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
+	console.log(articles);
 
 	document.getElementById('news-container').removeChild(document.getElementById('spinner'));
 
@@ -164,7 +167,8 @@ const populateCards = async () => {
 														<img src="${articles[i].pictureUrl}" class="card-img-top">
 														<div class="card-body">
 															<h5 class="card-title">${articles[i].headline}</h5>
-                              <p class="card-text">${articles[i].body}</p>
+                              <small class="card-text text-muted author">By ${articles[i].author}</small>
+                              <p class="card-text pt-3">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
                                 <div class="btn-container ${!isLoggedGuardian || !isLoggedNews
@@ -211,7 +215,8 @@ const loadCards = async () => {
 			container.innerHTML = `<div class="card">
 														<img src="${articles[i].pictureUrl}" class="card-img-top">
 														<div class="card-body">
-															<h5 class="card-title">${articles[i].headline}</h5>
+                              <h5 class="card-title">${articles[i].headline}</h5>
+                              <small class="card-text text-muted author">By ${articles[i].author}</small>
 															<p class="card-text">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
@@ -262,7 +267,7 @@ const handleBtn = () => {
 // Handle user's favorites
 const handleUserFavs = e => {
 	axios
-		.post('/user/favs', { externalUrl: e.target.offsetParent.children[1].children[2].firstElementChild.href })
+		.post('/user/favs', { externalUrl: e.target.offsetParent.children[1].children[3].firstElementChild.href })
 		.then(res => {
 			e.target.classList.toggle('favorite');
 			e.target.offsetParent.offsetParent.remove();
