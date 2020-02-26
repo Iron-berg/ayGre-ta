@@ -87,3 +87,15 @@ async function postThunberg(message, author) {
     console.log(error);
   }
 }
+
+async function likeThunberg(thunbergid, userid) {
+  try {
+    const response = await axios.post("/ddbb/likeThunberg", {
+      thunbergid,
+      userid
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

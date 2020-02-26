@@ -13,8 +13,16 @@
                   <h3>{{user.gretaPoints}} <i class="fas fa-medal"></i></h3>
 
                   <hr>
-                  <p id="points-label">Followers</p>
-                  <h3>{{user.followers}} <i class="fas fa-users"></i></h3>
+                  <div class="row">
+                    <div class="col">
+                      <p id="points-label">Followers</p>
+                      <h3>{{user.followers.length}} <i class="fas fa-users"></i></h3>
+                    </div>
+                    <div class="col">
+                      <p id="points-label">Following</p>
+                      <h3>{{user.followings.length}} <i class="fas fa-address-book"></i></h3>
+                    </div>
+                </div>
               </div>
           </div>
           <div class="row user-social-detail">

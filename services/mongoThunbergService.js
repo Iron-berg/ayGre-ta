@@ -23,6 +23,27 @@ class MongoThunbergService {
     }
   };
 
+  likeThunberg = async function(thunbergid, userid) {
+    try {
+      // Get thunberg by id and increase one like
+      const thunberg = await this.Thunberg.findByIdAndUpdate(thunbergid, {
+        $inc: { likes: 1 }
+      });
+
+      // Find author and increase two Greta points
+      const author = await this.User.findByIdAndUpdate(thunberg.author, {
+        $inc: { gretaPoints: 2 }
+      });
+
+      // Add thunberg as a favorite of current user
+      const currentUser = await this.User.findById(userid);
+      currentUser.favoriteThunbergs.push(thunberg);
+      currentUser.save();
+    } catch (error) {
+      console.log(`ERROR MongoThunbergService likeThunberg ${error}`);
+    }
+  };
+
   getRelatedThunbergs = async function(user) {
     try {
       let allThunbergs = [];

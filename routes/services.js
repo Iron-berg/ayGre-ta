@@ -103,4 +103,13 @@ router.post("/ddbb/postThunberg", async (req, res, next) => {
   res.json(response);
 });
 
+/* POST like thunberg by id */
+router.post("/ddbb/likeThunberg", async (req, res, next) => {
+  const response = await mongoThunbergService.likeThunberg(
+    req.body.thunbergid,
+    req.body.userid
+  );
+  res.json(response);
+});
+
 module.exports = router;
