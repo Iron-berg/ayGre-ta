@@ -3,7 +3,8 @@ const router = express.Router();
 const openUvService = require('../services/openUvService');
 const airVisualService = require('../services/airVisualService');
 const epicService = require('../services/epicService');
-const mongoService = require('../services/mongoUserService');
+const mongoUserService = require("../services/mongoUserService");
+const mongoThunbergService = require("../services/mongoThunbergService");
 const { newsAPI, guardianAPI } = require('../services/newsService');
 const News = require('../models/news');
 const mongoose = require('mongoose');
@@ -110,15 +111,36 @@ router.get('/services/guardian', async (req, res, next) => {
 });
 
 /* GET Users from DDBB by name */
-router.get('/ddbb/findUsersByName/:name', async (req, res, next) => {
-	const usr = await mongoService.getUsersByName(req.params.name);
-	res.json(JSON.stringify(usr));
+router.get("/ddbb/findUsersByName/:name", async (req, res, next) => {
+  const usr = await mongoUserService.getUsersByName(req.params.name);
+  res.json(JSON.stringify(usr));
 });
 
 /* POST add following to user in DDBB by ids */
-router.get('/ddbb/addFollowing', async (req, res, next) => {
-	const response = await mongoService.addFollowed(req.query.following, req.query.currentUser);
-	res.json(response);
+router.get("/ddbb/addFollowing", async (req, res, next) => {
+  const response = await mongoUserService.addFollowed(
+    req.query.following,
+    req.query.currentUser
+  );
+  res.json(response);
+});
+
+/* POST add following to user in DDBB by ids */
+router.post("/ddbb/postThunberg", async (req, res, next) => {
+  const response = await mongoThunbergService.postThunberg(
+    req.body.message,
+    req.body.author
+  );
+  res.json(response);
+});
+
+/* POST like thunberg by id */
+router.post("/ddbb/likeThunberg", async (req, res, next) => {
+  const response = await mongoThunbergService.likeThunberg(
+    req.body.thunbergid,
+    req.body.userid
+  );
+  res.json(response);
 });
 
 module.exports = router;

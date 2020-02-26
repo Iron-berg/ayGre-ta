@@ -1,10 +1,12 @@
 // Functions related to DOM manipulation
 const updateLink = () => {
+
 	const navLinks = [ ...document.querySelectorAll('#navbarNav .nav-link') ];
 	const currentLink = document.querySelector('#navbarNav a[href="' + location.pathname + '"]');
 
 	navLinks.forEach(link => link.classList.remove('active'));
 	currentLink.classList.add('active');
+
 };
 
 // Home page - Data section
@@ -77,19 +79,24 @@ const populateCarousel = async () => {
 	for (let i = 0; i < 5; i++) {
 		let container = document.createElement('div');
 
-		container.setAttribute('class', `carousel-item ${i === 0 ? 'active' : ''}`);
-		container.innerHTML = `<div class="card text-white">
+    container.setAttribute("class", `carousel-item ${i === 0 ? "active" : ""}`);
+    container.innerHTML = `<div class="card text-white">
                               <div class="img-gradient">
 															  <img class="d-block w-100" src="${articles[i].pictureUrl}">
                               </div>
                               <div class="carousel-caption">
                                 <h4>${articles[i].headline}</h4>
-                                ${i === 4 ? '<a href="/news">Discover more in our news section</a>' : ''}
+                                ${
+                                  i === 4
+                                    ? '<a href="/news">Discover more in our news section</a>'
+                                    : ""
+                                }
 													    </div>
 													</div>`;
 
 		document.getElementById('carousel').appendChild(container);
 	}
+
 };
 
 // News page
@@ -244,9 +251,9 @@ const loadCards = async () => {
 
 // Implement back to top button
 const handleArrow = () => {
-	window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
 
-	document.getElementById('back-to-top').style.visibility = 'hidden';
+  document.getElementById("back-to-top").style.visibility = "hidden";
 };
 
 // Handle buttons style
@@ -301,15 +308,16 @@ document.addEventListener(
 	false
 );
 
-window.addEventListener('scroll', () => {
-	if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
-		loadCards();
-	}
-	if (window.scrollY > document.documentElement.clientHeight) {
-		document.getElementById('back-to-top').style.visibility = 'visible';
-	} else {
-		document.getElementById('back-to-top').style.visibility = 'hidden';
-	}
+window.addEventListener("scroll", () => {
+  if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
+    loadCards();
+  }
+  if (window.scrollY > document.documentElement.clientHeight) {
+    document.getElementById("back-to-top").style.visibility = "visible";
+  } else {
+    document.getElementById("back-to-top").style.visibility = "hidden";
+  }
 });
 
-document.getElementById('back-to-top').addEventListener('click', handleArrow);
+// NO PASAR!!!!!! NO TRESPASS!!!!!
+document.getElementById("back-to-top").addEventListener("click", handleArrow);

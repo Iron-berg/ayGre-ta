@@ -1,47 +1,54 @@
-class MongoService {
-	constructor() {
-		this.User = require('../models/user');
-	}
+class MongoUserService {
+  constructor() {
+    this.User = require("../models/user");
+  }
 
-	getUsersByName = async function(name) {
-		const users = await this.User.find({
-			username: { $regex: name, $options: 'i' }
-		});
+  getUsersByName = async function(name) {
+    const users = await this.User.find({
+      username: { $regex: name, $options: "i" }
+    });
 
-		return users;
-	};
+    return users;
+  };
 
-	addFollowed = async function(idToFollow, user) {
-		try {
-			// First check wether is already following
-			if (await this.alreadyFollowing(idToFollow, user)) {
-				console.log('Already following');
-			} else {
-				// Find user to be followed and update followers
-				const userToFollow = await this.User.findByIdAndUpdate(idToFollow, {
-					$inc: { followers: 1, gretaPoints: 1 }
-				});
+  addFollowed = async function(idToFollow, user) {
+    try {
+      // First check wether is already following or it is himself or herself
+      if (
+        (await this.alreadyFollowing(idToFollow, user)) ||
+        idToFollow === user
+      ) {
+        console.log("Already following or trying to follow yourself, idiot!");
+      } else {
+        // Find user to be followed and update Greta Points
+        const userToFollow = await this.User.findByIdAndUpdate(idToFollow, {
+          $inc: { gretaPoints: 1 }
+        });
 
-				// Add user followed to current user
-				const currentUser = await this.User.findById(user);
-				currentUser.followings.push(userToFollow);
-				currentUser.save();
-			}
-		} catch (e) {
-			console.log('ERROR IN DATABASE ' + e);
-		}
-	};
+        // Add user followed to current user
+        const currentUser = await this.User.findById(user);
+        currentUser.followings.push(userToFollow);
+        currentUser.save();
 
-	alreadyFollowing = async function(idToFollow, user) {
-		let following = false;
-		const found = await this.User.findById(user).populate('followings');
+        // Add current user as a follower
+        userToFollow.followers.push(currentUser);
+        userToFollow.save();
+      }
+    } catch (e) {
+      console.log("ERROR IN DATABASE " + e);
+    }
+  };
 
-		found.followings.forEach(f => {
-			if (f.id === idToFollow) following = true;
-		});
+  alreadyFollowing = async function(idToFollow, user) {
+    let following = false;
+    const found = await this.User.findById(user).populate("followings");
 
-		return following;
-	};
+    found.followings.forEach(f => {
+      if (f.id === idToFollow) following = true;
+    });
+
+    return following;
+  };
 }
 
-module.exports = new MongoService();
+module.exports = new MongoUserService();
