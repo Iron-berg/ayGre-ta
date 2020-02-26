@@ -3,7 +3,7 @@ const axios = require("axios");
 class OpenUvService {
   constructor() {
     this.service = axios.create({
-      //baseURL: "https://api.openuv.io/api/v1/uv",
+      baseURL: "https://api.openuv.io/api/v1/uv",
       headers: { "x-access-token": process.env.API_SUN_TOKEN }
     });
   }
