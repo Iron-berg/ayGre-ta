@@ -8,7 +8,7 @@ const onPostClick = async function() {
 
   await postThunberg(message, loggedUser);
   const response = await getUserThunbergs(loggedUser);
-  console.log("A VER EL RESPONSE DATA " + response.data);
+
   document.querySelector("#thunbergsboard").innerHTML = response.data;
   document.getElementById("message").value = "";
 
@@ -21,6 +21,11 @@ const onLikeClick = async function(id) {
     .getElementById("btnThunberg")
     .getAttribute("data-userid");
   await likeThunberg(id, loggedUser);
+  const response = await getUserThunbergs(loggedUser);
+
+  document.querySelector("#thunbergsboard").innerHTML = response.data;
+
+  document.getElementById("btnThunberg").addEventListener("click", onPostClick);
 };
 
 document.getElementById("btnThunberg").addEventListener("click", onPostClick);
