@@ -40,6 +40,16 @@
 	padding: 0px 5px;
 }
 
+#following-label,
+#followers-label {
+	cursor: pointer;
+	&:hover {
+		color: #2a7886;
+	}
+}
+
+#following-label,
+#followers-label,
 #points-label,
 #fav-news,
 .far,
