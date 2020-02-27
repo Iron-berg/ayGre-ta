@@ -19,7 +19,6 @@ router.get('/user', ensureLogin.ensureLoggedIn(), async (req, res, next) => {
 				isTopUser: index < 5
 			};
 		});
-
 		const currentUser = platformUsers.find(user => user.username === req.user.username);
 
 		User.findById(req.user.id).populate('followings').populate('followers').exec((err, user) => {
@@ -33,8 +32,16 @@ router.get('/user', ensureLogin.ensureLoggedIn(), async (req, res, next) => {
 					currentUser,
 					numOfFavs: req.user.favoriteNews.length,
 					thunbergs,
-					follower: user.followers.map(user => user.username),
-					following: user.followings.map(user => user.username)
+					follower: user.followers.map(user => ({
+						id: user._id,
+						username: user.username,
+						mutuals: req.user.followings.includes(user._id)
+					})),
+					following: user.followings.map(user => ({
+						id: user._id,
+						username: user.username,
+						mutuals: user.followings.includes(req.user._id)
+					}))
 				});
 			}
 		});

@@ -5,6 +5,7 @@
 		font-size: 3rem;
 		font-family: 'Lobster', cursive;
 		color: #138496;
+		text-shadow: -.02em 0 #272343, 0 .02em #272343, .02em 0 #272343, 0 -.02em #272343;
 	}
 	.title-container {
 		flex-grow: 2;
@@ -48,4 +49,17 @@
 		border-bottom-left-radius: .25rem;
 		border-top: none;
 	}
+}
+
+/* SOCIAL MODAL SPECIFIC RULES */
+.follow-btn,
+.unfollow-btn {
+	font-size: 1.1rem;
+	margin-left: .2em;
+}
+.follow-btn:hover {
+	color: #1a8a77;
+}
+.unfollow-btn:hover {
+	color: #b33300;
 }

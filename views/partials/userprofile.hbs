@@ -14,11 +14,11 @@
       <hr>
       <div class="row">
         <div class="col">
-          <p id="followers-label" data-toggle="modal" data-target="#join-modal">Followers</p>
+          <p id="followers-label" data-toggle="modal" data-target="#modal">Followers</p>
           <h3>{{user.followers.length}} <i class="fas fa-users"></i></h3>
         </div>
         <div class="col">
-          <p id="following-label" data-toggle="modal" data-target="#join-modal">Following</p>
+          <p id="following-label" data-toggle="modal" data-target="#modal">Following</p>
           <h3>{{user.followings.length}} <i class="fas fa-user-check"></i></h3>
         </div>
       </div>
@@ -32,4 +32,4 @@
   </div>
 </div>
 
-{{> modal modalTitle="Folks of ayGre-ta" firstTab="Followers" secondTab="Following"}}
+{{> modal modalTitle="Folks of ayGre-ta" firstTab="Followers" firstID="followers" secondTab="Following" secondID="following"}}
