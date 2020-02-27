@@ -1,12 +1,10 @@
 // Functions related to DOM manipulation
 const updateLink = () => {
-
 	const navLinks = [ ...document.querySelectorAll('#navbarNav .nav-link') ];
 	const currentLink = document.querySelector('#navbarNav a[href="' + location.pathname + '"]');
 
 	navLinks.forEach(link => link.classList.remove('active'));
 	currentLink.classList.add('active');
-
 };
 
 // Home page - Data section
@@ -79,27 +77,22 @@ const populateCarousel = async () => {
 	for (let i = 0; i < 5; i++) {
 		let container = document.createElement('div');
 
-    container.setAttribute("class", `carousel-item ${i === 0 ? "active" : ""}`);
-    container.innerHTML = `<div class="card text-white">
+		container.setAttribute('class', `carousel-item ${i === 0 ? 'active' : ''}`);
+		container.innerHTML = `<div class="card text-white">
                               <div class="img-gradient">
 															  <img class="d-block w-100" src="${articles[i].pictureUrl}">
                               </div>
                               <div class="carousel-caption">
                                 <h4>${articles[i].headline}</h4>
-                                ${
-                                  i === 4
-                                    ? '<a href="/news">Discover more in our news section</a>'
-                                    : ""
-                                }
+                                ${i === 4 ? '<a href="/news">Discover more in our news section</a>' : ''}
 													    </div>
 													</div>`;
 
 		document.getElementById('carousel').appendChild(container);
 	}
-
 };
 
-// News page
+// News date formatting
 const formatDate = date => {
 	const Months = [
 		'January',
@@ -151,6 +144,7 @@ const handleFavorites = e => {
 		.catch(err => console.log('something went wrong', err));
 };
 
+// News page
 let loadedNews = [];
 let lastLoaded;
 const populateCards = async () => {
@@ -199,7 +193,7 @@ const populateCards = async () => {
 	document.querySelectorAll('.fav-btn').forEach(button => button.addEventListener('click', handleFavorites));
 };
 
-// News page - lazy load implementation
+// Lazy load implementation
 const loadCards = async () => {
 	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
 
@@ -251,12 +245,12 @@ const loadCards = async () => {
 
 // Implement back to top button
 const handleArrow = () => {
-  window.scrollTo(0, 0);
+	window.scrollTo(0, 0);
 
-  document.getElementById("back-to-top").style.visibility = "hidden";
+	document.getElementById('back-to-top').style.visibility = 'hidden';
 };
 
-// Handle buttons style
+// Handle fav button style
 const handleBtn = () => {
 	document.querySelectorAll('.user-fav').forEach(btn => {
 		btn.addEventListener('mouseenter', e => {
@@ -281,6 +275,42 @@ const handleUserFavs = e => {
 		})
 		.catch(error => console.log(error));
 };
+
+// User's social interactions
+document.querySelectorAll('.follow-btn').forEach(btn =>
+	btn.addEventListener('click', async e => {
+		const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
+		const id = e.target.getAttribute('data-followerid');
+		console.log('user to follow ', id, 'current user ', currentUser);
+
+		await addFollowing(id, currentUser);
+	})
+);
+
+// THIS SHOULD BE MOVED TO axiosServices.js ❗️
+async function removeFollowing(userToUnfollow, currentUser) {
+	try {
+		const response = await axios.post('/ddbb/removeFollowing', {
+			userToUnfollow,
+			currentUser
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+// ========================================
+document.querySelectorAll('.unfollow-btn').forEach(btn => {
+	btn.addEventListener('click', async e => {
+		console.log(e);
+		const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
+		const id = e.target.getAttribute('data-followerid');
+		console.log('user to unfollow ', id, 'current user ', currentUser);
+
+		await removeFollowing(id, currentUser);
+	});
+});
 
 // Set up event listeners
 document.addEventListener(
@@ -308,16 +338,16 @@ document.addEventListener(
 	false
 );
 
-window.addEventListener("scroll", () => {
-  if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
-    loadCards();
-  }
-  if (window.scrollY > document.documentElement.clientHeight) {
-    document.getElementById("back-to-top").style.visibility = "visible";
-  } else {
-    document.getElementById("back-to-top").style.visibility = "hidden";
-  }
+window.addEventListener('scroll', () => {
+	if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
+		loadCards();
+	}
+	if (window.scrollY > document.documentElement.clientHeight) {
+		document.getElementById('back-to-top').style.visibility = 'visible';
+	} else {
+		document.getElementById('back-to-top').style.visibility = 'hidden';
+	}
 });
 
 // NO PASAR!!!!!! NO TRESPASS!!!!!
-document.getElementById("back-to-top").addEventListener("click", handleArrow);
+document.getElementById('back-to-top').addEventListener('click', handleArrow);

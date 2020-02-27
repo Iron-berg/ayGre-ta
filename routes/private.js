@@ -50,4 +50,13 @@ router.get('/user', ensureLogin.ensureLoggedIn(), async (req, res, next) => {
 	}
 });
 
+// POST - remove following * this should be moved to services.js *
+
+const mongoUserService = require('../services/mongoUserService'); // temporary import
+
+router.post('/ddbb/removeFollowing', async (req, res, next) => {
+	const response = await mongoUserService.removeFollowing(req.body.userToUnfollow, req.body.currentUser);
+	res.json(response);
+});
+
 module.exports = router;
