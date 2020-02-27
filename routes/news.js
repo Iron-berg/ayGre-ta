@@ -15,7 +15,12 @@ router.get('/userFavs', (req, res) => {
 			console.log(err);
 			return res.redirect('/user');
 		} else {
-			res.render('userFavs', { favNews: user.favoriteNews });
+			const newsOrdered = user.favoriteNews.sort(
+				(a, b) => b.timesFavorited - a.timesFavorited || new Date(b.published) - new Date(a.published)
+			);
+
+			console.log('rendering user favs', user.favoriteNews);
+			res.render('userFavs', { favNews: newsOrdered });
 		}
 	});
 });
@@ -23,13 +28,13 @@ router.get('/userFavs', (req, res) => {
 // POST - favorite news
 router.post('/favorite', async (req, res) => {
 	try {
-		const { pictureUrl, headline, body, externalUrl, published, favorite } = req.body;
+		const { pictureUrl, headline, author, body, externalUrl, published, favorite } = req.body;
 		const newsFaved = await News.findOne({ externalUrl });
 		console.log('news exists', newsFaved);
 		const currentUser = await User.findById(req.user.id);
 
 		if (!newsFaved) {
-			const newsCreated = await News.create({ pictureUrl, headline, body, externalUrl, published });
+			const newsCreated = await News.create({ pictureUrl, headline, author, body, externalUrl, published });
 			console.log('news added to ddbb', newsCreated);
 
 			console.log('adding one!');

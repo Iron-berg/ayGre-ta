@@ -1,0 +1,42 @@
+<div class="leaderboard">
+  <div class="row board-title">
+    <p>Top users</p>
+  </div>
+  <div class="row table-heading">
+    <div class="col-3"></div>
+    <div class="col-3 text-center">
+      <i class="fas fa-users"></i>
+      <p>Followers</p>
+    </div>
+    <div class="col-2 text-center">
+      <i class="fas fa-hand-peace"></i>
+      <p>Likes</p>
+    </div>
+    <div class="col-4 text-center">
+      <i class="fas fa-medal"></i>
+      <p>Greta points</p>
+    </div>
+  </div>
+  {{#each platformUser}}
+  <div class="row table-content">
+    {{#if isCurrentUser}}
+      <div class="col-3 current-user">Your stats</div>
+    {{else}}
+      <div class="col-3">{{username}}</div>
+    {{/if}}
+    <div class="col-3 text-center stats">{{followers}}</div>
+    <div class="col-2 text-center stats">{{likes}}</div>
+    <div class="col-4 text-center stats">{{gretaPoints}}</div>
+  </div>
+  {{/each}}
+  {{#unless currentUser.isTopUser}}
+  <div id="bottom-user" class="row table-content">
+    <div class="col-3 current-user">Your stats</div>
+    <div class="col-3 text-center stats">{{currentUser.followers}}</div>
+    <div class="col-2 text-center stats">{{currentUser.likes}}</div>
+    <div class="col-4 text-center stats">{{currentUser.gretaPoints}}</div>
+  </div>
+  {{else}}
+    <div class="row table-content footer-table"></div>
+  {{/unless }}
+</div>

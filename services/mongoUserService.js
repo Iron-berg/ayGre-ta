@@ -1,4 +1,4 @@
-class MongoService {
+class MongoUserService {
   constructor() {
     this.User = require("../models/user");
   }
@@ -13,19 +13,26 @@ class MongoService {
 
   addFollowed = async function(idToFollow, user) {
     try {
-      // First check wether is already following
-      if (await this.alreadyFollowing(idToFollow, user)) {
-        console.log("Already following");
+      // First check wether is already following or it is himself or herself
+      if (
+        (await this.alreadyFollowing(idToFollow, user)) ||
+        idToFollow === user
+      ) {
+        console.log("Already following or trying to follow yourself, idiot!");
       } else {
-        // Find user to be followed and update followers
+        // Find user to be followed and update Greta Points
         const userToFollow = await this.User.findByIdAndUpdate(idToFollow, {
-          $inc: { followers: 1 }
+          $inc: { gretaPoints: 1 }
         });
 
         // Add user followed to current user
         const currentUser = await this.User.findById(user);
         currentUser.followings.push(userToFollow);
         currentUser.save();
+
+        // Add current user as a follower
+        userToFollow.followers.push(currentUser);
+        userToFollow.save();
       }
     } catch (e) {
       console.log("ERROR IN DATABASE " + e);
@@ -44,4 +51,4 @@ class MongoService {
   };
 }
 
-module.exports = new MongoService();
+module.exports = new MongoUserService();

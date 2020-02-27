@@ -1,0 +1,22 @@
+.error-page {
+	h1 {
+		color: #6b717f;
+		font-weight: normal;
+		font-size: 4.5rem;
+
+		span {
+			font-weight: bold;
+			color: #8b0000;
+		}
+	}
+	p {
+		color: #2a7886;
+		font-size: 1.5rem;
+		padding: 1.5em 0;
+	}
+	img {
+		border-radius: 1em;
+		border: solid .05em #272343;
+		box-shadow: .1em .1em 0 #272343;
+	}
+}

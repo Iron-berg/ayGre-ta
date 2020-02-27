@@ -1,0 +1,20 @@
+.text-news {
+	border: .1em solid #2a7886;
+	padding: 2em;
+	border-radius: 2em;
+	color: #272343;
+	font-size: 1.2rem;
+	text-align: center;
+
+	a {
+		text-decoration: none;
+		color: #2a7886;
+
+		&:hover {
+			color: #1d5661;
+			.fa-leaf {
+				color: #67c979;
+			}
+		}
+	}
+}

@@ -1,0 +1,11 @@
+<div class="card thunberg">
+  <div class="card-header">
+    {{this.author.username}}
+  </div>
+  <div class="card-body">
+    <p class="card-text">{{this.message}}</p>
+  </div>
+  <div class="card-footer text-center">
+    {{this.likes}} <i data-thunbergid="{{this.id}}" onclick="onLikeClick('{{this.id}}');" class="far fa-hand-peace"></i>
+  </div>
+</div>

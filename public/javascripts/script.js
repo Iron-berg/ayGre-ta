@@ -1,10 +1,12 @@
 // Functions related to DOM manipulation
 const updateLink = () => {
-	const navLinks = [ ...document.querySelectorAll('#navbar .nav-link') ];
-	const currentLink = document.querySelector('a[href="' + location.pathname + '"]');
+
+	const navLinks = [ ...document.querySelectorAll('#navbarNav .nav-link') ];
+	const currentLink = document.querySelector('#navbarNav a[href="' + location.pathname + '"]');
 
 	navLinks.forEach(link => link.classList.remove('active'));
 	currentLink.classList.add('active');
+
 };
 
 // Home page - Data section
@@ -77,19 +79,24 @@ const populateCarousel = async () => {
 	for (let i = 0; i < 5; i++) {
 		let container = document.createElement('div');
 
-		container.setAttribute('class', `carousel-item ${i === 0 ? 'active' : ''}`);
-		container.innerHTML = `<div class="card text-white">
+    container.setAttribute("class", `carousel-item ${i === 0 ? "active" : ""}`);
+    container.innerHTML = `<div class="card text-white">
                               <div class="img-gradient">
 															  <img class="d-block w-100" src="${articles[i].pictureUrl}">
                               </div>
                               <div class="carousel-caption">
                                 <h4>${articles[i].headline}</h4>
-                                ${i === 4 ? '<a href="/news">Discover more in our news section</a>' : ''}
+                                ${
+                                  i === 4
+                                    ? '<a href="/news">Discover more in our news section</a>'
+                                    : ""
+                                }
 													    </div>
 													</div>`;
 
 		document.getElementById('carousel').appendChild(container);
 	}
+
 };
 
 // News page
@@ -120,14 +127,16 @@ const formatDate = date => {
 const handleFavorites = e => {
 	const pictureUrl = e.target.offsetParent.children[0].src;
 	const headline = e.target.offsetParent.children[1].children[0].innerText;
-	const body = e.target.offsetParent.children[1].children[1].innerText;
-	const externalUrl = e.target.offsetParent.children[1].children[2].firstElementChild.href;
+	const author = e.target.offsetParent.children[1].children[1].innerText.slice(3);
+	const body = e.target.offsetParent.children[1].children[2].innerText;
+	const externalUrl = e.target.offsetParent.children[1].children[3].firstElementChild.href;
 	const published = e.target.offsetParent.children[2].innerText.slice(13);
 
 	axios
 		.post('/favorite', {
 			pictureUrl,
 			headline,
+			author: author.toLowerCase(),
 			body,
 			externalUrl,
 			published,
@@ -146,6 +155,9 @@ let loadedNews = [];
 let lastLoaded;
 const populateCards = async () => {
 	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
+	console.log(articles);
+
+	document.getElementById('news-container').removeChild(document.getElementById('spinner'));
 
 	for (let i = 0; i < 6; i++) {
 		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
@@ -162,7 +174,8 @@ const populateCards = async () => {
 														<img src="${articles[i].pictureUrl}" class="card-img-top">
 														<div class="card-body">
 															<h5 class="card-title">${articles[i].headline}</h5>
-                              <p class="card-text">${articles[i].body}</p>
+                              <small class="card-text text-muted author">By ${articles[i].author}</small>
+                              <p class="card-text pt-3">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
                                 <div class="btn-container ${!isLoggedGuardian || !isLoggedNews
@@ -191,6 +204,10 @@ const loadCards = async () => {
 	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
 
 	for (let i = lastLoaded + 1; i <= lastLoaded + 3; i++) {
+		if (articles.length === loadedNews.length) {
+			break;
+		}
+
 		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
 			? newsSaved.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
 			: '0';
@@ -199,16 +216,14 @@ const loadCards = async () => {
 				? 'favorite'
 				: '';
 
-		if (articles.length === loadedNews.length) {
-			break;
-		}
 		if (!loadedNews.includes(articles[i])) {
 			let container = document.createElement('div');
 			container.setAttribute('class', 'col-12 col-md-6 col-lg-4 pt-5');
 			container.innerHTML = `<div class="card">
 														<img src="${articles[i].pictureUrl}" class="card-img-top">
 														<div class="card-body">
-															<h5 class="card-title">${articles[i].headline}</h5>
+                              <h5 class="card-title">${articles[i].headline}</h5>
+                              <small class="card-text text-muted author">By ${articles[i].author}</small>
 															<p class="card-text">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
@@ -236,9 +251,9 @@ const loadCards = async () => {
 
 // Implement back to top button
 const handleArrow = () => {
-	window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
 
-	document.getElementById('back-to-top').style.visibility = 'hidden';
+  document.getElementById("back-to-top").style.visibility = "hidden";
 };
 
 // Handle buttons style
@@ -259,7 +274,7 @@ const handleBtn = () => {
 // Handle user's favorites
 const handleUserFavs = e => {
 	axios
-		.post('/user/favs', { externalUrl: e.target.offsetParent.children[1].children[2].firstElementChild.href })
+		.post('/user/favs', { externalUrl: e.target.offsetParent.children[1].children[3].firstElementChild.href })
 		.then(res => {
 			e.target.classList.toggle('favorite');
 			e.target.offsetParent.offsetParent.remove();
@@ -293,15 +308,16 @@ document.addEventListener(
 	false
 );
 
-window.addEventListener('scroll', () => {
-	if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
-		loadCards();
-	}
-	if (window.scrollY > document.documentElement.clientHeight) {
-		document.getElementById('back-to-top').style.visibility = 'visible';
-	} else {
-		document.getElementById('back-to-top').style.visibility = 'hidden';
-	}
+window.addEventListener("scroll", () => {
+  if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
+    loadCards();
+  }
+  if (window.scrollY > document.documentElement.clientHeight) {
+    document.getElementById("back-to-top").style.visibility = "visible";
+  } else {
+    document.getElementById("back-to-top").style.visibility = "hidden";
+  }
 });
 
-document.getElementById('back-to-top').addEventListener('click', handleArrow);
+// NO PASAR!!!!!! NO TRESPASS!!!!!
+document.getElementById("back-to-top").addEventListener("click", handleArrow);

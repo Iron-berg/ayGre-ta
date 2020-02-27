@@ -1,6 +1,12 @@
 .modal {
 	top: 20%;
-
+	.modal-title {
+		font-family: 'Lobster', cursive;
+		font-size: 3rem;
+		text-shadow: 0.02em 0.02em 0 #272343, -0.02em 0em 0 #272343, 0em -0.02em 0 #272343, 0.05em 0.05em 0 #333;
+		color: #79bac1;
+		margin-right: 0;
+	}
 	.title-container {
 		flex-grow: 2;
 		text-align: center;
@@ -23,7 +29,6 @@
 	.nav-tabs {
 		border-bottom: solid 1px #272343;
 	}
-
 	[aria-selected="false"] {
 		color: rgba(39, 35, 67, .4);
 		&:hover {
@@ -31,7 +36,6 @@
 			border-color: rgba(39, 35, 67, .7);
 		}
 	}
-
 	.nav-link.active {
 		color: #272343;
 		border-color: #272343 #272343 #fff;
