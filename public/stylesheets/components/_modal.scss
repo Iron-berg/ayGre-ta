@@ -1,11 +1,11 @@
+/* MODALS COMMON RULES */
 .modal {
-	top: 20%;
+	top: 5%;
 	.modal-title {
-		font-family: 'Lobster', cursive;
 		font-size: 3rem;
-		text-shadow: 0.02em 0.02em 0 #272343, -0.02em 0em 0 #272343, 0em -0.02em 0 #272343, 0.05em 0.05em 0 #333;
-		color: #79bac1;
-		margin-right: 0;
+		font-family: 'Lobster', cursive;
+		color: #138496;
+		text-shadow: -.02em 0 #272343, 0 .02em #272343, .02em 0 #272343, 0 -.02em #272343;
 	}
 	.title-container {
 		flex-grow: 2;
@@ -13,17 +13,10 @@
 	}
 	#btn-close {
 		color: rgba(39, 35, 67, .7);
-
 		&:hover {
 			color: #272343;
 			opacity: 100;
 		}
-	}
-	.tab-content {
-		border: solid 1px #272343;
-		border-bottom-right-radius: .25rem;
-		border-bottom-left-radius: .25rem;
-		border-top: none;
 	}
 	.modal-header,
 	.nav-tabs {
@@ -39,5 +32,57 @@
 	.nav-link.active {
 		color: #272343;
 		border-color: #272343 #272343 #fff;
+	}
+}
+
+/* AUTH MODAL SPECIFIC RULES*/
+.auth {
+	top: 20%;
+	.modal-title {
+		text-shadow: 0.02em 0.02em 0 #272343, -0.02em 0em 0 #272343, 0em -0.02em 0 #272343, 0.05em 0.05em 0 #333;
+		color: #79bac1;
+		margin-right: 0;
+	}
+	.tab-content {
+		border: solid 1px #272343;
+		border-bottom-right-radius: .25rem;
+		border-bottom-left-radius: .25rem;
+		border-top: none;
+	}
+}
+
+/* SOCIAL MODAL SPECIFIC RULES */
+.modal-dialog-scrollable {
+	height: 470px;
+
+	.social-tab {
+		text-align: center;
+		p {
+			margin-bottom: 0;
+			margin-top: 1em;
+			font-size: 1.1rem;
+		}
+		small {
+			background-color: #e3f6f5;
+			color: #aaaaaa;
+			padding: .2em .5em;
+			border-radius: .8em;
+		}
+		.follow-btn,
+		.unfollow-btn {
+			font-size: 1.1rem;
+			margin-left: .2em;
+			cursor: pointer;
+		}
+		.unfollow-btn:hover {
+			color: #b33300;
+		}
+		.follow-btn:hover {
+			color: #1a8a77;
+		}
+		.no-users {
+			flex-grow: 2;
+			margin-bottom: 1em;
+		}
 	}
 }

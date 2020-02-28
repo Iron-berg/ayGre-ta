@@ -1,12 +1,10 @@
 // Functions related to DOM manipulation
 const updateLink = () => {
-
 	const navLinks = [ ...document.querySelectorAll('#navbarNav .nav-link') ];
 	const currentLink = document.querySelector('#navbarNav a[href="' + location.pathname + '"]');
 
 	navLinks.forEach(link => link.classList.remove('active'));
 	currentLink.classList.add('active');
-
 };
 
 // Home page - Data section
@@ -59,47 +57,41 @@ const fetchNews = async () => {
 	const { news, isLoggedNews, uniqueIdsApi } = await getNewsArticles();
 	const { guardianNews, isLoggedGuardian, uniqueIdsGuardian, newsSaved } = await getGuardianArticles();
 
-	let articles;
+	let fetchedArticles;
 	if (news && guardianNews) {
-		articles = [ ...news, ...guardianNews ].sort((a, b) => new Date(b.published) - new Date(a.published));
+		fetchedArticles = [ ...news, ...guardianNews ].sort((a, b) => new Date(b.published) - new Date(a.published));
 	} else {
 		console.log('not able to get news', guardianNews);
 		console.log('not able to get news', news);
-		articles = news
+		fetchedArticles = news
 			? news.sort((a, b) => new Date(b.published) - new Date(a.published))
 			: guardianNews.sort((a, b) => new Date(b.published) - new Date(a.published));
 	}
-	return { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved };
+	return { fetchedArticles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved };
 };
 
+const articles = [];
 const populateCarousel = async () => {
-	const { articles } = await fetchNews();
-
 	document.getElementById('carousel').removeChild(document.getElementById('spinner'));
 	for (let i = 0; i < 5; i++) {
 		let container = document.createElement('div');
 
-    container.setAttribute("class", `carousel-item ${i === 0 ? "active" : ""}`);
-    container.innerHTML = `<div class="card text-white">
+		container.setAttribute('class', `carousel-item ${i === 0 ? 'active' : ''}`);
+		container.innerHTML = `<div class="card text-white">
                               <div class="img-gradient">
 															  <img class="d-block w-100" src="${articles[i].pictureUrl}">
                               </div>
                               <div class="carousel-caption">
                                 <h4>${articles[i].headline}</h4>
-                                ${
-                                  i === 4
-                                    ? '<a href="/news">Discover more in our news section</a>'
-                                    : ""
-                                }
+                                ${i === 4 ? '<a href="/news">Discover more in our news section</a>' : ''}
 													    </div>
 													</div>`;
 
 		document.getElementById('carousel').appendChild(container);
 	}
-
 };
 
-// News page
+// News date formatting
 const formatDate = date => {
 	const Months = [
 		'January',
@@ -151,20 +143,24 @@ const handleFavorites = e => {
 		.catch(err => console.log('something went wrong', err));
 };
 
+// News page
 let loadedNews = [];
-let lastLoaded;
+let lastLoaded,
+	isLoggedNewsGlobal,
+	isLoggedGuardianGlobal,
+	uniqueIdsApiGlobal,
+	uniqueIdsGuardianGlobal,
+	newsSavedGlobal;
 const populateCards = async () => {
-	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
-	console.log(articles);
-
 	document.getElementById('news-container').removeChild(document.getElementById('spinner'));
 
 	for (let i = 0; i < 6; i++) {
-		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
-			? newsSaved.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
+		let counter = newsSavedGlobal.find(news => news.externalUrl === articles[i].externalUrl)
+			? newsSavedGlobal.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
 			: '0';
 		let isFavorite =
-			uniqueIdsGuardian.includes(articles[i].externalUrl) || uniqueIdsApi.includes(articles[i].externalUrl)
+			uniqueIdsGuardianGlobal.includes(articles[i].externalUrl) ||
+			uniqueIdsApiGlobal.includes(articles[i].externalUrl)
 				? 'favorite'
 				: '';
 
@@ -178,7 +174,7 @@ const populateCards = async () => {
                               <p class="card-text pt-3">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
-                                <div class="btn-container ${!isLoggedGuardian || !isLoggedNews
+                                <div class="btn-container ${!isLoggedGuardianGlobal || !isLoggedNewsGlobal
 									? 'btn-container-hidden'
 									: ''}">
                                   <p class="counter">${counter}</p>
@@ -199,20 +195,19 @@ const populateCards = async () => {
 	document.querySelectorAll('.fav-btn').forEach(button => button.addEventListener('click', handleFavorites));
 };
 
-// News page - lazy load implementation
+// Lazy load implementation
 const loadCards = async () => {
-	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
-
 	for (let i = lastLoaded + 1; i <= lastLoaded + 3; i++) {
 		if (articles.length === loadedNews.length) {
 			break;
 		}
 
-		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
-			? newsSaved.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
+		let counter = newsSavedGlobal.find(news => news.externalUrl === articles[i].externalUrl)
+			? newsSavedGlobal.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
 			: '0';
 		let isFavorite =
-			uniqueIdsGuardian.includes(articles[i].externalUrl) || uniqueIdsApi.includes(articles[i].externalUrl)
+			uniqueIdsGuardianGlobal.includes(articles[i].externalUrl) ||
+			uniqueIdsApiGlobal.includes(articles[i].externalUrl)
 				? 'favorite'
 				: '';
 
@@ -227,7 +222,7 @@ const loadCards = async () => {
 															<p class="card-text">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
-                                <div class="btn-container ${!isLoggedGuardian || !isLoggedNews
+                                <div class="btn-container ${!isLoggedGuardianGlobal || !isLoggedNewsGlobal
 									? 'btn-container-hidden'
 									: ''}">
                                   <p class="counter">${counter}</p>
@@ -251,12 +246,12 @@ const loadCards = async () => {
 
 // Implement back to top button
 const handleArrow = () => {
-  window.scrollTo(0, 0);
+	window.scrollTo(0, 0);
 
-  document.getElementById("back-to-top").style.visibility = "hidden";
+	document.getElementById('back-to-top').style.visibility = 'hidden';
 };
 
-// Handle buttons style
+// Handle fav button style
 const handleBtn = () => {
 	document.querySelectorAll('.user-fav').forEach(btn => {
 		btn.addEventListener('mouseenter', e => {
@@ -282,16 +277,102 @@ const handleUserFavs = e => {
 		.catch(error => console.log(error));
 };
 
+// THESE FUNCTIONS SHOULD BE MOVED TO axiosServices.js ❗️
+async function removeFollowing(userToUnfollow, currentUser) {
+	try {
+		const response = await axios.post('/ddbb/removeFollowing', {
+			userToUnfollow,
+			currentUser
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}
+async function getUsersFriends(userid) {
+	try {
+		const response = await axios.get('/ddbb/getUsersFriends', {
+			params: { userid }
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+// User's social interactions
+const closeModal = () => {
+	const modal = document.querySelector('.modal');
+	modal.classList.remove('show');
+	modal.style.display = 'none';
+	document.body.classList.remove('modal-open');
+	document.querySelector('.modal-backdrop').remove();
+};
+
+const handleFollow = async e => {
+	const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
+	const id = e.target.getAttribute('data-followerid');
+	console.log('user to follow ', id, 'current user ', currentUser);
+
+	await addFollowing(id, currentUser);
+
+	const response = await getUsersFriends(currentUser);
+	const modal = document.getElementById('modal');
+	modal.remove();
+	document.querySelector('.main-section').insertAdjacentHTML('beforeend', response.data);
+
+	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
+	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
+};
+
+const handleUnfollow = async e => {
+	const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
+	const id = e.target.getAttribute('data-followerid');
+	console.log('user to unfollow ', id, 'current user ', currentUser);
+
+	await removeFollowing(id, currentUser);
+
+	const response = await getUsersFriends(currentUser);
+	const modal = document.getElementById('modal');
+	modal.remove();
+	document.querySelector('.main-section').insertAdjacentHTML('beforeend', response.data);
+
+	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
+
+	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
+};
+
 // Set up event listeners
 document.addEventListener(
 	'DOMContentLoaded',
-	() => {
+	async () => {
 		console.log('IronGenerator JS imported successfully!');
 		updateLink();
 		updateUvIndex();
 		updateContaminationIndex();
 		updateEpicPhoto();
 		updateTemperature();
+
+		if (location.pathname === '/' || location.pathname === '/news') {
+			const {
+				fetchedArticles,
+				isLoggedNews,
+				isLoggedGuardian,
+				uniqueIdsGuardian,
+				uniqueIdsApi,
+				newsSaved
+			} = await fetchNews();
+
+			// assign value to global variables
+			isLoggedNewsGlobal = isLoggedNews;
+			isLoggedGuardianGlobal = isLoggedGuardian;
+			uniqueIdsApiGlobal = uniqueIdsApi;
+			uniqueIdsGuardianGlobal = uniqueIdsGuardian;
+			newsSavedGlobal = newsSaved;
+
+			articles.push(...fetchedArticles);
+			console.log('articles fetched from APIs ', articles);
+		}
 		if (location.pathname === '/') {
 			populateCarousel();
 		}
@@ -308,16 +389,47 @@ document.addEventListener(
 	false
 );
 
-window.addEventListener("scroll", () => {
-  if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
-    loadCards();
-  }
-  if (window.scrollY > document.documentElement.clientHeight) {
-    document.getElementById("back-to-top").style.visibility = "visible";
-  } else {
-    document.getElementById("back-to-top").style.visibility = "hidden";
-  }
+// Initial set up for social buttons
+document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
+document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
+
+window.addEventListener('scroll', () => {
+	if (window.innerHeight + window.scrollY >= document.body.clientHeight) {
+		loadCards();
+	}
+	if (window.scrollY > document.documentElement.clientHeight) {
+		document.getElementById('back-to-top').style.visibility = 'visible';
+	} else {
+		document.getElementById('back-to-top').style.visibility = 'hidden';
+	}
 });
 
+document.querySelectorAll('.user-detail [data-toggle="modal"]').forEach(toggle =>
+	toggle.addEventListener('click', e => {
+		const followingContent = document.getElementById('following');
+		const followingTab = document.getElementById('following-tab');
+		const followersTab = document.getElementById('followers-tab');
+		const followersContent = document.getElementById('followers');
+
+		if (e.target.id === 'following-label') {
+			followingContent.classList.add('show', 'active');
+			followingTab.classList.add('active');
+			followingTab.setAttribute('aria-selected', true);
+
+			followersContent.classList.remove('show', 'active');
+			followersTab.classList.remove('active');
+			followersTab.setAttribute('aria-selected', false);
+		} else {
+			followersContent.classList.add('show', 'active');
+			followersTab.classList.add('active');
+			followersTab.setAttribute('aria-selected', true);
+
+			followingContent.classList.remove('show', 'active');
+			followingTab.classList.remove('active');
+			followingTab.setAttribute('aria-selected', false);
+		}
+	})
+);
+
 // NO PASAR!!!!!! NO TRESPASS!!!!!
-document.getElementById("back-to-top").addEventListener("click", handleArrow);
+document.getElementById('back-to-top').addEventListener('click', handleArrow);

@@ -74,6 +74,18 @@ hbs.registerHelper("trimDate", function(passedString) {
   return new hbs.SafeString(theString);
 });
 
+// HBS helpers
+hbs.registerHelper('trimName', str => {
+	let normalizedStr = str.trim();
+	if (!normalizedStr.includes(' ')) {
+		console.log('no spaces');
+		return str;
+	}
+	const trimmed = normalizedStr.split(' ');
+	console.log(trimmed);
+	return `${trimmed[0]} ${trimmed[1][0]}.`;
+});
+
 // default value for title local
 app.locals.title = "ayGre-ta";
 
