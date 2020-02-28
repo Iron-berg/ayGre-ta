@@ -83,6 +83,13 @@ app.use((req, res, next) => {
   next();
 });
 
+// Flash alerts
+app.use(function(req, res, next) {
+  res.locals.error = req.flash("error");
+  res.locals.info = req.flash("info");
+  next();
+});
+
 const index = require("./routes/index");
 app.use("/", index);
 

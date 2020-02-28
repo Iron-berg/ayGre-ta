@@ -31,6 +31,7 @@ router.post("/auth/signup", async (req, res, next) => {
       });
     }
   } catch (error) {
+    req.flash("error", "Credentials are necessary.");
     console.log("Credentials are necessary");
     return res.redirect("/");
   }
@@ -42,7 +43,8 @@ router.get("/login/facebook", passport.authenticate("facebook"));
 router.get(
   "/auth/facebook/callback",
   passport.authenticate("facebook", {
-    failureRedirect: "/" // here will redirect to login page
+    failureRedirect: "/", // here will redirect to login page
+    failureFlash: true
   }),
   function(req, res) {
     // Successful authentication, redirect private page.
@@ -56,7 +58,8 @@ router.post(
   "/auth/login",
   passport.authenticate("local", {
     successRedirect: "/user",
-    failureRedirect: "/"
+    failureRedirect: "/",
+    failureFlash: true
   })
 );
 
