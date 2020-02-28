@@ -20,48 +20,51 @@
         </ul>
         <div class="tab-content" id="myTabContent">
           {{#if user}}
-          <div class="tab-pane fade show active social-tab" id="{{firstID}}" role="tabpanel" aria-labelledby="{{firstID}}-tab">
-            <div class="container pt-3">
-              <div class="row">
-                {{#unless follower}}
-                  <p>You don't have any followers yet</p>
-                {{/unless}}
-                {{#each follower}}
-                  <div class="col-6">
-                    <p>
-                      {{username}}
-                      {{#unless mutuals}}
-                        <i data-followerid="{{id}}" class="fas fa-user-plus follow-btn"></i>
+            <div class="tab-pane fade show active social-tab" id="{{firstID}}" role="tabpanel" aria-labelledby="{{firstID}}-tab">
+              <div class="container pt-3">
+                <div class="row">
+                  {{#unless follower}}
+                    <p class="no-users">You don't have any followers yet</p>
+                  {{/unless}}
+                  {{#each follower}}
+                    <div class="col-6">
+                      <p>
+                        {{username}}
+                        {{#unless mutuals}}
+                          <i data-followerid="{{id}}" class="fas fa-user-plus follow-btn"></i>
+                        {{else}}
+                          <i data-followerid="{{id}}" class="fas fa-user-alt-slash unfollow-btn"></i>
+                        {{/unless}}
+                      </p>
+                      {{#if mutuals}}
+                      <small>You follow each other</small>
                       {{else}}
-                        <i data-followerid="{{id}}" class="fas fa-user-alt-slash unfollow-btn"></i>
-                      {{/unless}}
-                    </p>
-                    {{#if mutuals}}
-                    <small>You follow each other</small>
-                    {{else}}
-                    <small>Follows you</small>
-                    {{/if}}
-                  </div>
-                {{/each}}
+                      <small>Follows you</small>
+                      {{/if}}
+                    </div>
+                  {{/each}}
+                </div>
               </div>
             </div>
-          </div>
-          <div class="tab-pane fade social-tab" id="{{secondID}}" role="tabpanel" aria-labelledby="{{secondID}}-tab">
-            <div class="container pt-3">
-              <div class="row">
-                {{#each following}}
-                  <div class="col-6">
-                    <p>{{username}}<i data-followerid="{{id}}" class="fas fa-user-alt-slash unfollow-btn"></i></p>
-                    {{#if mutuals}}
-                    <small>You follow each other</small>
-                    {{else}}
-                    <small>Doesn't follow you</small>
-                    {{/if}}
-                  </div>
-                {{/each}}
+            <div class="tab-pane fade social-tab" id="{{secondID}}" role="tabpanel" aria-labelledby="{{secondID}}-tab">
+              <div class="container pt-3">
+                <div class="row">
+                  {{#unless following}}
+                    <p class="no-users">You are not following anyone yet</p>
+                  {{/unless}}
+                  {{#each following}}
+                    <div class="col-6">
+                      <p>{{username}}<i data-followerid="{{id}}" class="fas fa-user-alt-slash unfollow-btn"></i></p>
+                      {{#if mutuals}}
+                      <small>You follow each other</small>
+                      {{else}}
+                      <small>Doesn't follow you</small>
+                      {{/if}}
+                    </div>
+                  {{/each}}
+                </div>
               </div>
             </div>
-          </div>
           {{else}}
           <div class="tab-pane fade show active" id="{{firstID}}" role="tabpanel" aria-labelledby="{{firstID}}-tab">
             {{> form id="signup" submit="Sign up" action="Join using"}}

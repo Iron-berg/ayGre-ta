@@ -364,6 +364,14 @@ document.querySelectorAll('.user-detail [data-toggle="modal"]').forEach(toggle =
 			followersContent.classList.remove('show', 'active');
 			followersTab.classList.remove('active');
 			followersTab.setAttribute('aria-selected', false);
+		} else {
+			followersContent.classList.add('show', 'active');
+			followersTab.classList.add('active');
+			followersTab.setAttribute('aria-selected', true);
+
+			followingContent.classList.remove('show', 'active');
+			followingTab.classList.remove('active');
+			followingTab.setAttribute('aria-selected', false);
 		}
 	})
 );

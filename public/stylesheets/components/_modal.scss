@@ -52,14 +52,37 @@
 }
 
 /* SOCIAL MODAL SPECIFIC RULES */
-.follow-btn,
-.unfollow-btn {
-	font-size: 1.1rem;
-	margin-left: .2em;
-}
-.follow-btn:hover {
-	color: #1a8a77;
-}
-.unfollow-btn:hover {
-	color: #b33300;
+.modal-dialog-scrollable {
+	height: 470px;
+
+	.social-tab {
+		text-align: center;
+		p {
+			margin-bottom: 0;
+			margin-top: 1em;
+			font-size: 1.1rem;
+		}
+		small {
+			background-color: #e3f6f5;
+			color: #aaaaaa;
+			padding: .2em .5em;
+			border-radius: .8em;
+		}
+		.follow-btn,
+		.unfollow-btn {
+			font-size: 1.1rem;
+			margin-left: .2em;
+			cursor: pointer;
+		}
+		.unfollow-btn:hover {
+			color: #b33300;
+		}
+		.follow-btn:hover {
+			color: #1a8a77;
+		}
+		.no-users {
+			flex-grow: 2;
+			margin-bottom: 1em;
+		}
+	}
 }
