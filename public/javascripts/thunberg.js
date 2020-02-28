@@ -11,7 +11,10 @@ const onPostClick = async function() {
   document.querySelector("#thunbergsboard").innerHTML = response.data;
   document.getElementById("message").value = "";
 
+  // Re-setting listeners after updating HTML
   document.getElementById("btnThunberg").addEventListener("click", onPostClick);
+  document.getElementById("btnCancel").addEventListener("click", onCancelClick);
+  document.getElementById("message").addEventListener("keyup", onTexting);
 };
 
 // Like Thunberg
@@ -24,21 +27,22 @@ const onLikeClick = async function(id) {
 
   document.querySelector("#thunbergsboard").innerHTML = response.data;
 
+  // Re-setting listeners after updating HTML
   document.getElementById("btnThunberg").addEventListener("click", onPostClick);
+  document.getElementById("btnCancel").addEventListener("click", onCancelClick);
+  document.getElementById("message").addEventListener("keyup", onTexting);
 };
 
-document.getElementById("btnThunberg").addEventListener("click", onPostClick);
-
 // Message character lenght control
-document.getElementById("message").onkeyup = function() {
+const onTexting = function() {
   updateFormStatus();
 };
 
 // Cancel button clears text area
-document.getElementById("btnCancel").addEventListener("click", function() {
+const onCancelClick = function() {
   document.getElementById("message").value = "";
   updateFormStatus();
-});
+};
 
 const updateFormStatus = function() {
   const buttonPost = document.getElementById("btnThunberg");
@@ -56,3 +60,8 @@ const updateFormStatus = function() {
       ? true
       : false;
 };
+
+// Listeners
+document.getElementById("btnThunberg").addEventListener("click", onPostClick);
+document.getElementById("btnCancel").addEventListener("click", onCancelClick);
+document.getElementById("message").addEventListener("keyup", onTexting);
