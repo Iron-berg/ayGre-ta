@@ -349,5 +349,24 @@ window.addEventListener('scroll', () => {
 	}
 });
 
+document.querySelectorAll('.user-detail [data-toggle="modal"]').forEach(toggle =>
+	toggle.addEventListener('click', e => {
+		const followingContent = document.getElementById('following');
+		const followingTab = document.getElementById('following-tab');
+		const followersTab = document.getElementById('followers-tab');
+		const followersContent = document.getElementById('followers');
+
+		if (e.target.id === 'following-label') {
+			followingContent.classList.add('show', 'active');
+			followingTab.classList.add('active');
+			followingTab.setAttribute('aria-selected', true);
+
+			followersContent.classList.remove('show', 'active');
+			followersTab.classList.remove('active');
+			followersTab.setAttribute('aria-selected', false);
+		}
+	})
+);
+
 // NO PASAR!!!!!! NO TRESPASS!!!!!
 document.getElementById('back-to-top').addEventListener('click', handleArrow);
