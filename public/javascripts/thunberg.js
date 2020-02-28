@@ -1,6 +1,5 @@
 // Post Thunberg Form
 const onPostClick = async function() {
-  console.log("PASA");
   const message = document.getElementById("message").value;
   const loggedUser = document
     .getElementById("btnThunberg")
@@ -29,3 +28,24 @@ const onLikeClick = async function(id) {
 };
 
 document.getElementById("btnThunberg").addEventListener("click", onPostClick);
+
+// Message character lenght control
+document.getElementById("message").onkeyup = function() {
+  const buttonPost = document.getElementById("btnThunberg");
+  const charcounter = document.getElementById("characters-left");
+  charcounter.innerHTML = 50 - this.value.length;
+
+  /*   if (parseInt(charcounter.innerHTML) < 0) {
+    charcounter.classList.add("red");
+    buttonPost.disabled = true;
+  } else {
+    charcounter.classList.remove("red");
+    buttonPost.disabled = false;
+  } */
+  this.value.length > 50
+    ? charcounter.classList.add("red")
+    : charcounter.classList.remove("red");
+
+  buttonPost.disabled =
+    this.value.length == 0 || this.value.length > 50 ? true : false;
+};

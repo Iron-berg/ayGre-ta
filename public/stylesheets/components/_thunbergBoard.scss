@@ -5,10 +5,29 @@
 	color: #fff;
 	font-family: "Nanum Gothic", "Helvetica Neue", Arial, sans-serif;
 	margin-bottom: 50px;
+	padding-top: 40px;
 }
 
 #thunberg-form {
 	button {
 		margin: 20px 20px 0 0;
+	}
+
+	.red {
+		color: red;
+	}
+
+	.char-text {
+		font-size: 0.8em;
+	}
+
+	textarea {
+		resize: none;
+	}
+
+	#label-message {
+		font-family: "Lobster", cursive;
+		font-size: 1.5em;
+		margin-bottom: 15px;
 	}
 }
