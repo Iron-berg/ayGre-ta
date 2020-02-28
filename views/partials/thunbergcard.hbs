@@ -1,11 +1,12 @@
 <div class="card thunberg">
   <div class="card-header">
+    {{log 'thunbergslogCard' this}}
     {{this.author.username}}
   </div>
   <div class="card-body">
     <p class="card-text">{{this.message}}</p>
   </div>
-  <div class="card-footer text-center">
-    {{this.likes}} <i data-thunbergid="{{this.id}}" onclick="onLikeClick('{{this.id}}');" class="far fa-hand-peace"></i>
+  <div class="card-footer">
+    <span>{{{trimDate this.createdAt}}}</span> <span class="float-right">{{this.likes}} <i data-thunbergid="{{this.id}}" onclick="onLikeClick('{{this.id}}');" {{#if this.favorite}} class="fas fa-hand-peace"{{else}}class="far fa-hand-peace"{{/if}}></i></span>
   </div>
 </div>

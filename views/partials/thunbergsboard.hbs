@@ -2,16 +2,18 @@
 
   <form id="thunberg-form">
     <div class="form-group">
-      <label for="message">Share your Thunberg</label>
-      <textarea class="form-control" id="message" rows="3"></textarea>
+      <label id="label-message" for="message">Share your Thunberg</label>
+      <textarea class="form-control" id="message" rows="3" maxlength="100"></textarea>
+      <span class="char-text">Characters left: </span><span id="characters-left">50</span>
       <div class="text-right">
         <button type="button" class="btn btn-light">Cancel</button>
-        <button type="button" class="btn btn-dark" id="btnThunberg" data-userid="{{user.id}}" >Post</button>
+        <button type="button" class="btn btn-dark" id="btnThunberg" data-userid="{{user.id}}" disabled>Post</button>
       </div>
     </div>
   </form>
 
   <hr>
+  {{log 'thunbergslog' thunbergs}}
   {{#each thunbergs}}
    {{> thunbergcard this }}
   {{/each}}
