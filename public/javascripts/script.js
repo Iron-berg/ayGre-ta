@@ -57,22 +57,21 @@ const fetchNews = async () => {
 	const { news, isLoggedNews, uniqueIdsApi } = await getNewsArticles();
 	const { guardianNews, isLoggedGuardian, uniqueIdsGuardian, newsSaved } = await getGuardianArticles();
 
-	let articles;
+	let fetchedArticles;
 	if (news && guardianNews) {
-		articles = [ ...news, ...guardianNews ].sort((a, b) => new Date(b.published) - new Date(a.published));
+		fetchedArticles = [ ...news, ...guardianNews ].sort((a, b) => new Date(b.published) - new Date(a.published));
 	} else {
 		console.log('not able to get news', guardianNews);
 		console.log('not able to get news', news);
-		articles = news
+		fetchedArticles = news
 			? news.sort((a, b) => new Date(b.published) - new Date(a.published))
 			: guardianNews.sort((a, b) => new Date(b.published) - new Date(a.published));
 	}
-	return { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved };
+	return { fetchedArticles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved };
 };
 
+const articles = [];
 const populateCarousel = async () => {
-	const { articles } = await fetchNews();
-
 	document.getElementById('carousel').removeChild(document.getElementById('spinner'));
 	for (let i = 0; i < 5; i++) {
 		let container = document.createElement('div');
@@ -146,19 +145,22 @@ const handleFavorites = e => {
 
 // News page
 let loadedNews = [];
-let lastLoaded;
+let lastLoaded,
+	isLoggedNewsGlobal,
+	isLoggedGuardianGlobal,
+	uniqueIdsApiGlobal,
+	uniqueIdsGuardianGlobal,
+	newsSavedGlobal;
 const populateCards = async () => {
-	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
-	console.log(articles);
-
 	document.getElementById('news-container').removeChild(document.getElementById('spinner'));
 
 	for (let i = 0; i < 6; i++) {
-		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
-			? newsSaved.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
+		let counter = newsSavedGlobal.find(news => news.externalUrl === articles[i].externalUrl)
+			? newsSavedGlobal.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
 			: '0';
 		let isFavorite =
-			uniqueIdsGuardian.includes(articles[i].externalUrl) || uniqueIdsApi.includes(articles[i].externalUrl)
+			uniqueIdsGuardianGlobal.includes(articles[i].externalUrl) ||
+			uniqueIdsApiGlobal.includes(articles[i].externalUrl)
 				? 'favorite'
 				: '';
 
@@ -172,7 +174,7 @@ const populateCards = async () => {
                               <p class="card-text pt-3">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
-                                <div class="btn-container ${!isLoggedGuardian || !isLoggedNews
+                                <div class="btn-container ${!isLoggedGuardianGlobal || !isLoggedNewsGlobal
 									? 'btn-container-hidden'
 									: ''}">
                                   <p class="counter">${counter}</p>
@@ -195,18 +197,17 @@ const populateCards = async () => {
 
 // Lazy load implementation
 const loadCards = async () => {
-	const { articles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved } = await fetchNews();
-
 	for (let i = lastLoaded + 1; i <= lastLoaded + 3; i++) {
 		if (articles.length === loadedNews.length) {
 			break;
 		}
 
-		let counter = newsSaved.find(news => news.externalUrl === articles[i].externalUrl)
-			? newsSaved.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
+		let counter = newsSavedGlobal.find(news => news.externalUrl === articles[i].externalUrl)
+			? newsSavedGlobal.find(news => news.externalUrl === articles[i].externalUrl).timesFavorited
 			: '0';
 		let isFavorite =
-			uniqueIdsGuardian.includes(articles[i].externalUrl) || uniqueIdsApi.includes(articles[i].externalUrl)
+			uniqueIdsGuardianGlobal.includes(articles[i].externalUrl) ||
+			uniqueIdsApiGlobal.includes(articles[i].externalUrl)
 				? 'favorite'
 				: '';
 
@@ -221,7 +222,7 @@ const loadCards = async () => {
 															<p class="card-text">${articles[i].body}</p>
                               <div id="fav-news" class="row justify-content-between">
                                 <a href="${articles[i].externalUrl}" target="blank">Read more</a>
-                                <div class="btn-container ${!isLoggedGuardian || !isLoggedNews
+                                <div class="btn-container ${!isLoggedGuardianGlobal || !isLoggedNewsGlobal
 									? 'btn-container-hidden'
 									: ''}">
                                   <p class="counter">${counter}</p>
@@ -315,13 +316,34 @@ document.querySelectorAll('.unfollow-btn').forEach(btn => {
 // Set up event listeners
 document.addEventListener(
 	'DOMContentLoaded',
-	() => {
+	async () => {
 		console.log('IronGenerator JS imported successfully!');
 		updateLink();
 		updateUvIndex();
 		updateContaminationIndex();
 		updateEpicPhoto();
 		updateTemperature();
+
+		if (location.pathname === '/' || location.pathname === '/news') {
+			const {
+				fetchedArticles,
+				isLoggedNews,
+				isLoggedGuardian,
+				uniqueIdsGuardian,
+				uniqueIdsApi,
+				newsSaved
+			} = await fetchNews();
+
+			// assign value to global variables
+			isLoggedNewsGlobal = isLoggedNews;
+			isLoggedGuardianGlobal = isLoggedGuardian;
+			uniqueIdsApiGlobal = uniqueIdsApi;
+			uniqueIdsGuardianGlobal = uniqueIdsGuardian;
+			newsSavedGlobal = newsSaved;
+
+			articles.push(...fetchedArticles);
+			console.log('articles fetched from APIs ', articles);
+		}
 		if (location.pathname === '/') {
 			populateCarousel();
 		}
