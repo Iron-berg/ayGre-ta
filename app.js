@@ -62,6 +62,18 @@ hbs.registerPartials(`${__dirname}/views/partials`);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
+// HBS helpers
+hbs.registerHelper('trimName', str => {
+	let normalizedStr = str.trim();
+	if (!normalizedStr.includes(' ')) {
+		console.log('no spaces');
+		return str;
+	}
+	const trimmed = normalizedStr.split(' ');
+	console.log(trimmed);
+	return `${trimmed[0]} ${trimmed[1][0]}.`;
+});
+
 // default value for title local
 app.locals.title = 'ayGre-ta';
 
