@@ -59,4 +59,33 @@ router.post('/ddbb/removeFollowing', async (req, res, next) => {
 	res.json(response);
 });
 
+router.get('/ddbb/getUsersFriends', async (req, res, next) => {
+	try {
+		await User.findById(req.query.userid).populate('followings').populate('followers').exec((err, user) => {
+			console.log('user updated in DDBB', user);
+			res.render('partials/modal', {
+				layout: false,
+				follower: user.followers.map(user => ({
+					id: user._id,
+					username: user.username,
+					mutuals: req.user.followings.includes(user._id)
+				})),
+				following: user.followings.map(user => ({
+					id: user._id,
+					username: user.username,
+					mutuals: user.followings.includes(req.user._id)
+				})),
+				modalTitle: 'Folks of ayGre-ta',
+				firstTab: 'Followers',
+				firstID: 'followers',
+				secondTab: 'Following',
+				secondID: 'following',
+				activeModal: true
+			});
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 module.exports = router;

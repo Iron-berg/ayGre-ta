@@ -277,18 +277,7 @@ const handleUserFavs = e => {
 		.catch(error => console.log(error));
 };
 
-// User's social interactions
-document.querySelectorAll('.follow-btn').forEach(btn =>
-	btn.addEventListener('click', async e => {
-		const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
-		const id = e.target.getAttribute('data-followerid');
-		console.log('user to follow ', id, 'current user ', currentUser);
-
-		await addFollowing(id, currentUser);
-	})
-);
-
-// THIS SHOULD BE MOVED TO axiosServices.js ❗️
+// THESE FUNCTIONS SHOULD BE MOVED TO axiosServices.js ❗️
 async function removeFollowing(userToUnfollow, currentUser) {
 	try {
 		const response = await axios.post('/ddbb/removeFollowing', {
@@ -300,18 +289,50 @@ async function removeFollowing(userToUnfollow, currentUser) {
 		console.log(error);
 	}
 }
+async function getUsersFriends(userid) {
+	try {
+		const response = await axios.get('/ddbb/getUsersFriends', {
+			params: { userid }
+		});
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}
 
-// ========================================
-document.querySelectorAll('.unfollow-btn').forEach(btn => {
-	btn.addEventListener('click', async e => {
-		console.log(e);
-		const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
-		const id = e.target.getAttribute('data-followerid');
-		console.log('user to unfollow ', id, 'current user ', currentUser);
+// User's social interactions
+const handleFollow = async e => {
+	const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
+	const id = e.target.getAttribute('data-followerid');
+	console.log('user to follow ', id, 'current user ', currentUser);
 
-		await removeFollowing(id, currentUser);
-	});
-});
+	await addFollowing(id, currentUser);
+
+	const response = await getUsersFriends(currentUser);
+	const modal = document.getElementById('modal');
+	modal.remove();
+	document.querySelector('.main-section').insertAdjacentHTML('beforeend', response.data);
+
+	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
+	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
+};
+
+const handleUnfollow = async e => {
+	const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
+	const id = e.target.getAttribute('data-followerid');
+	console.log('user to unfollow ', id, 'current user ', currentUser);
+
+	await removeFollowing(id, currentUser);
+
+	const response = await getUsersFriends(currentUser);
+	const modal = document.getElementById('modal');
+	modal.remove();
+	document.querySelector('.main-section').insertAdjacentHTML('beforeend', response.data);
+
+	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
+
+	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
+};
 
 // Set up event listeners
 document.addEventListener(
@@ -359,6 +380,10 @@ document.addEventListener(
 	},
 	false
 );
+
+// Initial set up for social buttons
+document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
+document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
 
 window.addEventListener('scroll', () => {
 	if (window.innerHeight + window.scrollY >= document.body.clientHeight) {

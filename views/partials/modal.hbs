@@ -1,4 +1,4 @@
-<div class="modal {{#unless user}} auth {{/unless}} fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+<div class="modal {{#unless user}}auth{{/unless}} {{#if activeModal}}show{{/if}} fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" {{#if activeModal}} style="display: block"{{/if}}>
   <div class="modal-dialog {{#if user}} modal-dialog-scrollable {{/if}}" role="document">
     <div class="modal-content">
       <div class="modal-header">
