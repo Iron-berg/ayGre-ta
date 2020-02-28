@@ -10,6 +10,7 @@ const logger = require("morgan");
 const path = require("path");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
+const flash = require("connect-flash");
 
 mongoose
   .connect(process.env.MONGODB_URL, {
@@ -46,6 +47,7 @@ app.use(
     store: new MongoStore({ mongooseConnection: mongoose.connection })
   })
 );
+app.use(flash());
 
 require("./passport")(app); // This automatically requires index.js in this folder
 
@@ -78,6 +80,13 @@ app.locals.title = "ayGre-ta";
 app.use((req, res, next) => {
   res.locals.user = req.user;
   console.log("USUARIO" + req.user);
+  next();
+});
+
+// Flash alerts
+app.use(function(req, res, next) {
+  res.locals.error = req.flash("error");
+  res.locals.info = req.flash("info");
   next();
 });
 
