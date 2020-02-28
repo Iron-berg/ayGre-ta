@@ -301,6 +301,14 @@ async function getUsersFriends(userid) {
 }
 
 // User's social interactions
+const closeModal = () => {
+	const modal = document.querySelector('.modal');
+	modal.classList.remove('show');
+	modal.style.display = 'none';
+	document.body.classList.remove('modal-open');
+	document.querySelector('.modal-backdrop').remove();
+};
+
 const handleFollow = async e => {
 	const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
 	const id = e.target.getAttribute('data-followerid');
