@@ -14,6 +14,13 @@ const handleArrow = () => {
 	document.getElementById('back-to-top').style.visibility = 'hidden';
 };
 
+// update leaderboard
+const updateLeaderboard = async () => {
+	const boardData = await getLeaderboard();
+	console.log('la response en el front ', boardData);
+	return boardData;
+};
+
 // Set up event listeners
 document.addEventListener(
 	'DOMContentLoaded',

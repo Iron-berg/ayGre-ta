@@ -136,3 +136,13 @@ async function getUserThunbergs(userid) {
 		console.log(error);
 	}
 }
+
+// Leaderboard update
+async function getLeaderboard() {
+	try {
+		const response = await axios.get('/ddbb/getLeaderboardData');
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}

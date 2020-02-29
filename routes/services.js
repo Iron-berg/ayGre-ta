@@ -7,6 +7,7 @@ const mongoUserService = require('../services/mongoUserService');
 const mongoThunbergService = require('../services/mongoThunbergService');
 const { newsAPI, guardianAPI } = require('../services/newsService');
 const News = require('../models/news');
+const User = require('../models/user');
 const mongoose = require('mongoose');
 
 /* GET Open UV API (UV INDEX) */
@@ -150,6 +151,34 @@ router.get('/ddbb/getUserThunbergs', async (req, res, next) => {
 router.post('/ddbb/removeFollowing', async (req, res, next) => {
 	const response = await mongoUserService.removeFollowing(req.body.userToUnfollow, req.body.currentUser);
 	res.json(response);
+});
+
+/* GET update leaderboard */
+router.get('/ddbb/getLeaderboardData', async (req, res, next) => {
+	try {
+		const users = await User.find().sort({ gretaPoints: -1 });
+		const platformUsers = users.map((user, index) => {
+			return {
+				username: user.username,
+				followers: user.followers.length,
+				gretaPoints: user.gretaPoints,
+				likes: user.gretaPoints > 0 ? (user.gretaPoints - user.followers.length) / 2 : 0,
+				isCurrentUser: req.user.username === user.username ? true : false,
+				isTopUser: index < 5
+			};
+		});
+		const currentUser = platformUsers.find(user => user.username === req.user.username);
+
+		console.log('los users después de un change', platformUsers);
+
+		res.render('partials/leaderboard', {
+			layout: false,
+			platformUser: platformUsers.slice(0, 5),
+			currentUser
+		});
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 module.exports = router;

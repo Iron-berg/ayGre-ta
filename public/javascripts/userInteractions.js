@@ -72,9 +72,15 @@ const handleFollow = async e => {
 	modal.remove();
 	document.querySelector('.main-section').insertAdjacentHTML('beforeend', modalResponse.data);
 
-	const followingDiplay = document.querySelector('.following-counter');
-	followingDiplay.innerHTML = ` <h3 class="following-counter">${Number(followingDiplay.innerText) +
+	const followingDisplay = document.querySelector('.following-counter');
+	followingDisplay.innerHTML = ` <h3 class="following-counter">${Number(followingDisplay.innerText) +
 		1} <i class="fas fa-user-check"></i></h3>`;
+
+	// update leaderboard when following new user
+	console.log('following, update leaderboard');
+	const leaderboardResponse = await updateLeaderboard();
+	console.log(leaderboardResponse.data);
+	document.querySelector('.ranking-section').innerHTML = leaderboardResponse.data;
 
 	// reset event listeners
 	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
@@ -94,12 +100,11 @@ const handleUnfollow = async e => {
 
 	document.querySelector('.main-section').insertAdjacentHTML('beforeend', modalResponse.data);
 
-	const followingDiplay = document.querySelector('.following-counter');
-	followingDiplay.innerHTML = ` <h3 class="following-counter">${Number(followingDiplay.innerText) -
+	const followingDisplay = document.querySelector('.following-counter');
+	followingDisplay.innerHTML = ` <h3 class="following-counter">${Number(followingDisplay.innerText) -
 		1} <i class="fas fa-user-check"></i></h3>`;
 
 	if (e.target.classList.contains('following-tab')) {
-		console.log('el tab del following');
 		const followingTab = document.getElementById('following-tab');
 		const followersTab = document.getElementById('followers-tab');
 
@@ -112,6 +117,12 @@ const handleUnfollow = async e => {
 		followersTab.classList.remove('active');
 		followersTab.setAttribute('aria-selected', false);
 	}
+
+	// update leaderboard when unfollowing user
+	console.log('following, update leaderboard');
+	const leaderboardResponse = await updateLeaderboard();
+	console.log(leaderboardResponse.data);
+	document.querySelector('.ranking-section').innerHTML = leaderboardResponse.data;
 
 	// reset event listeners
 	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
