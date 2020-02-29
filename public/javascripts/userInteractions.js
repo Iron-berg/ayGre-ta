@@ -64,7 +64,6 @@ const closeModal = () => {
 const handleFollow = async e => {
 	const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
 	const id = e.target.getAttribute('data-followerid');
-	console.log('user to follow ', id, 'current user ', currentUser);
 
 	await addFollowing(id, currentUser);
 
@@ -85,7 +84,6 @@ const handleFollow = async e => {
 const handleUnfollow = async e => {
 	const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
 	const id = e.target.getAttribute('data-followerid');
-	console.log('user to unfollow ', id, 'current user ', currentUser);
 
 	await removeFollowing(id, currentUser);
 

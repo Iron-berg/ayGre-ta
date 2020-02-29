@@ -39,7 +39,6 @@ document.addEventListener(
 			newsSavedGlobal = newsSaved;
 
 			articles.push(...fetchedArticles);
-			console.log('articles fetched from APIs ', articles);
 		}
 		if (location.pathname === '/') {
 			populateCarousel();

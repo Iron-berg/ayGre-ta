@@ -2,7 +2,6 @@
 const updateUvIndex = async () => {
 	const currentPost = await geolocation;
 	let uvIndex = await getUvIndex(currentPost.latitude, currentPost.longitude);
-	console.log('The UV Index is: ' + uvIndex);
 	if (uvIndex === undefined) uvIndex = 1.6; // FAKE DATA... shhh
 
 	let container = document.createElement('div');
@@ -14,7 +13,6 @@ const updateUvIndex = async () => {
 
 const updateContaminationIndex = async () => {
 	let contamIndex = await getContaminationIndex();
-	console.log('The air pollution Index is: ' + contamIndex);
 	if (contamIndex === undefined) contamIndex = 55; // FAKE DATA... shhh
 
 	let container = document.createElement('div');
@@ -25,7 +23,6 @@ const updateContaminationIndex = async () => {
 
 const updateTemperature = async () => {
 	let temperature = await getTemperature();
-	console.log('The temperature in Celsius is: ' + temperature);
 	if (temperature === undefined) temperature = 20; // FAKE DATA... shhh
 
 	let container = document.createElement('div');
@@ -36,7 +33,6 @@ const updateTemperature = async () => {
 
 const updateEpicPhoto = async () => {
 	const urlEpic = await getEpicPhoto();
-	console.log('The URL of the Earth pic is: ' + urlEpic);
 
 	let container = document.createElement('div');
 	container.innerHTML = `<img src="${urlEpic}" id="earth" class="img-fluid" alt="The Earth">`;

@@ -8,13 +8,19 @@ const fetchNews = async () => {
 	if (news && guardianNews) {
 		fetchedArticles = [ ...news, ...guardianNews ].sort((a, b) => new Date(b.published) - new Date(a.published));
 	} else {
-		console.log('not able to get news', guardianNews);
-		console.log('not able to get news', news);
 		fetchedArticles = news
 			? news.sort((a, b) => new Date(b.published) - new Date(a.published))
 			: guardianNews.sort((a, b) => new Date(b.published) - new Date(a.published));
 	}
-	return { fetchedArticles, isLoggedNews, isLoggedGuardian, uniqueIdsGuardian, uniqueIdsApi, newsSaved };
+
+	return {
+		fetchedArticles: fetchedArticles.map(news => ({ ...news, author: news.author ? news.author : 'unknown' })),
+		isLoggedNews,
+		isLoggedGuardian,
+		uniqueIdsGuardian,
+		uniqueIdsApi,
+		newsSaved
+	};
 };
 
 const populateCarousel = async () => {
