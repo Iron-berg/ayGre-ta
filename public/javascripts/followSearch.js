@@ -5,11 +5,10 @@ autocomplete({
   input: input,
   fetch: async function(text, update) {
     text = text.toLowerCase();
-    // you can also use AJAX requests instead of preloaded data
     let data = await getUsersByName(text);
-    console.log("DATA " + JSON.stringify(data.data));
+
     names = JSON.parse(data.data);
-    console.log("NOMBRES --- " + names[0].username);
+
     let suggestions = names.filter(n =>
       n.username.toLowerCase().startsWith(text)
     );
@@ -26,7 +25,23 @@ autocomplete({
   onSelect: async function(item) {
     input.value = item.label;
 
-    let data = await addFollowing(item.value, logedUser);
+    let res = await addFollowing(item.value, logedUser);
     $("#followUser").val("");
+
+    if (res.data.status == "ko") {
+      document.getElementById("follow-message-ko").style.display = "block";
+      document.getElementById("message-alert-ko").innerHTML = res.data.msg;
+      window.setTimeout(function() {
+        document.getElementById("follow-message-ko").style.display = "none";
+      }, 2000);
+    }
+
+    if (res.data.status == "ok") {
+      document.getElementById("follow-message-ok").style.display = "block";
+      document.getElementById("message-alert-ok").innerHTML = res.data.msg;
+      window.setTimeout(function() {
+        document.getElementById("follow-message-ok").style.display = "none";
+      }, 2000);
+    }
   }
 });
