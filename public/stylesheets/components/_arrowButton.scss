@@ -3,12 +3,12 @@
 	right: 2em;
 	bottom: 1em;
 	font-size: 2em;
-	color: #272343;
+	color: $dark-blue;
 	visibility: hidden;
 	cursor: pointer;
 
 	&:hover {
-		color: #2a7886;
+		color: $main-global-color;
 	}
 
 	@media (max-width: 1024px) {

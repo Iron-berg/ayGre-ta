@@ -5,10 +5,11 @@
 		padding-left: 3.5vw;
 
 		#title {
-			font-family: 'Lobster', cursive;
+			font-family: $text-font-title;
 			font-size: calc(2.7rem + 2.5vw);
-			text-shadow: 0.02em 0.02em 0 #272343, -0.02em 0em 0 #272343, 0em -0.02em 0 #272343, 0.05em 0.05em 0 #333;
-			color: #79bac1;
+			text-shadow: 0.02em 0.02em 0 $dark-blue, -0.02em 0em 0 $dark-blue, 0em -0.02em 0 $dark-blue,
+				0.05em 0.05em 0 $shadow-color;
+			color: $mid-blue;
 			margin-right: 0;
 		}
 		.title-hidden {
@@ -19,57 +20,55 @@
 		width: calc(2.5em + 2vw);
 	}
 	.nav-link {
-		color: #272343;
+		color: $dark-blue;
 		cursor: pointer;
 
 		&:hover {
-			color: #2a7886;
+			color: $main-global-color;
 		}
 	}
 	.active {
-		color: #2a7886;
-		text-decoration: underline;
+		color: $main-global-color;
 	}
 	#navbarNav {
 		flex-grow: 0;
 		text-align: end;
 	}
 	.navbar-toggler {
-		border-color: #272343;
+		border-color: $dark-blue;
 		padding: .75rem 1rem;
 	}
 	.fa-bars {
 		font-size: 1.5rem;
-		color: #272343;
+		color: $dark-blue;
 	}
 	.dropdown-menu {
 		min-width: 0;
-		border: solid .04em #272343;
-		color: #272343;
+		border: solid .04em $dark-blue;
 		right: .8em;
 		left: auto;
 		text-align: right;
 		.dropdown-item {
 			padding: .25rem .5rem;
-			color: #272343;
+			color: $dark-blue;
 			&:hover {
 				background: transparent;
-				color: #2a7886;
+				color: $main-global-color;
 				.fa-leaf {
-					color: #67c979;
+					color: $favorite-color;
 				}
 			}
 			&.active {
 				background: none;
-				color: #2a7886;
+				color: $main-global-color;
 				.fa-leaf {
-					color: #67c979;
+					color: $favorite-color;
 				}
 			}
 		}
 	}
 	[aria-expanded="true"] {
-		color: #2a7886;
+		color: $main-global-color;
 	}
 	.dropdown-toggle:after {
 		vertical-align: .1em;

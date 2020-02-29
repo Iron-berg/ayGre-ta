@@ -1,56 +1,65 @@
 .leaderboard {
 	margin-right: 1em;
 	text-align: center;
+
 	.board-title {
-		font-family: 'Lobster', cursive;
-		background-color: #2a7886;
+		font-family: $text-font-title;
+		background-color: $main-global-color;
 		height: 150px;
 		border-top-right-radius: .3em;
 		border-top-left-radius: .3em;
-		color: #fff;
+		color: $font-dark-bg;
 		justify-content: center;
 		align-items: center;
 		font-size: 2.5rem;
 		font-weight: bold;
 	}
+
 	.row {
-		border-left: .1em solid #138496;
-		border-right: .1em solid #138496;
+		border-left: .1em solid $border-color-profile;
+		border-right: .1em solid $border-color-profile;
 	}
+
 	.table-heading {
 		padding-top: 1em;
 		div {
 			align-self: center;
 		}
 	}
+
 	.table-content > div {
 		padding: .5em .2em;
 	}
+
 	.current-user {
-		color: #2a7886;
-		font-weight: bold;
+		color: $main-global-color;
+		font-weight: 700;
 	}
+
 	.stats {
 		align-self: center;
 	}
 
 	.table-content:last-of-type {
-		border-bottom: .1em solid #138496;
+		border-bottom: .1em solid $border-color-profile;
 		border-bottom-right-radius: .5em;
 		border-bottom-left-radius: .5em;
 		padding-bottom: 2em;
 	}
+
 	#bottom-user {
-		background-color: #2a7886;
-		border-top: .1em solid #138496;
-		color: #fff;
-		.current-user {
-			color: #fff;
-		}
+		background-color: $main-global-color;
+		border-top: .1em solid $border-color-profile;
+		color: $font-dark-bg;
 		padding: 1.6em .2em;
+
+		.current-user {
+			color: $font-dark-bg;
+		}
 	}
+
 	.footer-table {
-		background-color: #2a7886;
+		background-color: $main-global-color;
 		padding: 4em 0;
 	}
 }
@@ -63,6 +72,7 @@
 		display: none;
 	}
 }
+
 @media (max-width: 425px) {
 	.table-heading {
 		p {
