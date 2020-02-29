@@ -1,9 +1,18 @@
-@import "components/form", "components/modal", "components/newsCard",
-  "components/arrowButton", "components/profileCard", "components/thunbergBoard",
-  "components/thunbergcard", "components/leaderboard", "components/alerts";
+@import "abstracts/variables";
 
-@import "layout/navbar", "layout/about";
+@import "base/base";
 
-@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700&display=swap");
+@import "components/form",
+	"components/authModal",
+	"components/socialModal",
+	"components/newsCard",
+	"components/spinner",
+	"components/arrowButton",
+	"components/profileCard",
+	"components/thunbergBoard",
+	"components/thunbergcard",
+	"components/leaderboard";
 
-@import "pages/home", "pages/userFavs", "pages/error-pages";
+@import "layout/navbar", "layout/footerAlerts", "layout/modal";
+
+@import "pages/home", "pages/about", "pages/userFavs", "pages/error-pages";

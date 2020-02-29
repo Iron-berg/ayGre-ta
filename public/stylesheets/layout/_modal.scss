@@ -1,0 +1,35 @@
+/* MODALS COMMON RULES */
+.modal {
+	top: 5%;
+	.modal-title {
+		font-size: 3rem;
+		font-family: 'Lobster', cursive;
+	}
+	.title-container {
+		flex-grow: 2;
+		text-align: center;
+	}
+	#btn-close {
+		color: rgba(39, 35, 67, .7);
+		&:hover {
+			color: $dark-blue;
+			opacity: 100;
+		}
+	}
+	.modal-header,
+	.nav-tabs {
+		border-bottom: 1px solid $dark-blue;
+	}
+	[aria-selected="false"] {
+		color: rgba(39, 35, 67, .4);
+		&:hover {
+			color: rgba(39, 35, 67, .7);
+			border-color: rgba(39, 35, 67, .7);
+		}
+	}
+
+	.nav-link.active {
+		color: $dark-blue;
+		border-color: $dark-blue $dark-blue #fff;
+	}
+}
