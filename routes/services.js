@@ -37,7 +37,7 @@ router.get('/services/epic/lastPhoto', async (req, res, next) => {
 router.get('/services/news', async (req, res, next) => {
 	try {
 		const result = await newsAPI.getNews(
-			'"greta%20thunberg"OR"climate%20change"OR"environment"&language=en&pageSize=40'
+			'"greta%20thunberg"OR"climate%20change"OR"environment"NOT"jeff%20bezos"&language=en&pageSize=50'
 		);
 
 		const news = result.data.articles.map(article => {
@@ -74,7 +74,7 @@ router.get('/services/news', async (req, res, next) => {
 router.get('/services/guardian', async (req, res, next) => {
 	try {
 		const result = await guardianAPI.getNews(
-			'&section=environment&q="climate%20change"&page-size=40&show-fields=headline,byline,thumbnail,bodyText,trailText'
+			'&section=environment&q="climate%20change"&page-size=50&show-fields=headline,byline,thumbnail,bodyText,trailText'
 		);
 
 		const guardianNews = result.data.response.results.map(article => {
