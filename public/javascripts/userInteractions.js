@@ -84,6 +84,7 @@ const handleFollow = async e => {
 const handleUnfollow = async e => {
 	const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
 	const id = e.target.getAttribute('data-followerid');
+	console.log(e);
 
 	await removeFollowing(id, currentUser);
 
@@ -96,6 +97,21 @@ const handleUnfollow = async e => {
 	const followingDiplay = document.querySelector('.following-counter');
 	followingDiplay.innerHTML = ` <h3 class="following-counter">${Number(followingDiplay.innerText) -
 		1} <i class="fas fa-user-check"></i></h3>`;
+
+	if (e.target.classList.contains('following-tab')) {
+		console.log('el tab del following');
+		const followingTab = document.getElementById('following-tab');
+		const followersTab = document.getElementById('followers-tab');
+
+		// keep following tab open in case it was open before clicking
+		document.getElementById('following').classList.add('show', 'active');
+		followingTab.classList.add('active');
+		followingTab.setAttribute('aria-selected', true);
+
+		document.getElementById('followers').classList.remove('show', 'active');
+		followersTab.classList.remove('active');
+		followersTab.setAttribute('aria-selected', false);
+	}
 
 	// reset event listeners
 	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
