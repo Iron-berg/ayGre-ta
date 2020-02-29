@@ -66,7 +66,7 @@
 .data-content {
 	font-family: "Nanum Gothic", "Helvetica Neue", Arial, sans-serif;
 	color: $font-dark-bg;
-	background-color: $main-global-color;
+	background-color: rgba($color: $main-global-color, $alpha: 0.7);
 	border: .05em solid $dark-blue;
 	border-radius: 15px 50px;
 	padding: 10px;
