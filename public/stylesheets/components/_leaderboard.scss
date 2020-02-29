@@ -22,9 +22,14 @@
 
 	.table-heading {
 		padding-top: 1em;
+		background-color: #fff;
 		div {
 			align-self: center;
 		}
+	}
+
+	.table-content {
+		background-color: #fff;
 	}
 
 	.table-content > div {
