@@ -25,20 +25,49 @@ class MongoThunbergService {
 
   likeThunberg = async function(thunbergid, userid) {
     try {
-      // Get thunberg by id and increase one like
-      const thunberg = await this.Thunberg.findByIdAndUpdate(thunbergid, {
-        $inc: { likes: 1 }
-      });
+      // If the thunberg belongs to the user don't allow to like it
+      const th = await this.Thunberg.findById(thunbergid);
 
-      // Find author and increase two Greta points
-      const author = await this.User.findByIdAndUpdate(thunberg.author, {
-        $inc: { gretaPoints: 2 }
-      });
+      if (th.author != userid) {
+        // Check if the thunberg has already been faved by user
+        const currentUser = await this.User.findById(userid);
 
-      // Add thunberg as a favorite of current user
-      const currentUser = await this.User.findById(userid);
-      currentUser.favoriteThunbergs.push(thunberg);
-      currentUser.save();
+        if (!currentUser.favoriteThunbergs.includes(thunbergid)) {
+          // Not faved, then fav
+
+          // Get thunberg by id and increase one like
+          const thunberg = await this.Thunberg.findByIdAndUpdate(thunbergid, {
+            $inc: { likes: 1 }
+          });
+
+          // Find author and increase two Greta points
+          const author = await this.User.findByIdAndUpdate(thunberg.author, {
+            $inc: { gretaPoints: 2 }
+          });
+
+          // Add thunberg as a favorite of current user
+          //const currentUser = await this.User.findById(userid);
+          currentUser.favoriteThunbergs.push(thunberg);
+          currentUser.save();
+        } else {
+          // Already faved, then unfav
+          // Get thunberg by id and decrease one like
+          const thunberg = await this.Thunberg.findByIdAndUpdate(thunbergid, {
+            $inc: { likes: -1 }
+          });
+
+          // Find author and decrease two Greta points
+          const author = await this.User.findByIdAndUpdate(thunberg.author, {
+            $inc: { gretaPoints: -2 }
+          });
+
+          // Delete thunberg as a favorite of current user
+          //const currentUser = await this.User.findById(userid);
+          let index = currentUser.favoriteThunbergs.indexOf(thunbergid);
+          if (index !== -1) currentUser.favoriteThunbergs.splice(index, 1);
+          currentUser.save();
+        }
+      }
     } catch (error) {
       console.log(`ERROR MongoThunbergService likeThunberg ${error}`);
     }
@@ -72,9 +101,14 @@ class MongoThunbergService {
 
       // Sort thunbergs by date
       allThunbergs.sort(function(a, b) {
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
         return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+
+      // Check whether the thunberg is a fav of user
+      allThunbergs.forEach(t => {
+        if (thunbergsUser.favoriteThunbergs.includes(t.id)) {
+          t.favorite = true;
+        }
       });
 
       return allThunbergs;

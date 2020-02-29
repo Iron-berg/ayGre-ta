@@ -1,35 +1,35 @@
 <div class="col-12 main-section text-center">
-          <div class="row">
-              <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
-          </div>
-          <div class="row user-detail">
-              <div class="col-lg-12 col-sm-12 col-12">
-                  <img src="{{#if user.pictureUrl}}{{user.pictureUrl}}{{else}}images/user-default.png{{/if}}" alt="{{user.username}}" class="rounded-circle img-thumbnail">
-                  <h5>{{user.username}}</h5>
-                  <p id="fav-news"><i class="far fa-newspaper" aria-hidden="true"></i> <a href="/userFavs">Favorite News</a></p>
-                  <h3>{{numOfFavs}} <i class="fas fa-leaf"></i></h3>
-
-                  <hr>
-                  <p id="points-label">Greta points</p>
-                  <h3>{{user.gretaPoints}} <i class="fas fa-medal"></i></h3>
-
-                  <hr>
-                  <div class="row">
-                    <div class="col">
-                      <p id="points-label">Followers</p>
-                      <h3>{{user.followers.length}} <i class="fas fa-users"></i></h3>
-                    </div>
-                    <div class="col">
-                      <p id="points-label">Following</p>
-                      <h3>{{user.followings.length}} <i class="fas fa-address-book"></i></h3>
-                    </div>
-                </div>
-              </div>
-          </div>
-          <div class="row user-social-detail">
-              <div class="col-lg-12 col-sm-12 col-12">
-                <label for="name">Follow</label>
-                <input id="followUser" data-userid="{{user.id}}" name="followUser" class="form-control" type="text" placeholder="Name" aria-label="Search">
-              </div>
-          </div>
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
+  </div>
+  <div class="row user-detail">
+    <div class="col-lg-12 col-sm-12 col-12">
+      <img src="{{#if user.pictureUrl}}{{user.pictureUrl}}{{else}}images/user-default.png{{/if}}" alt="{{user.username}}" class="rounded-circle img-thumbnail">
+      <h5>{{user.username}}</h5>
+      <p id="fav-news"><i class="far fa-newspaper" aria-hidden="true"></i> <a href="/userFavs">Favorite News</a></p>
+      <h3>{{user.favoriteNews.length}} <i class="fas fa-leaf"></i></h3>
+      <hr>
+      <p id="points-label">Greta points</p>
+      <h3>{{user.gretaPoints}} <i class="fas fa-medal"></i></h3>
+      <hr>
+      <div class="row">
+        <div class="col">
+          <p id="followers-label" data-toggle="modal" data-target="#modal">Followers</p>
+          <h3>{{user.followers.length}} <i class="fas fa-users"></i></h3>
+        </div>
+        <div class="col">
+          <p id="following-label" data-toggle="modal" data-target="#modal">Following</p>
+          <h3>{{user.followings.length}} <i class="fas fa-user-check"></i></h3>
+        </div>
       </div>
+    </div>
+  </div>
+  <div class="row user-social-detail">
+    <div class="col-lg-12 col-sm-12 col-12">
+      <label for="name">Follow</label>
+      <input id="followUser" data-userid="{{user.id}}" name="followUser" class="form-control" type="text" placeholder="Name" aria-label="Search">
+    </div>
+  </div>
+</div>
+
+{{> modal modalTitle="Folks of ayGre-ta" firstTab="Followers" firstID="followers" secondTab="Following" secondID="following"}}

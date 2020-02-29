@@ -1,0 +1,26 @@
+#about-page {
+	font-family: "Nanum Gothic", "Helvetica Neue", Arial, sans-serif;
+}
+
+.jumbo-about {
+	color: #f1f3f4;
+	background-color: #2a7886;
+
+	h4 {
+		padding-top: 15px;
+	}
+	img {
+		cursor: pointer;
+	}
+}
+
+#about-text {
+	color: #2a7886;
+	font-size: 1.2em;
+	width: 100%;
+	padding: 80px 20px;
+}
+
+p.lead {
+	margin-bottom: 3em;
+}

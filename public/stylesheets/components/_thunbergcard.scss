@@ -1,6 +1,6 @@
 .card.thunberg {
 	margin-bottom: 20px;
-	border: 1px solid #138496;
+	border: 1px solid $border-color-profile;
 
 	.card-body {
 		color: #000;
@@ -8,9 +8,9 @@
 
 	.card-header,
 	.card-footer {
-		background-color: #79bac1;
+		background-color: $mid-blue;
 		color: #fff;
-		border-color: #138496;
+		border-color: $border-color-profile;
 	}
 
 	.card-header {
@@ -22,7 +22,8 @@
 	}
 
 	.fa-hand-peace {
-		color: #fff;
 		font-size: 1.3em;
+		color: #fff;
+		cursor: pointer;
 	}
 }

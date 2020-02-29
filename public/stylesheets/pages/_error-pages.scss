@@ -10,13 +10,13 @@
 		}
 	}
 	p {
-		color: #2a7886;
+		color: $main-global-color;
 		font-size: 1.5rem;
 		padding: 1.5em 0;
 	}
 	img {
 		border-radius: 1em;
-		border: solid .05em #272343;
-		box-shadow: .1em .1em 0 #272343;
+		border: .05em solid $dark-blue;
+		box-shadow: .1em .1em 0 $dark-blue;
 	}
 }

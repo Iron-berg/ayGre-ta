@@ -1,30 +1,78 @@
-<div class="modal fade" id="join-modal" tabindex="-1" role="dialog" aria-labelledby="join-modal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal {{#unless user}}auth{{/unless}} {{#if activeModal}}show{{/if}} fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" {{#if activeModal}} style="display: block"{{/if}}>
+  <div class="modal-dialog {{#if user}} modal-dialog-scrollable {{/if}}" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <div class="title-container">
-          <h5 class="modal-title" id="join-modal">Welcome</h5>
+          <h2 class="modal-title" id="modal">{{modalTitle}}</h2>
         </div>
-        <button id="btn-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button {{#if activeModal}} onclick="closeModal()" {{/if}} id="btn-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div data-currentuser="{{user.id}}" class="modal-body">
         <ul class="nav nav-tabs" id="join-tab" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="true">Sign up</a>
+            <a class="nav-link active" id="{{firstID}}-tab" data-toggle="tab" href="#{{firstID}}" role="tab" aria-controls="{{firstID}}" aria-selected="true">{{firstTab}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="false">Login</a>
+            <a class="nav-link" id="{{secondID}}-tab" data-toggle="tab" href="#{{secondID}}" role="tab" aria-controls="{{secondID}}" aria-selected="false">{{secondTab}}</a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="register" role="tabpanel" aria-labelledby="register-tab">
+          {{#if user}}
+            <div class="tab-pane fade show active social-tab" id="{{firstID}}" role="tabpanel" aria-labelledby="{{firstID}}-tab">
+              <div class="container pt-3">
+                <div class="row">
+                  {{#unless follower}}
+                    <p class="no-users">You don't have any followers yet</p>
+                  {{/unless}}
+                  {{#each follower}}
+                    <div class="col-6">
+                      <p>
+                        {{username}}
+                        {{#unless mutuals}}
+                          <i data-followerid="{{id}}" class="fas fa-user-plus follow-btn"></i>
+                        {{else}}
+                          <i data-followerid="{{id}}" class="fas fa-user-alt-slash unfollow-btn"></i>
+                        {{/unless}}
+                      </p>
+                      {{#if mutuals}}
+                      <small>You follow each other</small>
+                      {{else}}
+                      <small>Follows you</small>
+                      {{/if}}
+                    </div>
+                  {{/each}}
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade social-tab" id="{{secondID}}" role="tabpanel" aria-labelledby="{{secondID}}-tab">
+              <div class="container pt-3">
+                <div class="row">
+                  {{#unless following}}
+                    <p class="no-users">You are not following anyone yet</p>
+                  {{/unless}}
+                  {{#each following}}
+                    <div class="col-6">
+                      <p>{{username}}<i data-followerid="{{id}}" class="fas fa-user-alt-slash unfollow-btn"></i></p>
+                      {{#if mutuals}}
+                      <small>You follow each other</small>
+                      {{else}}
+                      <small>Doesn't follow you</small>
+                      {{/if}}
+                    </div>
+                  {{/each}}
+                </div>
+              </div>
+            </div>
+          {{else}}
+          <div class="tab-pane fade show active" id="{{firstID}}" role="tabpanel" aria-labelledby="{{firstID}}-tab">
             {{> form id="signup" submit="Sign up" action="Join using"}}
           </div>
-          <div class="tab-pane fade" id="login" role="tabpanel" aria-labelledby="login-tab">
+          <div class="tab-pane fade" id="{{secondID}}" role="tabpanel" aria-labelledby="{{secondID}}-tab">
             {{> form id="login" submit="Login" action="Login with"}}
           </div>
+          {{/if}}
         </div>
       </div>
     </div>

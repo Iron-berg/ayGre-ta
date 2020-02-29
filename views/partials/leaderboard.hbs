@@ -22,7 +22,7 @@
     {{#if isCurrentUser}}
       <div class="col-3 current-user">Your stats</div>
     {{else}}
-      <div class="col-3">{{username}}</div>
+      <div class="col-3">{{{trimName username}}}</div>
     {{/if}}
     <div class="col-3 text-center stats">{{followers}}</div>
     <div class="col-2 text-center stats">{{likes}}</div>
