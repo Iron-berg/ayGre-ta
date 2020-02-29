@@ -277,29 +277,6 @@ const handleUserFavs = e => {
 		.catch(error => console.log(error));
 };
 
-// THESE FUNCTIONS SHOULD BE MOVED TO axiosServices.js ❗️
-async function removeFollowing(userToUnfollow, currentUser) {
-	try {
-		const response = await axios.post('/ddbb/removeFollowing', {
-			userToUnfollow,
-			currentUser
-		});
-		return response;
-	} catch (error) {
-		console.log(error);
-	}
-}
-async function getUsersFriends(userid) {
-	try {
-		const response = await axios.get('/ddbb/getUsersFriends', {
-			params: { userid }
-		});
-		return response;
-	} catch (error) {
-		console.log(error);
-	}
-}
-
 // User's social interactions
 const closeModal = () => {
 	const modal = document.querySelector('.modal');

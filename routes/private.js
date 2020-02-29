@@ -5,7 +5,7 @@ const mongoThunbergService = require('../services/mongoThunbergService');
 const User = require('../models/user');
 
 // GET user private page
-router.get('/user', ensureLogin.ensureLoggedIn(), async (req, res, next) => {
+router.get('/user', ensureLogin.ensureLoggedIn('/'), async (req, res, next) => {
 	try {
 		const thunbergs = await mongoThunbergService.getRelatedThunbergs(req.user.id);
 		const users = await User.find().sort({ gretaPoints: -1 });
@@ -50,15 +50,7 @@ router.get('/user', ensureLogin.ensureLoggedIn(), async (req, res, next) => {
 	}
 });
 
-// POST - remove following * this should be moved to services.js *
-
-const mongoUserService = require('../services/mongoUserService'); // temporary import
-
-router.post('/ddbb/removeFollowing', async (req, res, next) => {
-	const response = await mongoUserService.removeFollowing(req.body.userToUnfollow, req.body.currentUser);
-	res.json(response);
-});
-
+// GET all users from platform
 router.get('/ddbb/getUsersFriends', async (req, res, next) => {
 	try {
 		await User.findById(req.query.userid).populate('followings').populate('followers').exec((err, user) => {
