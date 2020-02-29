@@ -27,7 +27,7 @@ router.get("/user", ensureLogin.ensureLoggedIn("/"), async (req, res, next) => {
     const currentUser = platformUsers.find(
       user => user.username === req.user.username
     );
-
+    
     User.findById(req.user.id)
       .populate("followings")
       .populate("followers")
