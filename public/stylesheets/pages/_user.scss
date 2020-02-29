@@ -2,8 +2,12 @@
 	padding-top: 3.5em;
 }
 
-.main-section,
 .leaderboard {
 	position: sticky;
 	top: 7em;
+}
+
+#follow-message-ko,
+#follow-message-ok {
+	display: none;
 }
