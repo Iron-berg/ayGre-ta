@@ -293,11 +293,16 @@ const handleFollow = async e => {
 
 	await addFollowing(id, currentUser);
 
-	const response = await getUsersFriends(currentUser);
+	const modalResponse = await getUsersFriends(currentUser);
 	const modal = document.getElementById('modal');
 	modal.remove();
-	document.querySelector('.main-section').insertAdjacentHTML('beforeend', response.data);
+	document.querySelector('.main-section').insertAdjacentHTML('beforeend', modalResponse.data);
 
+	const followingDiplay = document.querySelector('.following-counter');
+	followingDiplay.innerHTML = ` <h3 class="following-counter">${Number(followingDiplay.innerText) +
+		1} <i class="fas fa-user-check"></i></h3>`;
+
+	// reset event listeners
 	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
 	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
 };
@@ -309,13 +314,18 @@ const handleUnfollow = async e => {
 
 	await removeFollowing(id, currentUser);
 
-	const response = await getUsersFriends(currentUser);
+	const modalResponse = await getUsersFriends(currentUser);
 	const modal = document.getElementById('modal');
 	modal.remove();
-	document.querySelector('.main-section').insertAdjacentHTML('beforeend', response.data);
 
+	document.querySelector('.main-section').insertAdjacentHTML('beforeend', modalResponse.data);
+
+	const followingDiplay = document.querySelector('.following-counter');
+	followingDiplay.innerHTML = ` <h3 class="following-counter">${Number(followingDiplay.innerText) -
+		1} <i class="fas fa-user-check"></i></h3>`;
+
+	// reset event listeners
 	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
-
 	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
 };
 
