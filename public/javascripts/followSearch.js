@@ -38,6 +38,11 @@ autocomplete({
 		const response = await getUserThunbergs(logedUser);
 		document.querySelector('#thunbergsboard').innerHTML = response.data;
 
+		// Re-setting listeners after updating HTML
+		document.getElementById('btnThunberg').addEventListener('click', onPostClick);
+		document.getElementById('btnCancel').addEventListener('click', onCancelClick);
+		document.getElementById('message').addEventListener('keyup', onTexting);
+
 		if (res.data.status == 'ko') {
 			document.getElementById('follow-message-ko').style.display = 'block';
 			document.getElementById('message-alert-ko').innerHTML = res.data.msg;
