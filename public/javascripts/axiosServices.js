@@ -136,3 +136,29 @@ async function getUserThunbergs(userid) {
 		console.log(error);
 	}
 }
+
+// Leaderboard update
+async function getLeaderboard() {
+	try {
+		const response = await axios.get('/ddbb/getLeaderboardData');
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+// Update social counters
+async function getSocialCounters() {
+	try {
+		const response = await axios.get('/ddbb/getSocialData');
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+// update favorite news page
+const updateFavNews = async newsid => {
+	const response = await axios.get('/ddbb/getFavoriteNews', { params: { newsid } });
+	return response;
+};

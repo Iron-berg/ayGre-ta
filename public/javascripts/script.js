@@ -14,6 +14,18 @@ const handleArrow = () => {
 	document.getElementById('back-to-top').style.visibility = 'hidden';
 };
 
+// update leaderboard
+const updateLeaderboard = async () => {
+	const boardData = await getLeaderboard();
+	return boardData;
+};
+
+// update following counter
+const updateSocialCounters = async () => {
+	const socialCounters = await getSocialCounters();
+	return socialCounters;
+};
+
 // Set up event listeners
 document.addEventListener(
 	'DOMContentLoaded',
@@ -55,6 +67,7 @@ document.addEventListener(
 			btn.addEventListener('click', handleUserFavs);
 		});
 
+		// set mouse effect on fav btn
 		handleFavBtn();
 	},
 	false

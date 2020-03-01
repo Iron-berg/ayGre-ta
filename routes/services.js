@@ -7,6 +7,7 @@ const mongoUserService = require('../services/mongoUserService');
 const mongoThunbergService = require('../services/mongoThunbergService');
 const { newsAPI, guardianAPI } = require('../services/newsService');
 const News = require('../models/news');
+const User = require('../models/user');
 const mongoose = require('mongoose');
 
 /* GET Open UV API (UV INDEX) */
@@ -150,6 +151,77 @@ router.get('/ddbb/getUserThunbergs', async (req, res, next) => {
 router.post('/ddbb/removeFollowing', async (req, res, next) => {
 	const response = await mongoUserService.removeFollowing(req.body.userToUnfollow, req.body.currentUser);
 	res.json(response);
+});
+
+/* GET update leaderboard */
+router.get('/ddbb/getLeaderboardData', async (req, res, next) => {
+	try {
+		const users = await User.find().sort({ gretaPoints: -1 });
+		const platformUsers = users.map((user, index) => {
+			return {
+				username: user.username,
+				followers: user.followers.length,
+				gretaPoints: user.gretaPoints,
+				likes: user.gretaPoints > 0 ? (user.gretaPoints - user.followers.length) / 2 : 0,
+				isCurrentUser: req.user.username === user.username ? true : false,
+				isTopUser: index < 5
+			};
+		});
+		const currentUser = platformUsers.find(user => user.username === req.user.username);
+
+		res.render('partials/leaderboard', {
+			layout: false,
+			platformUser: platformUsers.slice(0, 5),
+			currentUser
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+router.get('/ddbb/getSocialData', async (req, res, next) => {
+	try {
+		console.log('el user', req.user);
+		res.render('partials/socialdisplay', {
+			layout: false
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+router.get('/ddbb/getFavoriteNews', async (req, res, next) => {
+	try {
+		const newsUnfave = await News.findById(req.query.newsid);
+		const currentUser = await User.findById(req.user.id);
+		console.log('el user es ', currentUser, ' y está desfavoriteando la noticia', newsUnfave);
+
+		await News.updateOne({ _id: newsUnfave._id }, { $inc: { timesFavorited: -1 } });
+		await currentUser.favoriteNews.splice(currentUser.favoriteNews.indexOf(newsUnfave._id), 1);
+
+		console.log(`updating ${currentUser} and ${newsUnfave}`);
+
+		currentUser.save();
+		newsUnfave.save();
+
+		User.findById(req.user.id).populate('favoriteNews').exec((err, user) => {
+			if (err) {
+				console.log(err);
+				return res.redirect('/user');
+			} else {
+				const newsOrdered = user.favoriteNews
+					.sort(
+						(a, b) => b.timesFavorited - a.timesFavorited || new Date(b.published) - new Date(a.published)
+					)
+					.filter(news => currentUser.favoriteNews.includes(news.id));
+
+				console.log('rendering user favs', newsOrdered);
+				res.render('userFavs', { layout: false, favNews: newsOrdered });
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 module.exports = router;

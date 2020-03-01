@@ -29,7 +29,7 @@
                   {{#each follower}}
                     <div class="col-6">
                       <p>
-                        {{username}}
+                        {{{trimName username}}}
                         {{#unless mutuals}}
                           <i data-followerid="{{id}}" class="fas fa-user-plus follow-btn"></i>
                         {{else}}
@@ -54,7 +54,7 @@
                   {{/unless}}
                   {{#each following}}
                     <div class="col-6">
-                      <p>{{username}}<i data-followerid="{{id}}" class="fas fa-user-alt-slash unfollow-btn"></i></p>
+                      <p>{{{trimName username}}}<i data-followerid="{{id}}" class="fas fa-user-alt-slash unfollow-btn following-tab"></i></p>
                       {{#if mutuals}}
                       <small>You follow each other</small>
                       {{else}}
