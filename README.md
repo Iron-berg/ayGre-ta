@@ -6,8 +6,6 @@
 Responsive app that shows the latest news on climate change and it lets users interact with each other 
 
 ## Demo
-![features demonstration](public/images/readme-imgs/features.gif)
-
 Live version [https://aygre-ta.herokuapp.com/](https://aygre-ta.herokuapp.com/)
 
 ## Installing
@@ -19,12 +17,14 @@ In order to run this project locally do the following:
 4. Run `npm run dev` to launch the application and access it at localhost:port
 
 ## Features
+![features demonstration](public/images/readme-imgs/features.gif)
+
 * Main page shows a carousel with five of the latest news as well as some insightful information about the environment
 * News page displays up to a hundred of the latest news on climate changes, environment, global warming...
 * Users can sign up and login, both using Facebook and providing username and password 
 * When logged in, users can: 
   - Favorite/unfavorite news using the leaf button, which will be saved in their favorite page
-  - Look for user's to follow using search bar
+  - Look for users to follow using search bar
   - Manage their followers and following via opening modal window
   - Create their own posts and like posts from the people they follow by cliking the victory button
 * Users will get a point per follower and two points per liked post 
