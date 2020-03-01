@@ -119,6 +119,11 @@ const handleFollow = async e => {
 	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
 	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
 	resetModalListeners();
+
+	// Re-setting listeners after updating HTML
+	document.getElementById('btnThunberg').addEventListener('click', onPostClick);
+	document.getElementById('btnCancel').addEventListener('click', onCancelClick);
+	document.getElementById('message').addEventListener('keyup', onTexting);
 };
 
 const handleUnfollow = async e => {
@@ -140,6 +145,11 @@ const handleUnfollow = async e => {
 	// update thunberg board when following new user
 	const response = await getUserThunbergs(currentUser);
 	document.querySelector('#thunbergsboard').innerHTML = response.data;
+
+	// Re-setting listeners after updating HTML
+	document.getElementById('btnThunberg').addEventListener('click', onPostClick);
+	document.getElementById('btnCancel').addEventListener('click', onCancelClick);
+	document.getElementById('message').addEventListener('keyup', onTexting);
 
 	if (e.target.classList.contains('following-tab')) {
 		const followingTab = document.getElementById('following-tab');
