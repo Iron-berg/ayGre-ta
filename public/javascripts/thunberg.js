@@ -1,67 +1,64 @@
 // Post Thunberg Form
 const onPostClick = async function() {
-  const message = document.getElementById("message").value;
-  const loggedUser = document
-    .getElementById("btnThunberg")
-    .getAttribute("data-userid");
+	const message = document.getElementById('message').value;
+	const loggedUser = document.getElementById('btnThunberg').getAttribute('data-userid');
 
-  await postThunberg(message, loggedUser);
-  const response = await getUserThunbergs(loggedUser);
+	await postThunberg(message, loggedUser);
+	const response = await getUserThunbergs(loggedUser);
 
-  document.querySelector("#thunbergsboard").innerHTML = response.data;
-  document.getElementById("message").value = "";
+	document.querySelector('#thunbergsboard').innerHTML = response.data;
+	document.getElementById('message').value = '';
 
-  // Re-setting listeners after updating HTML
-  document.getElementById("btnThunberg").addEventListener("click", onPostClick);
-  document.getElementById("btnCancel").addEventListener("click", onCancelClick);
-  document.getElementById("message").addEventListener("keyup", onTexting);
+	// Re-setting listeners after updating HTML
+	document.getElementById('btnThunberg').addEventListener('click', onPostClick);
+	document.getElementById('btnCancel').addEventListener('click', onCancelClick);
+	document.getElementById('message').addEventListener('keyup', onTexting);
 };
 
 // Like Thunberg
 const onLikeClick = async function(id) {
-  const loggedUser = document
-    .getElementById("btnThunberg")
-    .getAttribute("data-userid");
-  await likeThunberg(id, loggedUser);
-  const response = await getUserThunbergs(loggedUser);
+	const loggedUser = document.getElementById('btnThunberg').getAttribute('data-userid');
+	await likeThunberg(id, loggedUser);
+	const response = await getUserThunbergs(loggedUser);
 
-  document.querySelector("#thunbergsboard").innerHTML = response.data;
+	document.querySelector('#thunbergsboard').innerHTML = response.data;
 
-  // Re-setting listeners after updating HTML
-  document.getElementById("btnThunberg").addEventListener("click", onPostClick);
-  document.getElementById("btnCancel").addEventListener("click", onCancelClick);
-  document.getElementById("message").addEventListener("keyup", onTexting);
+	// update leaderboard when unfollowing user
+	console.log('following, update leaderboard');
+	const leaderboardResponse = await updateLeaderboard();
+	console.log(leaderboardResponse.data);
+	document.querySelector('.ranking-section').innerHTML = leaderboardResponse.data;
+
+	// Re-setting listeners after updating HTML
+	document.getElementById('btnThunberg').addEventListener('click', onPostClick);
+	document.getElementById('btnCancel').addEventListener('click', onCancelClick);
+	document.getElementById('message').addEventListener('keyup', onTexting);
 };
 
 // Message character lenght control
 const onTexting = function() {
-  updateFormStatus();
+	updateFormStatus();
 };
 
 // Cancel button clears text area
 const onCancelClick = function() {
-  document.getElementById("message").value = "";
-  updateFormStatus();
+	document.getElementById('message').value = '';
+	updateFormStatus();
 };
 
 const updateFormStatus = function() {
-  const buttonPost = document.getElementById("btnThunberg");
-  const messageArea = document.getElementById("message");
-  const charcounter = document.getElementById("characters-left");
+	const buttonPost = document.getElementById('btnThunberg');
+	const messageArea = document.getElementById('message');
+	const charcounter = document.getElementById('characters-left');
 
-  charcounter.innerHTML = 50 - messageArea.value.length;
+	charcounter.innerHTML = 50 - messageArea.value.length;
 
-  messageArea.value.length > 50
-    ? charcounter.classList.add("red")
-    : charcounter.classList.remove("red");
+	messageArea.value.length > 50 ? charcounter.classList.add('red') : charcounter.classList.remove('red');
 
-  buttonPost.disabled =
-    messageArea.value.length == 0 || messageArea.value.length > 50
-      ? true
-      : false;
+	buttonPost.disabled = messageArea.value.length == 0 || messageArea.value.length > 50 ? true : false;
 };
 
 // Listeners
-document.getElementById("btnThunberg").addEventListener("click", onPostClick);
-document.getElementById("btnCancel").addEventListener("click", onCancelClick);
-document.getElementById("message").addEventListener("keyup", onTexting);
+document.getElementById('btnThunberg').addEventListener('click', onPostClick);
+document.getElementById('btnCancel').addEventListener('click', onCancelClick);
+document.getElementById('message').addEventListener('keyup', onTexting);
