@@ -31,8 +31,10 @@ In order to run this project locally do the following:
 * Profile page shows a leaderboard of the Top 5 users as well as logged user's own score
 
 **To do:**
-* Improve app's design
 * Include live chat
+* Add editable user's settings and possibility to retrieve password when forgotten
+* Implement live updating when users interact 
+* Create a discussion thread
 
 ## Technologies
 * [Handlebars.js](https://handlebarsjs.com/) and [Bootstrap](https://getbootstrap.com/) to get the structure and styling of the app
