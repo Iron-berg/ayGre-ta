@@ -1,0 +1,9 @@
+PORT=<selected port>
+MONGODB_URL=<database connection>
+FACEBOOK_APP_ID=<clientID>
+FACEBOOK_APP_SECRET=<client secret>
+
+API_SUN_TOKEN=<apikey> from https://www.openuv.io/uvindex
+API_AIR_TOKEN=<apikey> from www.airvisual.com
+NEWS_APIKEY=<apikey> from https://newsapi.org/
+GUARDIAN_APIKEY=<apikey> from https://open-platform.theguardian.com/
