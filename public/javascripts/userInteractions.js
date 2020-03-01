@@ -53,6 +53,35 @@ const handleUserFavs = e => {
 };
 
 // User's social interactions
+const resetModalListeners = () => {
+	document.querySelectorAll('.user-detail [data-toggle="modal"]').forEach(toggle =>
+		toggle.addEventListener('click', e => {
+			const followingContent = document.getElementById('following');
+			const followingTab = document.getElementById('following-tab');
+			const followersTab = document.getElementById('followers-tab');
+			const followersContent = document.getElementById('followers');
+
+			if (e.target.id === 'following-label') {
+				followingContent.classList.add('show', 'active');
+				followingTab.classList.add('active');
+				followingTab.setAttribute('aria-selected', true);
+
+				followersContent.classList.remove('show', 'active');
+				followersTab.classList.remove('active');
+				followersTab.setAttribute('aria-selected', false);
+			} else {
+				followersContent.classList.add('show', 'active');
+				followersTab.classList.add('active');
+				followersTab.setAttribute('aria-selected', true);
+
+				followingContent.classList.remove('show', 'active');
+				followingTab.classList.remove('active');
+				followingTab.setAttribute('aria-selected', false);
+			}
+		})
+	);
+};
+
 const closeModal = () => {
 	const modal = document.querySelector('.modal');
 	modal.classList.remove('show');
@@ -72,25 +101,23 @@ const handleFollow = async e => {
 	modal.remove();
 	document.querySelector('.main-section').insertAdjacentHTML('beforeend', modalResponse.data);
 
-	const followingDisplay = document.querySelector('.following-counter');
-	followingDisplay.innerHTML = ` <h3 class="following-counter">${Number(followingDisplay.innerText) +
-		1} <i class="fas fa-user-check"></i></h3>`;
+	// update social counters when following new user
+	const socialCountersResponse = await updateSocialCounters();
+	document.querySelector('.social-counters').innerHTML = socialCountersResponse.data;
 
 	// update leaderboard when following new user
-	console.log('following, update leaderboard');
 	const leaderboardResponse = await updateLeaderboard();
-	console.log(leaderboardResponse.data);
 	document.querySelector('.ranking-section').innerHTML = leaderboardResponse.data;
 
 	// reset event listeners
 	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
 	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
+	resetModalListeners();
 };
 
 const handleUnfollow = async e => {
 	const currentUser = e.target.offsetParent.offsetParent.getAttribute('data-currentuser');
 	const id = e.target.getAttribute('data-followerid');
-	console.log(e);
 
 	await removeFollowing(id, currentUser);
 
@@ -100,9 +127,9 @@ const handleUnfollow = async e => {
 
 	document.querySelector('.main-section').insertAdjacentHTML('beforeend', modalResponse.data);
 
-	const followingDisplay = document.querySelector('.following-counter');
-	followingDisplay.innerHTML = ` <h3 class="following-counter">${Number(followingDisplay.innerText) -
-		1} <i class="fas fa-user-check"></i></h3>`;
+	// update social counters when unfollowing  user
+	const socialCountersResponse = await updateSocialCounters();
+	document.querySelector('.social-counters').innerHTML = socialCountersResponse.data;
 
 	if (e.target.classList.contains('following-tab')) {
 		const followingTab = document.getElementById('following-tab');
@@ -119,12 +146,11 @@ const handleUnfollow = async e => {
 	}
 
 	// update leaderboard when unfollowing user
-	console.log('following, update leaderboard');
 	const leaderboardResponse = await updateLeaderboard();
-	console.log(leaderboardResponse.data);
 	document.querySelector('.ranking-section').innerHTML = leaderboardResponse.data;
 
 	// reset event listeners
 	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
 	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
+	resetModalListeners();
 };

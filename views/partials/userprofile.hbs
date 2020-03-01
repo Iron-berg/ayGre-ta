@@ -12,15 +12,16 @@
       <p id="points-label">Greta points</p>
       <h3>{{user.gretaPoints}} <i class="fas fa-medal"></i></h3>
       <hr>
-      <div class="row">
-        <div class="col">
+      <div class="row social-counters">
+        {{> socialdisplay}}
+        {{!-- <div class="col">
           <p id="followers-label" data-toggle="modal" data-target="#modal">Followers</p>
           <h3 class="followers-counter">{{user.followers.length}} <i class="fas fa-users"></i></h3>
         </div>
         <div class="col">
           <p id="following-label" data-toggle="modal" data-target="#modal">Following</p>
           <h3 class="following-counter">{{user.followings.length}} <i class="fas fa-user-check"></i></h3>
-        </div>
+        </div> --}}
       </div>
     </div>
   </div>

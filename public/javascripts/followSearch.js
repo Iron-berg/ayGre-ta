@@ -27,10 +27,12 @@ autocomplete({
 		$('#followUser').val('');
 
 		// update leaderboard upon following user
-		console.log('following, update leaderboard');
 		const leaderboardResponse = await updateLeaderboard();
-		console.log(leaderboardResponse.data);
 		document.querySelector('.ranking-section').innerHTML = leaderboardResponse.data;
+
+		// update social counters when following new user
+		const socialCountersResponse = await updateSocialCounters();
+		document.querySelector('.social-counters').innerHTML = socialCountersResponse.data;
 
 		if (res.data.status == 'ko') {
 			document.getElementById('follow-message-ko').style.display = 'block';

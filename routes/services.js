@@ -181,4 +181,15 @@ router.get('/ddbb/getLeaderboardData', async (req, res, next) => {
 	}
 });
 
+router.get('/ddbb/getSocialData', async (req, res, next) => {
+	try {
+		console.log('el user', req.user);
+		res.render('partials/socialdisplay', {
+			layout: false
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
 module.exports = router;

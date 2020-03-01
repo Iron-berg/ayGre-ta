@@ -17,8 +17,13 @@ const handleArrow = () => {
 // update leaderboard
 const updateLeaderboard = async () => {
 	const boardData = await getLeaderboard();
-	console.log('la response en el front ', boardData);
 	return boardData;
+};
+
+// update following counter
+const updateSocialCounters = async () => {
+	const socialCounters = await getSocialCounters();
+	return socialCounters;
 };
 
 // Set up event listeners

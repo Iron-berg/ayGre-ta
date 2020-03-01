@@ -146,3 +146,13 @@ async function getLeaderboard() {
 		console.log(error);
 	}
 }
+
+// Update social counters
+async function getSocialCounters() {
+	try {
+		const response = await axios.get('/ddbb/getSocialData');
+		return response;
+	} catch (error) {
+		console.log(error);
+	}
+}
