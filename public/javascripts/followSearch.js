@@ -34,17 +34,6 @@ autocomplete({
 		const socialCountersResponse = await updateSocialCounters();
 		document.querySelector('.social-counters').innerHTML = socialCountersResponse.data;
 
-		// update modal when following new user
-		const modalResponse = await getUsersFriends(logedUser);
-		const modal = document.getElementById('modal');
-		console.log(modalResponse);
-		modal.remove();
-		document.querySelector('.main-section').insertAdjacentHTML('beforeend', modalResponse.data);
-		document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
-		document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
-		resetModalListeners();
-		closeModal();
-
 		if (res.data.status == 'ko') {
 			document.getElementById('follow-message-ko').style.display = 'block';
 			document.getElementById('message-alert-ko').innerHTML = res.data.msg;
@@ -60,5 +49,15 @@ autocomplete({
 				document.getElementById('follow-message-ok').style.display = 'none';
 			}, 2000);
 		}
+
+		// update modal when following new user
+		const modalResponse = await getUsersFriends(logedUser);
+		const modal = document.getElementById('modal');
+		modal.remove();
+		document.querySelector('.main-section').insertAdjacentHTML('beforeend', modalResponse.data);
+		document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
+		document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
+		resetModalListeners();
+		closeModal();
 	}
 });
