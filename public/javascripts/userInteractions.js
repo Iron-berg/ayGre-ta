@@ -109,6 +109,10 @@ const handleFollow = async e => {
 	const leaderboardResponse = await updateLeaderboard();
 	document.querySelector('.ranking-section').innerHTML = leaderboardResponse.data;
 
+	// update thunberg board when following new user
+	const response = await getUserThunbergs(currentUser);
+	document.querySelector('#thunbergsboard').innerHTML = response.data;
+
 	// reset event listeners
 	document.querySelectorAll('.follow-btn').forEach(btn => btn.addEventListener('click', handleFollow));
 	document.querySelectorAll('.unfollow-btn').forEach(btn => btn.addEventListener('click', handleUnfollow));
@@ -130,6 +134,10 @@ const handleUnfollow = async e => {
 	// update social counters when unfollowing  user
 	const socialCountersResponse = await updateSocialCounters();
 	document.querySelector('.social-counters').innerHTML = socialCountersResponse.data;
+
+	// update thunberg board when following new user
+	const response = await getUserThunbergs(currentUser);
+	document.querySelector('#thunbergsboard').innerHTML = response.data;
 
 	if (e.target.classList.contains('following-tab')) {
 		const followingTab = document.getElementById('following-tab');

@@ -34,6 +34,10 @@ autocomplete({
 		const socialCountersResponse = await updateSocialCounters();
 		document.querySelector('.social-counters').innerHTML = socialCountersResponse.data;
 
+		// update thunberg board when following new user
+		const response = await getUserThunbergs(logedUser);
+		document.querySelector('#thunbergsboard').innerHTML = response.data;
+
 		if (res.data.status == 'ko') {
 			document.getElementById('follow-message-ko').style.display = 'block';
 			document.getElementById('message-alert-ko').innerHTML = res.data.msg;
