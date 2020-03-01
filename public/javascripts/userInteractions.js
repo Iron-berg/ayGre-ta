@@ -42,14 +42,16 @@ const handleFavBtn = () => {
 };
 
 // Handle user's favorites
-const handleUserFavs = e => {
-	axios
-		.post('/user/favs', { externalUrl: e.target.offsetParent.children[1].children[3].firstElementChild.href })
-		.then(res => {
-			e.target.classList.toggle('favorite');
-			e.target.offsetParent.offsetParent.remove();
-		})
-		.catch(error => console.log(error));
+const handleUserFavs = async e => {
+	const id = e.target.getAttribute('data-newsid');
+	const newsResponse = await updateFavNews(id);
+
+	document.querySelector('.body-main').innerHTML = newsResponse.data;
+
+	// reset event listener
+	document.querySelectorAll('.user-fav').forEach(btn => {
+		btn.addEventListener('click', handleUserFavs);
+	});
 };
 
 // User's social interactions

@@ -67,6 +67,7 @@ document.addEventListener(
 			btn.addEventListener('click', handleUserFavs);
 		});
 
+		// set mouse effect on fav btn
 		handleFavBtn();
 	},
 	false

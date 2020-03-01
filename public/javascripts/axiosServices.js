@@ -156,3 +156,9 @@ async function getSocialCounters() {
 		console.log(error);
 	}
 }
+
+// update favorite news page
+const updateFavNews = async newsid => {
+	const response = await axios.get('/ddbb/getFavoriteNews', { params: { newsid } });
+	return response;
+};

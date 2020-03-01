@@ -169,8 +169,6 @@ router.get('/ddbb/getLeaderboardData', async (req, res, next) => {
 		});
 		const currentUser = platformUsers.find(user => user.username === req.user.username);
 
-		console.log('los users después de un change', platformUsers);
-
 		res.render('partials/leaderboard', {
 			layout: false,
 			platformUser: platformUsers.slice(0, 5),
@@ -186,6 +184,40 @@ router.get('/ddbb/getSocialData', async (req, res, next) => {
 		console.log('el user', req.user);
 		res.render('partials/socialdisplay', {
 			layout: false
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+router.get('/ddbb/getFavoriteNews', async (req, res, next) => {
+	try {
+		const newsUnfave = await News.findById(req.query.newsid);
+		const currentUser = await User.findById(req.user.id);
+		console.log('el user es ', currentUser, ' y está desfavoriteando la noticia', newsUnfave);
+
+		await News.updateOne({ _id: newsUnfave._id }, { $inc: { timesFavorited: -1 } });
+		await currentUser.favoriteNews.splice(currentUser.favoriteNews.indexOf(newsUnfave._id), 1);
+
+		console.log(`updating ${currentUser} and ${newsUnfave}`);
+
+		currentUser.save();
+		newsUnfave.save();
+
+		User.findById(req.user.id).populate('favoriteNews').exec((err, user) => {
+			if (err) {
+				console.log(err);
+				return res.redirect('/user');
+			} else {
+				const newsOrdered = user.favoriteNews
+					.sort(
+						(a, b) => b.timesFavorited - a.timesFavorited || new Date(b.published) - new Date(a.published)
+					)
+					.filter(news => news.timesFavorited !== 0);
+
+				console.log('rendering user favs', newsOrdered);
+				res.render('userFavs', { layout: false, favNews: newsOrdered });
+			}
 		});
 	} catch (error) {
 		console.log(error);
