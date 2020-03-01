@@ -213,7 +213,7 @@ router.get('/ddbb/getFavoriteNews', async (req, res, next) => {
 					.sort(
 						(a, b) => b.timesFavorited - a.timesFavorited || new Date(b.published) - new Date(a.published)
 					)
-					.filter(news => news.timesFavorited !== 0);
+					.filter(news => currentUser.favoriteNews.includes(news.id));
 
 				console.log('rendering user favs', newsOrdered);
 				res.render('userFavs', { layout: false, favNews: newsOrdered });
